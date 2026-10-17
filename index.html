@@ -1023,7 +1023,10 @@ const K3=(function(){
       metal:P({roughness:.3,metalness:.95}),mirror:P({roughness:.04,metalness:1}),accent:P({roughness:.55,metalness:0}),
       pcb:P({roughness:.6,metalness:.1,side:THREE.DoubleSide}),glass:P({roughness:.1,metalness:0,opacity:.22,side:THREE.DoubleSide,depthWrite:false}),
       ghost:P({roughness:1,opacity:.1,depthWrite:false}),edge:new THREE.LineBasicMaterial({transparent:true})}}
-  function Model(parent){const g=new THREE.Group();const m={g,parts:[],mats:makeMats(),scale:1,spinners:[]};parent.add(g);return m}
+  function Model(parent){const g=new THREE.Group();const m={g,parts:[],mats:makeMats(),scale:1,spinners:[]};parent.add(g);
+    /* the renderer updates every matrix in the scene each frame; skip hidden models (the frame that shows one
+       again sets its transform, which updates the whole subtree) */
+    g.updateMatrixWorld=function(force){if(this.visible)THREE.Object3D.prototype.updateMatrixWorld.call(this,force)};return m}
   function part(M,geo,mk,pos,off,o={}){
     const mesh=new THREE.Mesh(geo,M.mats[mk]);const holder=new THREE.Group();const inner=new THREE.Group();inner.add(mesh);holder.add(inner);
     if(o.rot)inner.rotation.set(...o.rot);if(o.scale)inner.scale.set(...o.scale);if(o.shift)inner.position.set(...o.shift);
@@ -1379,7 +1382,7 @@ function startHome3D(){
     b.parentNode.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));Object.assign(mt,K3.MODES[b.dataset.mode])}));
   const NS='http://www.w3.org/2000/svg',lsvg=$('leaders'),lwrap=$('labels'),pool=[];
   for(let i=0;i<12;i++){const ln=document.createElementNS(NS,'line'),c=document.createElementNS(NS,'circle');c.setAttribute('r','3');lsvg.append(ln,c);
-    const d=document.createElement('div');d.className='lbl';d.innerHTML='<b></b><span></span>';lwrap.appendChild(d);pool.push({ln,c,d,w:0})}
+    const d=document.createElement('div');d.className='lbl';d.innerHTML='<b></b><span></span>';lwrap.appendChild(d);pool.push({ln,c,d,w:0,b:d.querySelector('b')})}
   let mobile=false;
   function size(){const w=innerWidth,h=innerHeight;fitPixels(renderer,w,h);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();mobile=w<900;lsvg.setAttribute('viewBox',`0 0 ${w} ${h}`)}
   size();addEventListener('resize',size);
@@ -1387,7 +1390,9 @@ function startHome3D(){
   function toWorld(sx,sy){tmp.set(sx/innerWidth*2-1,-(sy/innerHeight)*2+1,.5).unproject(camera).sub(camera.position).normalize();const d=-camera.position.z/tmp.z;return camera.position.clone().add(tmp.multiplyScalar(d))}
   const coverFig=$('coverFig'),plate=$('plate'),theatre=$('theatre');
   let rx=0,ry=0,last=performance.now();const t0=last;const v3=new THREE.Vector3();
-  function hide(){canvas.style.visibility='hidden';lsvg.style.visibility=lwrap.style.visibility='hidden'}
+  /* per-frame DOM writes only when the value changes: each write invalidates style/layout */
+  let shown=null;function show3(v){if(shown===v)return;shown=v;const s=v?'visible':'hidden';canvas.style.visibility=s;lsvg.style.visibility=lwrap.style.visibility=s}
+  function hide(){show3(false)}
   function frame(now){
     requestAnimationFrame(frame);
     if(SOFT_GL&&now-last<30)return; /* software WebGL: ~30 fps */
@@ -1395,7 +1400,7 @@ function startHome3D(){
     if(S.view!=='home'){hide();return}
     const tb=theatre.getBoundingClientRect();
     if(tb.bottom<-50){hide();return}
-    canvas.style.visibility='visible';lsvg.style.visibility=lwrap.style.visibility='visible';
+    show3(true);
     const t=(now-t0)/1000;
     const nx=px>-9000?(px/innerWidth-.5)*2:0,ny=py>-9000?(py/innerHeight-.5)*2:0;
     rx+=(ny*.14-rx)*.05;ry+=(nx*.4-ry)*.05;
@@ -1430,14 +1435,14 @@ function startHome3D(){
     let pi=0;
     [[L,'l'],[R,'r']].forEach(([arr,side])=>{let prev=Bp.top+50;
       arr.forEach(o=>{if(pi>=pool.length)return;const P=pool[pi++];const ly=Math.max(clamp(o.y,Bp.top+80,Bp.bottom-88),prev+28);prev=ly;
-        P.d.className='lbl '+side;
+        const cn='lbl '+side;if(P.cn!==cn){P.d.className=cn;P.cn=cn}
         if(P.d.dataset.t!==o.t){P.d.querySelector('span').textContent=o.t;P.d.dataset.t=o.t;P.w=P.d.offsetWidth}
-        P.d.querySelector('b').textContent=String(pi).padStart(2,'0');
+        const no=String(pi).padStart(2,'0');if(P.no!==no){P.b.textContent=no;P.no=no}
         const lx=side==='l'?Bp.left+32:Bp.right-32-P.w;const endX=side==='l'?lx+P.w+6:lx-6;
-        P.d.style.transform=`translate(${lx}px,${ly-10}px)`;P.d.style.opacity=1;
-        P.ln.setAttribute('x1',o.x);P.ln.setAttribute('y1',o.y);P.ln.setAttribute('x2',endX);P.ln.setAttribute('y2',ly);P.ln.style.opacity=1;
-        P.c.setAttribute('cx',o.x);P.c.setAttribute('cy',o.y);P.c.style.opacity=1})});
-    for(;pi<pool.length;pi++){pool[pi].d.style.opacity=0;pool[pi].ln.style.opacity=0;pool[pi].c.style.opacity=0}
+        P.d.style.transform=`translate(${lx}px,${ly-10}px)`;if(P.on!==true){P.d.style.opacity=1;P.ln.style.opacity=1;P.c.style.opacity=1;P.on=true}
+        P.ln.setAttribute('x1',o.x);P.ln.setAttribute('y1',o.y);P.ln.setAttribute('x2',endX);P.ln.setAttribute('y2',ly);
+        P.c.setAttribute('cx',o.x);P.c.setAttribute('cy',o.y)})});
+    for(;pi<pool.length;pi++){const P=pool[pi];if(P.on!==false){P.d.style.opacity=0;P.ln.style.opacity=0;P.c.style.opacity=0;P.on=false}}
     renderer.render(scene,camera);
   }
   requestAnimationFrame(frame);
@@ -1497,7 +1502,8 @@ function setActive(i){if(i===cur)return;arts[cur].classList.remove('on');stripB[
   if(hasGSAP&&!reduce){gsap.fromTo(a.querySelectorAll('.ln > span'),{yPercent:110},{yPercent:0,duration:.9,ease:'expo.out',stagger:.07,overwrite:true});
     gsap.fromTo(a.querySelectorAll('.kick,.deck,.body,.spec,.more'),{y:14,opacity:0},{y:0,opacity:1,duration:.7,ease:'power3.out',stagger:.06,delay:.1,overwrite:true});
     gsap.fromTo('#figno',{yPercent:40,opacity:0},{yPercent:0,opacity:1,duration:.6,ease:'power3.out',overwrite:true})}}
-function readout(e){$('rEx').textContent=String(Math.round(e*100)).padStart(3,'0')+' %'}
+let lastReadout='';
+function readout(e){const s=String(Math.round(e*100)).padStart(3,'0')+' %';if(s!==lastReadout){$('rEx').textContent=s;lastReadout=s}}
 
 /* ===================== WORKS INDEX ===================== */
 const toc=$('toc'),filters=$('filters');
@@ -1667,9 +1673,13 @@ function proximity(sel,radius){const chs=[...document.querySelectorAll(sel+' .ch
 if(fine&&!reduce){proximity('.mast',220);proximity('.big',260)}
 
 /* ticker */
-const rows=[...document.querySelectorAll('.trow')].map(r=>{r.innerHTML+=r.innerHTML+r.innerHTML;return{el:r,x:0,dir:+r.dataset.dir}});
+const rows=[...document.querySelectorAll('.trow')].map(r=>{r.innerHTML+=r.innerHTML+r.innerHTML;return{el:r,x:0,dir:+r.dataset.dir,w:0}});
+/* widths cached (reading scrollWidth every frame forced a layout); moves only while the strip is on screen */
+const measureRows=()=>rows.forEach(r=>r.w=r.el.scrollWidth/3);
+measureRows();addEventListener('resize',measureRows);addEventListener('route',measureRows);ScrollTrigger.addEventListener('refresh',measureRows);document.fonts&&document.fonts.ready.then(measureRows);
+let rowsOn=true;const tickerEl=document.querySelector('.ticker');if(tickerEl&&window.IntersectionObserver)new IntersectionObserver(es=>rowsOn=es[0].isIntersecting).observe(tickerEl);
 let vel=0;if(lenis)lenis.on('scroll',e=>vel=e.velocity||0);
-gsap.ticker.add((t,dt)=>{if(reduce||S.view!=='home')return;rows.forEach(r=>{const w=r.el.scrollWidth/3;r.x-=(.6+Math.abs(vel)*.4)*r.dir*(dt/16);if(r.x<-w)r.x+=w;if(r.x>0)r.x-=w;
+gsap.ticker.add((t,dt)=>{if(reduce||S.view!=='home'||!rowsOn){vel*=.92;return}rows.forEach(r=>{const w=r.w||(r.w=r.el.scrollWidth/3);if(!w)return;r.x-=(.6+Math.abs(vel)*.4)*r.dir*(dt/16);if(r.x<-w)r.x+=w;if(r.x>0)r.x-=w;
   r.el.style.transform=`translateX(${r.x}px) skewX(${clamp(-vel*.35,-8,8)}deg)`});vel*=.92});
 
 /* home section heads */
@@ -1762,7 +1772,7 @@ addEventListener('load',()=>ScrollTrigger.refresh());
     const th=$('theatre').getBoundingClientRect();
     const on=S.view==='home'&&!end&&!(innerWidth<900&&th.top<=innerHeight*.5);cue.classList.toggle('off',!on);
     if(!on)return;
-    txt.textContent=th.top>innerHeight*.5?'Scroll to open the projects':(th.bottom>innerHeight?'Scroll · next project':'Scroll')}
+    const s=th.top>innerHeight*.5?'Scroll to open the projects':(th.bottom>innerHeight?'Scroll · next project':'Scroll');if(txt.textContent!==s)txt.textContent=s}
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);addEventListener('route',()=>setTimeout(upd,1400));setInterval(upd,800);upd()})();
 });
 </script>
