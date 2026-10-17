@@ -5,9 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Portfolio Mikel Arnao</title>
 <meta name="description" content="Mikel Arnao, Product Design Engineer. Industrial design, product development, UX/UI, web and robotics.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- libraries and fonts are self-hosted (vendor/, fonts/): no extra origins on the critical path.
+     The big scripts are preloaded so they download while the HTML is still arriving. -->
+<link rel="preload" href="vendor/three-0.128.0/three.min.js" as="script">
+<link rel="preload" href="vendor/gsap-3.12.5/gsap.min.js" as="script">
+<link rel="preload" href="vendor/gsap-3.12.5/ScrollTrigger.min.js" as="script">
+<style>
+/* Inter Tight, Inter, IBM Plex Mono (SIL OFL), latin + latin-ext subsets */
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-ext-400.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-400.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-ext-500.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/inter-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:300 800;font-display:swap;src:url(fonts/inter-tight-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:300 800;font-display:swap;src:url(fonts/inter-tight-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+</style>
 <style>
 /* Layout: technical magazine. Home = cover + pinned spreads (article left, 3D plate right) + procedure + appendix.
    Works = index with terrain filters. Project = feature article with plate, spec sheet and numbered sections. About = profile + colophon. */
@@ -722,12 +735,12 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 </div></footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+<script src="vendor/three-0.128.0/three.min.js"></script>
+<script src="vendor/gsap-3.12.5/gsap.min.js"></script>
+<script src="vendor/gsap-3.12.5/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis-1.1.13/lenis.min.js"></script>
+<script src="vendor/three-0.128.0/GLTFLoader.js"></script>
+<script src="vendor/three-0.128.0/DRACOLoader.js"></script>
 <script>
 /* =====================================================================
    CONTENT (English). A second language can be added as another object.
@@ -1263,7 +1276,7 @@ const K3=(function(){
     /* web: Draco GLBs with baked edges (tools/build-models.mjs), decoded in a worker.
        file://: fetch is blocked, so fall back to the JS-wrapped exports (window.__GLTF[name]) */
     const local=location.protocol==='file:';
-    if(!local&&THREE.DRACOLoader){const D=new THREE.DRACOLoader();D.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');L.setDRACOLoader(D)}
+    if(!local&&THREE.DRACOLoader){const D=new THREE.DRACOLoader();D.setDecoderPath('vendor/three-0.128.0/draco/');L.setDRACOLoader(D)}
     /* one model at a time, in index order (the cover model first), each after the page goes idle */
     const queue=Object.entries(GLB),idle=f=>window.requestIdleCallback?requestIdleCallback(f,{timeout:1500}):setTimeout(f,200);
     const next=()=>{const e=queue.shift();if(!e)return;const [i,spec]=e;

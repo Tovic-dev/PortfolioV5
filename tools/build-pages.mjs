@@ -103,7 +103,7 @@ write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="htt
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
 // static assets the pages use (the *.gltf.js wrappers are only for opening index.html from disk)
-fs.cpSync(path.join(ROOT, 'img'), path.join(OUT, 'img'), { recursive: true });
+for (const dir of ['img', 'fonts', 'vendor']) fs.cpSync(path.join(ROOT, dir), path.join(OUT, dir), { recursive: true });
 fs.cpSync(path.join(ROOT, 'models'), path.join(OUT, 'models'), { recursive: true, filter: f => !f.endsWith('.gltf.js') });
 for (const f of ['favicon.svg', 'favicon-32.png', 'apple-touch-icon.png']) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 
