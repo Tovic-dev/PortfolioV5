@@ -897,8 +897,9 @@ const DRAW=[
  '<rect x="88" y="14" width="64" height="132" rx="10"/><circle cx="120" cy="54" r="20"/><path class="acc" d="M120 34 A20 20 0 0 1 139 60"/><path d="M100 128 V112 M112 128 V100 M124 128 V106 M136 128 V92"/>'];
 
 (function(){
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(pointer:fine)').matches;
+/* touch devices: keep scroll animations even when battery saver / "remove animations" sets reduced motion */
+const reduce=fine&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root=document.documentElement;root.lang='en';
 const hasGSAP=typeof gsap!=='undefined';
 const css=n=>getComputedStyle(root).getPropertyValue(n).trim();
@@ -1475,7 +1476,8 @@ function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollT
 
 if(!hasGSAP){go();return}
 gsap.registerPlugin(ScrollTrigger);
-if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+/* Lenis only for mouse/trackpad; touch keeps native scroll, which ScrollTrigger tracks directly */
+if(!reduce&&fine&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
 
 gsap.to('.progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3,invalidateOnRefresh:true}});
 const thST=ScrollTrigger.create({trigger:'#theatre',start:'top top',end:'bottom bottom',onUpdate:s=>{if(S.view!=='home')return;S.cf=s.progress*N;setActive(clamp(Math.floor(S.cf),0,N-1))},
