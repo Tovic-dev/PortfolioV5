@@ -1,8 +1,10 @@
 # Portfolio · Mikel Arnao
 
-Product Design Engineer portfolio. Static site, no build step.
+Product Design Engineer portfolio. Static site.
 
-- `index.html`: the whole site (HTML, CSS and JS). Hash routes: `#home`, `#works`, `#about`, `#<project-id>`.
+- `index.html`: the whole site (HTML, CSS and JS). Routes: `/`, `/works/`, `/about/`, `/works/<project-id>/`. Old `#<route>` links redirect to these. Opened from disk it falls back to `#/works/…` URLs.
+- `tools/build-pages.mjs`: builds `dist/`, one static page per route with its view pre-rendered and its own title, description, canonical, Open Graph/Twitter tags and JSON-LD, plus `404.html`, `sitemap.xml` and `robots.txt`. No dependencies. `SITE_URL` sets the absolute URL (default: the Vercel production domain).
+- `favicon.svg`, `img/og.jpg`: favicon and default share image (1200×630).
 - `img/`: project photos.
 - `models/`: CAD models (SEAT mirror, Ardura, Orbea rack).
   - `*.glb`: what the site loads. Draco-compressed, with the feature edges baked in, loaded one at a time.
@@ -13,10 +15,11 @@ Product Design Engineer portfolio. Static site, no build step.
 ## Run locally
 
 ```
-python3 -m http.server 8000
+node tools/build-pages.mjs
+python3 -m http.server 8000 --directory dist
 ```
-then open http://localhost:8000. Opening `index.html` directly also works.
+then open http://localhost:8000. Opening `index.html` directly also works (hash URLs).
 
 ## Deploy
 
-Vercel: import the repo, framework preset **Other**, no build command, output directory `.` (root).
+Vercel: import the repo, framework preset **Other**. `vercel.json` sets the build command (`node tools/build-pages.mjs`), the output directory (`dist`) and trailing slashes.
