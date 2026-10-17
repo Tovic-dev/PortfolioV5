@@ -1,0 +1,1657 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Portfolio Mikel Arnao</title>
+<meta name="description" content="Mikel Arnao, Product Design Engineer. Industrial design, product development, UX/UI, web and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: technical magazine. Home = cover + pinned spreads (article left, 3D plate right) + procedure + appendix.
+   Works = index with terrain filters. Project = feature article with plate, spec sheet and numbered sections. About = profile + colophon. */
+:root{
+  --paper:#ECECE7;       /* neutral coated paper */
+  --paper-2:#E1E1DB;
+  --sheet:#F5F5F1;
+  --ink:#141413;
+  --ink-2:#5D5D57;
+  --rule:rgba(20,20,19,.16);
+  --spot:#FF5B14;        /* safety orange, spot ink */
+  --on-spot:#141413;
+  --serif:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --sans:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --gl:max(16px, env(safe-area-inset-left, 0px));
+  --gr:max(16px, env(safe-area-inset-right, 0px));
+  --pad:clamp(0px,2.2vw,36px);
+  --head:44px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121211; --paper-2:#1B1B19; --sheet:#181816; --ink:#E9E8E2; --ink-2:#9A9991; --rule:rgba(233,232,226,.15);
+    --spot:#FF6A2B; --on-spot:#121211; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121211; --paper-2:#1B1B19; --sheet:#181816; --ink:#E9E8E2; --ink-2:#9A9991; --rule:rgba(233,232,226,.15);
+  --spot:#FF6A2B; --on-spot:#121211; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s,color .5s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:85;background-image:var(--noise,none);opacity:.07;mix-blend-mode:multiply}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body::after{mix-blend-mode:screen;opacity:.04}}
+:root[data-theme="dark"] body::after{mix-blend-mode:screen;opacity:.04}
+a{color:inherit}
+::selection{background:var(--spot);color:var(--on-spot)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--spot);outline-offset:3px}
+h1,h2,h3{margin:0;font-weight:inherit;text-wrap:balance}
+p{margin:0}
+em{font-style:italic}
+img{display:block;max-width:100%;height:auto}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.wrap{padding-left:var(--gl);padding-right:var(--gr)}
+.inner{max-width:1480px;margin:0 auto;padding-inline:var(--pad)}
+.ln{display:block;overflow:hidden;padding:.14em 0 .06em;margin:-.14em 0 -.06em}
+.ln > span{display:inline-block}
+
+/* canvas */
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none}
+#leaders{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+#leaders line{stroke:var(--ink);stroke-width:.8}
+#leaders circle{fill:var(--paper);stroke:var(--ink);stroke-width:1}
+#labels{position:fixed;inset:0;z-index:2;pointer-events:none}
+.lbl{position:absolute;left:0;top:0;display:flex;align-items:center;gap:7px;white-space:nowrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;opacity:0;transition:opacity .3s}
+.lbl b{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink);font-weight:500;font-size:9.5px;background:var(--paper)}
+.lbl span{background:color-mix(in srgb,var(--paper) 80%,transparent);padding:1px 3px}
+.lbl.r{flex-direction:row-reverse}
+
+/* print intro + page wipe */
+#intro{position:fixed;inset:0;z-index:95;background:var(--paper);display:grid;place-items:center;clip-path:inset(0 0 0 0);animation:introOut .01s 3.4s forwards}
+.reg{width:84px;height:84px;position:relative}
+.reg::before,.reg::after{content:"";position:absolute;background:var(--ink)}
+.reg::before{left:50%;top:0;bottom:0;width:1px}
+.reg::after{top:50%;left:0;right:0;height:1px}
+.reg i{position:absolute;inset:18px;border:1px solid var(--ink);border-radius:50%}
+.reg i::after{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--spot)}
+#intro .bar{position:absolute;left:var(--gl);right:var(--gr);bottom:calc(28px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;gap:12px;padding-inline:24px;color:var(--ink-2)}
+#intro .bar b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+@keyframes introOut{to{visibility:hidden;opacity:0}}
+#wipe{position:fixed;inset:0;z-index:94;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--gr) calc(28px + env(safe-area-inset-bottom,0px)) var(--gl);visibility:hidden;pointer-events:none}
+#wipe .t{font-family:var(--serif);font-weight:300;font-size:clamp(56px,11vw,180px);line-height:.85;letter-spacing:-.04em;padding-inline:24px}
+#wipe .t em{color:var(--spot)}
+#wipe .mono{padding:0 24px 10px;opacity:.7}
+
+/* running head */
+.runhead{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:var(--paper);border-bottom:1px solid var(--rule);padding-left:var(--gl);padding-right:var(--gr)}
+.runhead .inner{height:var(--head);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.runhead .who{font-family:var(--serif);font-size:16px;letter-spacing:-.01em;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.runhead .who em{color:var(--ink-2)}
+.runhead nav{display:flex;gap:clamp(10px,1.8vw,26px)}
+.runhead nav a{text-decoration:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;position:relative}
+.runhead nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--spot);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.runhead nav a:hover::after,.runhead nav a[aria-current="page"]::after{transform:scaleX(1)}
+.runhead .right{display:flex;justify-content:flex-end;align-items:center;gap:14px}
+.folio{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.folio b{color:var(--ink);font-weight:500}
+.theme{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border:1px solid var(--rule);white-space:nowrap}
+.theme:hover{border-color:var(--ink)}
+.runhead .mnav{display:none;height:auto;grid-template-columns:none;gap:14px;padding:8px 0 10px;border-top:1px solid var(--rule)}
+.mnav a{text-decoration:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+.mnav a[aria-current="page"]{color:var(--spot)}
+.progress{position:fixed;top:calc(var(--head) + env(safe-area-inset-top,0px));left:0;height:2px;width:100%;background:var(--spot);transform-origin:0 50%;transform:scaleX(0);z-index:51}
+@media (max-width:860px){
+  :root{--head:44px}
+  .runhead nav{display:none}.runhead .inner{grid-template-columns:minmax(0,1fr) auto}.runhead .who em{display:none}
+  .runhead .mnav{display:flex}
+  .progress{top:calc(var(--head) + 37px + env(safe-area-inset-top,0px))}
+  .view{--hx:37px}
+}
+
+/* cover */
+.view{--hx:0px}
+@media (max-width:860px){.view{--hx:37px}}
+#cover{position:relative;min-height:100svh;padding-top:calc(var(--head) + var(--hx) + env(safe-area-inset-top,0px) + 14px);padding-bottom:20px}
+.cover{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;min-height:calc(100svh - var(--head) - 40px);grid-template-rows:auto auto 1fr}
+.issue{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);color:var(--ink-2)}
+.issue span{padding:8px 0}
+.issue span + span{padding-left:12px;border-left:1px solid var(--rule)}
+.issue b{color:var(--ink);font-weight:500}
+.mast{grid-column:1 / -1;font-family:var(--serif);font-size:clamp(68px,15.4vw,236px);line-height:.84;letter-spacing:-.045em;font-weight:300;font-variation-settings:'opsz' 72;margin:26px 0 0 -.04em;white-space:nowrap}
+.mast .ch{display:inline-block}
+.cover-left{grid-column:1 / span 4;display:flex;flex-direction:column;gap:22px;padding-top:22px;min-width:0}
+.cover-deck{font-family:var(--serif);font-size:clamp(20px,1.7vw,26px);line-height:1.22;font-weight:350;letter-spacing:-.01em}
+.cover-deck em{color:var(--spot)}
+.lines{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.lines li{border-bottom:1px solid var(--rule)}
+.lines button{width:100%;display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:baseline;text-align:left;padding:9px 0;transition:padding .35s var(--ease)}
+.lines button:hover{padding-left:8px}
+.lines .pg{font-family:var(--mono);font-size:11px;color:var(--spot)}
+.lines .tt{font-family:var(--serif);font-size:19px;line-height:1.15;letter-spacing:-.01em}
+.lines .ct{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.cover-fig{grid-column:6 / -1;position:relative;min-height:420px;margin:22px 0 0}
+.cover-fig figcaption{position:absolute;right:0;bottom:0;max-width:34ch;text-align:right;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.35}
+.cover-fig figcaption b{font-family:var(--mono);font-style:normal;font-weight:500;font-size:10.5px;letter-spacing:.06em;color:var(--ink);text-transform:uppercase}
+.cover-fig .tag{position:absolute;left:0;top:0;color:var(--ink-2)}
+@media (max-width:900px){
+  .issue{grid-template-columns:1fr 1fr}.issue span:nth-child(3){padding-left:0;border-left:0}
+  .issue span:nth-child(n+3){border-top:1px solid var(--rule)}
+  .cover-left{grid-column:1 / -1;order:3}.cover-fig{grid-column:1 / -1;min-height:50svh;order:2}
+  .mast{white-space:normal}
+}
+
+/* spreads */
+#theatre{position:relative;height:calc(5 * 140svh)}
+.spread{position:sticky;top:0;height:100svh;padding-top:calc(var(--head) + var(--hx) + env(safe-area-inset-top,0px) + 18px);padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column}
+.spread > .inner{flex:1;width:100%;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-rows:minmax(0,1fr) auto;gap:14px clamp(20px,3vw,48px);min-height:0}
+.arts{position:relative;min-height:0;border-top:2px solid var(--ink)}
+.art{position:absolute;inset:0;display:flex;flex-direction:column;gap:clamp(10px,1.6vh,20px);padding-top:12px;visibility:hidden}
+.art.on{visibility:visible}
+.kick{display:flex;justify-content:space-between;gap:12px;color:var(--ink-2)}
+.kick b{color:var(--spot);font-weight:500}
+.art h2{font-family:var(--serif);font-weight:330;font-variation-settings:'opsz' 72;font-size:clamp(38px,4.3vw,76px);line-height:.98;letter-spacing:-.03em;margin-top:6px}
+.art .deck{font-family:var(--serif);font-style:italic;font-weight:350;font-size:clamp(19px,1.55vw,24px);line-height:1.25;color:var(--ink-2);max-width:32ch}
+.art .body{display:grid;grid-template-columns:96px 1fr;gap:14px;border-top:1px solid var(--rule);padding-top:12px;font-size:15px;max-width:52ch}
+.art .body .mono{color:var(--ink-2);padding-top:3px}
+.art .spec{margin:6px 0 0;display:grid;grid-template-columns:96px 1fr;font-size:14px;border-top:1px solid var(--ink)}
+.art .spec dt,.art .spec dd{margin:0;padding:7px 0;border-bottom:1px solid var(--rule)}
+.art .spec dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:9px}
+.art .more{align-self:flex-start;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--spot);padding-bottom:2px}
+.art .more:hover{color:var(--spot)}
+.stamp{display:inline-block;background:var(--spot);color:var(--on-spot);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px}
+.plate{position:relative;min-height:0;border:1px solid var(--rule);margin:0}
+.plate .cm{position:absolute;width:14px;height:14px;border:0 solid var(--ink);z-index:3}
+.plate .cm:nth-child(1){left:-1px;top:-1px;border-left-width:2px;border-top-width:2px}
+.plate .cm:nth-child(2){right:-1px;top:-1px;border-right-width:2px;border-top-width:2px}
+.plate .cm:nth-child(3){left:-1px;bottom:-1px;border-left-width:2px;border-bottom-width:2px}
+.plate .cm:nth-child(4){right:-1px;bottom:-1px;border-right-width:2px;border-bottom-width:2px}
+.ptop{position:absolute;left:14px;right:14px;top:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:3}
+.figno{font-family:var(--serif);font-size:clamp(34px,3vw,52px);line-height:.8;font-weight:300;letter-spacing:-.03em}
+.figno small{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-2);margin-left:8px;vertical-align:top}
+.modes{display:flex;border:1px solid var(--rule);background:var(--paper)}
+.modes button{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px}
+.modes button + button{border-left:1px solid var(--rule)}
+.modes button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.pcap{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;z-index:3}
+.pcap p{font-family:var(--serif);font-style:italic;font-size:15px;line-height:1.35;color:var(--ink-2);max-width:46ch}
+.pcap p b{font-family:var(--mono);font-style:normal;font-weight:500;font-size:10.5px;letter-spacing:.06em;color:var(--ink);text-transform:uppercase}
+.pcap p span.num{font-family:var(--mono);font-style:normal;font-size:12px;color:var(--ink);font-variant-numeric:tabular-nums}
+.scale{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.scale i{display:block;width:120px;height:8px;border:1px solid var(--ink);border-top:0;background:linear-gradient(90deg,var(--ink) 0 25%,transparent 25% 50%,var(--ink) 50% 75%,transparent 75%);background-size:100% 3px;background-repeat:no-repeat;background-position:bottom;transform-origin:right;transform:scaleX(0)}
+.strip{grid-column:1 / -1;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--ink)}
+.strip button{position:relative;text-align:left;padding:8px 10px 0 0;display:flex;gap:8px;align-items:baseline;min-width:0;color:var(--ink-2);transition:color .3s}
+.strip button .p{font-family:var(--mono);font-size:10.5px}
+.strip button .n{font-family:var(--serif);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strip button.on{color:var(--ink)}
+.strip button.on .p{color:var(--spot)}
+.strip button::before{content:"";position:absolute;left:0;right:10px;top:-1px;height:2px;background:var(--spot);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.strip button.on::before{transform:scaleX(1)}
+@media (max-width:900px){
+  .spread > .inner{grid-template-columns:1fr;grid-template-rows:40svh minmax(0,1fr) auto;gap:10px}
+  .plate{grid-row:1}.arts{grid-row:2}
+  .art .body,.art .kick span:last-child{display:none}
+  .art h2{font-size:clamp(30px,8vw,44px)}
+  .art .deck{font-size:17px}
+  .pcap p{font-size:13px}.scale{display:none}
+  .strip button .n{display:none}
+}
+
+/* paper sections */
+.paper{position:relative;z-index:3;background:var(--paper)}
+.sec{padding-block:clamp(80px,10vw,160px)}
+.shead{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:40px}
+.shead .k{grid-column:1 / span 3;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+.shead .k b{color:var(--spot);font-weight:500}
+.shead h2,.shead h1{grid-column:4 / span 9;font-family:var(--serif);font-weight:300;font-variation-settings:'opsz' 72;font-size:clamp(46px,7.4vw,124px);line-height:.88;letter-spacing:-.04em}
+.shead .sm{font-size:clamp(28px,2.6vw,40px);line-height:1.1;letter-spacing:-.02em}
+@media (max-width:860px){.shead .k,.shead h2,.shead h1{grid-column:1 / -1}}
+
+/* ticker */
+.ticker{border-block:1px solid var(--rule);overflow:hidden;padding-block:14px}
+.trow{display:flex;width:max-content;will-change:transform}
+.trow span{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(30px,4.4vw,64px);padding-inline:.4em;white-space:nowrap;display:flex;align-items:center;gap:.4em;letter-spacing:-.02em}
+.trow span::after{content:"";width:.5em;height:1px;background:var(--spot)}
+
+/* works index */
+.vpage{position:relative;z-index:3;background:var(--paper);padding-top:calc(var(--head) + var(--hx) + env(safe-area-inset-top,0px) + clamp(40px,7vw,100px));min-height:100svh}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:-12px 0 28px}
+.filters button{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border:1px solid var(--rule);display:inline-flex;gap:8px;align-items:baseline;transition:background .25s,color .25s,border-color .25s}
+.filters button sup{font-size:9px;color:var(--spot)}
+.filters button:hover{border-color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters button[aria-pressed="true"] sup{color:var(--paper);opacity:.7}
+.wcount{margin-left:auto;align-self:center;color:var(--ink-2)}
+.toc{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.toc li{border-bottom:1px solid var(--rule);overflow:hidden}
+.toc li.off{display:none}
+.toc a{display:grid;grid-template-columns:70px auto 1fr auto 56px 26px;gap:16px;align-items:baseline;text-decoration:none;padding:18px 0;position:relative;isolation:isolate}
+.toc a::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease);z-index:-1}
+.toc a:hover{color:var(--paper)}
+.toc a:hover::before{transform:scaleY(1)}
+.toc .pg{font-family:var(--serif);font-style:italic;font-size:clamp(24px,2.2vw,34px);color:var(--spot);padding-left:8px;font-weight:300}
+.toc .t{font-family:var(--serif);font-size:clamp(24px,3vw,46px);line-height:1.04;letter-spacing:-.02em;font-weight:350;transition:transform .45s var(--ease)}
+.toc .t small{display:block;font-family:var(--sans);font-size:14px;letter-spacing:0;color:var(--ink-2);margin-top:4px;font-weight:400}
+.toc a:hover .t small{color:inherit;opacity:.7}
+.toc a:hover .t{transform:translateX(10px)}
+.toc .lead{border-bottom:1px dotted currentColor;opacity:.35;align-self:end;margin-bottom:.5em}
+.toc .ct{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.7;white-space:nowrap}
+.toc .yr{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;opacity:.7;text-align:right}
+.toc .go{justify-self:end;padding-right:8px}
+@media (max-width:860px){.toc a{grid-template-columns:44px 1fr 20px}.toc .lead,.toc .ct,.toc .yr{display:none}.wcount{margin-left:0;width:100%}}
+.peek{position:fixed;left:0;top:0;width:300px;aspect-ratio:3/2;z-index:40;pointer-events:none;background:var(--sheet);border:1px solid var(--ink);opacity:0;transform:scale(.85);transition:opacity .25s,transform .35s var(--ease);overflow:hidden}
+.peek.on{opacity:1;transform:scale(1)}
+.peek img{width:100%;height:100%;object-fit:cover}
+.peek svg{width:100%;height:100%}
+.peek svg *{vector-effect:non-scaling-stroke;fill:none;stroke:var(--ink);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.peek svg .acc{stroke:var(--spot);stroke-width:2}
+.peek svg .dash{stroke-dasharray:3 4;stroke:var(--ink-2)}
+.peek .cap{position:absolute;left:0;right:0;bottom:0;padding:5px 8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--sheet);border-top:1px solid var(--ink)}
+
+/* project feature */
+.ph .shead h1{font-size:clamp(46px,7vw,118px)}
+.pintro{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-bottom:clamp(40px,6vw,80px)}
+.pintro .deck{grid-column:1 / span 6;font-family:var(--serif);font-style:italic;font-weight:330;font-size:clamp(24px,2.4vw,36px);line-height:1.2;letter-spacing:-.015em}
+.pintro .deck em{font-style:normal;color:var(--spot)}
+.pintro .spec2{grid-column:8 / span 5}
+.role{background:color-mix(in srgb,var(--spot) 10%,transparent);padding:12px 12px!important;border-left:2px solid var(--spot)}
+@media (max-width:900px){.pintro .deck,.pintro .spec2{grid-column:1 / -1}}
+.pplate{height:min(80svh,760px);margin:0 0 clamp(40px,6vw,80px)}
+.pplate canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
+.pplate canvas:active{cursor:grabbing}
+.legend{position:absolute;left:14px;top:64px;z-index:3;list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:lg}
+.legend li{counter-increment:lg;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase}
+.legend li::before{content:counter(lg,decimal-leading-zero);display:grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink);font-size:9.5px;background:var(--paper);flex:none}
+.legend li span{background:color-mix(in srgb,var(--paper) 80%,transparent);padding:1px 3px}
+.xbar{display:flex;align-items:center;gap:10px;min-width:min(320px,50%)}
+.xbar label{white-space:nowrap}
+.xbar input{flex:1;accent-color:var(--spot);min-width:80px}
+.xbar output{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;width:4ch;text-align:right}
+@media (max-width:700px){.legend{display:none}.pplate{height:68svh}.pplate .pcap{flex-direction:column;align-items:stretch}.xbar{min-width:0}}
+.pherofig{margin:0 0 clamp(40px,6vw,80px)}
+.pherofig img{width:100%;max-height:82svh;object-fit:contain;background:var(--sheet);border:1px solid var(--rule);cursor:zoom-in}
+.pherofig figcaption,.figs figcaption{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.35}
+.pherofig figcaption b,.figs figcaption b{font-family:var(--mono);font-style:normal;font-weight:500;font-size:10.5px;letter-spacing:.06em;color:var(--ink);text-transform:uppercase;margin-right:6px}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);margin-bottom:clamp(40px,6vw,80px)}
+.pstats div{padding:16px 20px 16px 0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pstats div + div{padding-left:20px;border-left:1px solid var(--rule)}
+.pstats b{font-family:var(--serif);font-weight:300;font-size:clamp(40px,4.6vw,76px);line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.pstats span{color:var(--ink-2);font-size:14.5px;max-width:30ch}
+@media (max-width:760px){.pstats{grid-template-columns:1fr}.pstats div + div{padding-left:0;border-left:0;border-top:1px solid var(--rule)}}
+.psec{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;border-top:1px solid var(--ink);padding:24px 0 clamp(40px,5vw,72px)}
+.psec .ph2{grid-column:1 / span 3;display:flex;flex-direction:column;gap:6px;align-self:start;position:sticky;top:calc(var(--head) + var(--hx) + 24px)}
+.psec .ph2 .mono{color:var(--spot)}
+.psec .ph2 h2{font-family:var(--serif);font-weight:330;font-size:clamp(28px,2.6vw,40px);line-height:1;letter-spacing:-.025em}
+.psec .pb{grid-column:4 / span 9;min-width:0;display:flex;flex-direction:column;gap:18px}
+.psec .pb p{font-size:17px;max-width:64ch}
+.psec .pb ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;max-width:64ch;border-top:1px solid var(--rule)}
+.psec .pb li{padding:7px 0 7px 22px;border-bottom:1px solid var(--rule);position:relative;font-size:15.5px}
+.psec .pb li::before{content:"";position:absolute;left:2px;top:15px;width:8px;height:8px;border:1px solid var(--spot);border-radius:50%}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:20px;margin-top:6px}
+.figs figure{margin:0;min-width:0}
+.figs img{width:100%;height:auto;background:var(--sheet);border:1px solid var(--rule);cursor:zoom-in}
+@media (max-width:860px){.psec .ph2,.psec .pb{grid-column:1 / -1}.psec .ph2{position:static}}
+.pnext{display:block;text-decoration:none;border-top:2px solid var(--ink);padding:24px 0 40px;margin-top:clamp(20px,4vw,60px)}
+.pnext .mono{color:var(--ink-2)}
+.pnext .t{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(44px,7vw,120px);line-height:.9;letter-spacing:-.04em;margin-top:10px;transition:color .3s,transform .5s var(--ease)}
+.pnext:hover .t{color:var(--spot);transform:translateX(12px)}
+.pback{display:inline-block;margin-bottom:22px;text-decoration:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.pback:hover{color:var(--spot)}
+.soon{border:1px dashed var(--rule);padding:16px;color:var(--ink-2);font-family:var(--serif);font-style:italic;font-size:17px}
+
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:93;background:color-mix(in srgb,var(--paper) 96%,transparent);display:grid;place-items:center;padding:calc(20px + env(safe-area-inset-top,0px)) var(--gr) calc(20px + env(safe-area-inset-bottom,0px)) var(--gl)}
+#lb figure{margin:0;display:flex;flex-direction:column;gap:10px;max-width:min(1400px,100%)}
+#lb img{max-height:80svh;width:auto;max-width:100%;object-fit:contain;border:1px solid var(--rule);background:var(--sheet)}
+#lb figcaption{font-family:var(--serif);font-style:italic;color:var(--ink-2)}
+#lb button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:calc(var(--gr) + 4px);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--ink);padding:8px 12px;background:var(--paper)}
+
+/* profile */
+.prof{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.prof .text{grid-column:1 / span 7;min-width:0}
+.prof .lede{font-family:var(--serif);font-weight:330;font-size:clamp(26px,2.6vw,40px);line-height:1.15;letter-spacing:-.02em;margin-bottom:32px}
+.prof .lede em{color:var(--spot)}
+.prof .cols{columns:2 280px;column-gap:32px;font-size:16px}
+.prof .cols p + p{margin-top:1em}
+.prof .cols p:first-child::first-letter{font-family:var(--serif);float:left;font-size:4.6em;line-height:.82;padding:4px 10px 0 0;font-weight:300;color:var(--spot)}
+.prof aside{grid-column:9 / span 4;min-width:0}
+.spec2{margin:0;display:grid;grid-template-columns:110px 1fr;border-top:2px solid var(--ink);font-size:14.5px}
+.spec2 dt,.spec2 dd{margin:0;padding:12px 0;border-bottom:1px solid var(--rule)}
+.spec2 dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:14px}
+.spec2 dd{min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:4px 10px;font-family:var(--serif);font-style:italic;font-size:16px}
+.lang{display:grid;gap:8px}
+.lang div{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em}
+.lang i{height:5px;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 6px);transform-origin:left}
+.lang i.p{-webkit-mask:linear-gradient(90deg,#000 75%,transparent 75%);mask:linear-gradient(90deg,#000 75%,transparent 75%)}
+@media (max-width:900px){.prof .text,.prof aside{grid-column:1 / -1}}
+
+/* appendix (removed from home) */
+
+.apx{display:grid;grid-template-columns:repeat(12,1fr);gap:40px 24px}
+.fig{grid-column:span 4;display:flex;flex-direction:column;gap:10px;min-width:0;margin:0}
+.fig.w5{grid-column:span 5}.fig.w3{grid-column:span 3}
+.fig .box{position:relative;height:260px;background:var(--sheet);border:1px solid var(--rule);display:grid;place-items:center;overflow:hidden}
+.fig .box::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:24px 24px;opacity:.5}
+.fig .box > *{position:relative}
+.fig .fhead{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--ink);padding-top:8px}
+.fig .fhead b{font-weight:500;color:var(--spot)}
+.fig h3{font-family:var(--serif);font-size:clamp(24px,2vw,30px);font-weight:350;letter-spacing:-.02em;line-height:1.05}
+.fig p{font-family:var(--serif);font-style:italic;color:var(--ink-2);font-size:16px;line-height:1.35;max-width:40ch}
+.fig .ro{position:absolute;left:10px;bottom:8px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+@media (max-width:1000px){.fig,.fig.w5,.fig.w3{grid-column:span 6}}
+@media (max-width:640px){.fig,.fig.w5,.fig.w3{grid-column:1 / -1}}
+.cube-wrap{perspective:700px;width:130px;height:130px}
+.cube{width:100%;height:100%;position:relative;transform-style:preserve-3d}
+.cube div{position:absolute;inset:0;border:1.3px solid var(--ink);background:color-mix(in srgb,var(--sheet) 85%,transparent)}
+.cube div::after{content:"";position:absolute;inset:26%;border:1px dashed var(--ink-2);border-radius:50%}
+.cube .f1{transform:translateZ(65px)}.cube .f2{transform:rotateY(180deg) translateZ(65px)}.cube .f3{transform:rotateY(90deg) translateZ(65px)}
+.cube .f4{transform:rotateY(-90deg) translateZ(65px)}.cube .f5{transform:rotateX(90deg) translateZ(65px);background:var(--spot)}.cube .f6{transform:rotateX(-90deg) translateZ(65px)}
+.rbox{display:flex;align-items:center;gap:26px}
+.sphere{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at var(--lx,35%) var(--ly,30%),#fff 0%,var(--spot) 24%,color-mix(in srgb,var(--spot) 30%,var(--ink)) 62%,var(--ink) 100%)}
+.knob{width:70px;height:70px;border-radius:50%;background:var(--paper);border:1px solid var(--ink);position:relative;cursor:grab;touch-action:none}
+.knob::before{content:"";position:absolute;inset:-9px;border-radius:50%;background:repeating-conic-gradient(var(--ink) 0 1deg,transparent 1deg 15deg);-webkit-mask:radial-gradient(circle,transparent 41px,#000 42px);mask:radial-gradient(circle,transparent 41px,#000 42px)}
+.knob::after{content:"";position:absolute;left:50%;top:6px;width:2px;height:16px;margin-left:-1px;background:var(--spot)}
+.kwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.layers{width:160px;display:flex;flex-direction:column-reverse;gap:2px}
+.layers i{display:block;height:5px;background:var(--ink);transform-origin:left;transform:scaleX(0)}
+.layers i:nth-child(4n){background:var(--spot)}
+.phones{display:flex;gap:10px;position:relative}
+.phone{width:58px;height:116px;border:1.3px solid var(--ink);border-radius:11px;padding:8px 6px;display:flex;flex-direction:column;gap:5px;background:var(--paper)}
+.phone i{display:block;height:5px;background:var(--rule)}.phone i.a{background:var(--spot);height:18px}.phone i.s{width:60%}
+.tap{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--spot)}
+.code{width:calc(100% - 28px);font-family:var(--mono);font-size:12px;line-height:1.6;background:var(--paper);border:1px solid var(--rule);padding:12px;white-space:pre;overflow:hidden;height:200px}
+.code .k{color:var(--spot)}.code .c{color:var(--ink-2)}
+.caret{display:inline-block;width:7px;height:13px;background:var(--spot);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.arm{width:92%;max-width:300px;height:auto;overflow:visible}
+.arm .lk{stroke:var(--ink);stroke-width:9;stroke-linecap:round;fill:none}.arm .lk2{stroke:var(--sheet);stroke-width:3;stroke-linecap:round;fill:none}
+.arm .jt{fill:var(--sheet);stroke:var(--spot);stroke-width:2.2}.arm .bs{fill:var(--ink)}
+.arm .tg{fill:none;stroke:var(--spot);stroke-width:1.2;stroke-dasharray:3 3}.arm .gr{stroke:var(--spot);stroke-width:3;stroke-linecap:round;fill:none}
+
+/* procedure */
+.proc{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.proc .intro{grid-column:1 / span 4;position:sticky;top:calc(var(--head) + 40px);align-self:start;font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.3;color:var(--ink-2)}
+.steps{grid-column:6 / span 7;list-style:none;margin:0;padding:0 0 0 40px;position:relative;min-width:0}
+.rail{position:absolute;left:8px;top:14px;bottom:20px;width:1px;background:var(--rule)}
+.rail i{position:absolute;inset:0;background:var(--spot);transform-origin:top}
+.steps li{position:relative;padding-bottom:clamp(36px,5vw,64px)}
+.steps li::before{content:"";position:absolute;left:-37px;top:12px;width:11px;height:11px;border-radius:50%;border:1px solid var(--ink);background:var(--paper)}
+.steps .n{font-family:var(--serif);font-style:italic;color:var(--spot);font-size:20px}
+.steps h3{font-family:var(--serif);font-weight:330;font-size:clamp(32px,3.2vw,52px);letter-spacing:-.03em;line-height:1;margin:2px 0 10px}
+.steps p{color:var(--ink-2);max-width:46ch}
+@media (max-width:860px){.proc .intro,.steps{grid-column:1 / -1}.proc .intro{position:static}}
+
+/* colophon / contact */
+.big{font-family:var(--serif);font-weight:300;font-variation-settings:'opsz' 72;font-size:clamp(76px,17vw,270px);line-height:.82;letter-spacing:-.05em;margin-left:-.04em}
+.big .ch,.big em{display:inline-block}
+.big em{color:var(--spot)}
+.colo{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:44px;border-top:2px solid var(--ink);padding-top:20px}
+.colo .say{grid-column:1 / span 5;font-family:var(--serif);font-size:clamp(20px,1.7vw,26px);line-height:1.25;font-weight:350}
+.colo .mail{grid-column:7 / span 6;display:flex;flex-direction:column;gap:14px;min-width:0}
+.addr{font-family:var(--serif);font-style:italic;font-size:clamp(24px,2.6vw,40px);letter-spacing:-.02em;user-select:all;word-break:break-all;line-height:1.1}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border:1px solid var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn:hover{background:var(--spot);color:var(--on-spot);border-color:var(--spot)}
+.colophon{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px;border-top:1px solid var(--rule);padding-top:16px}
+.colophon div{display:flex;flex-direction:column;gap:4px;font-size:14px;min-width:0}
+.colophon .mono{color:var(--ink-2)}
+@media (max-width:860px){.colo .say,.colo .mail{grid-column:1 / -1}.colophon{grid-template-columns:1fr 1fr}}
+footer{position:relative;z-index:3;background:var(--paper);border-top:1px solid var(--rule);padding-block:16px calc(16px + env(safe-area-inset-bottom,0px))}
+footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;color:var(--ink-2)}
+footer b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* crosshair cursor */
+.xh{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;pointer-events:none;z-index:96;display:none}
+.xh::before,.xh::after{content:"";position:absolute;background:var(--ink)}
+.xh::before{left:50%;top:0;bottom:0;width:1px}
+.xh::after{top:50%;left:0;right:0;height:1px}
+.xh i{position:absolute;inset:6px;border:1px solid var(--spot);border-radius:50%;transition:inset .3s var(--ease),background .3s}
+.xh.big i{inset:-14px;background:color-mix(in srgb,var(--spot) 18%,transparent)}
+.xh span{position:absolute;left:20px;top:16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (pointer:fine){.xh{display:block}}
+@media (prefers-reduced-motion: reduce){#intro{display:none}.xh{display:none!important}}
+
+/* ===== Grotesk variant: neutral sans, flat paper ===== */
+body::after{display:none}
+em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figcaption,.fig p,.proc .intro,.chips,.art .deck,.pintro .deck,.addr,.trow span,.toc .pg,.steps .n,.soon{font-style:normal}
+.mast,.big,.shead h1,.shead h2,.art h2,.pnext .t,#wipe .t,.pstats b,.figno{font-weight:640;letter-spacing:-.05em;font-variation-settings:normal}
+.mast{letter-spacing:-.06em;line-height:.86}
+.big{letter-spacing:-.065em}
+.shead .sm{font-weight:520;letter-spacing:-.03em}
+.mast em,.art h2 em,.shead h1 em,.shead h2 em{color:var(--ink-2)}
+.toc .t,.psec .ph2 h2,.steps h3,.fig h3,.lines .tt,.strip button .n,.runhead .who{font-weight:540;letter-spacing:-.025em}
+.cover-deck,.prof .lede,.art .deck,.pintro .deck,.colo .say,.addr{font-weight:420;letter-spacing:-.02em}
+.cover-deck em,.prof .lede em,.pintro .deck em{color:var(--spot)}
+.art .deck,.pintro .deck{color:var(--ink-2)}
+.toc .pg,.steps .n{font-weight:500;letter-spacing:-.02em}
+.trow span{font-weight:300;letter-spacing:-.03em}
+.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,.fig p,.proc .intro,.chips{font-weight:400;letter-spacing:-.005em}
+.prof .cols p:first-child::first-letter{font-weight:640;letter-spacing:-.04em}
+.runhead .who em{font-weight:400}
+
+/* scroll cue */
+.scue{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:45;display:flex;align-items:center;gap:10px;padding:7px 12px;background:color-mix(in srgb,var(--paper) 88%,transparent);border:1px solid var(--rule);backdrop-filter:blur(8px);pointer-events:none;transition:opacity .4s,transform .4s var(--ease)}
+.scue .mono{color:var(--ink-2);white-space:nowrap}
+.scue i{position:relative;display:block;width:1px;height:22px;background:var(--rule);overflow:hidden}
+.scue b{position:absolute;left:-1px;top:-8px;width:3px;height:8px;background:var(--spot);animation:scue 1.6s var(--ease) infinite}
+@keyframes scue{to{top:22px}}
+.scue.off{opacity:0;transform:translate(-50%,10px)}
+.spread{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))!important}
+@media (prefers-reduced-motion: reduce){.scue b{animation:none;top:7px}}
+
+/* ===== Minimal pass ===== */
+.plate{border:0}.plate .cm{display:none}
+#plate .ptop{left:28px;right:28px;top:24px}#plate .pcap{left:28px;right:28px;bottom:22px}
+.pframe{position:absolute;inset:0;pointer-events:none;z-index:2}
+.pframe i{position:absolute;background:var(--rule);display:block}
+.pframe .b{left:0;right:0;bottom:0;height:1px;transform:scaleX(0)}
+.pframe .l,.pframe .r{top:0;bottom:0;width:1px;transform:scaleY(0);transform-origin:bottom}
+.pframe .l{left:0}.pframe .r{right:0}
+.pframe .tl,.pframe .tr{top:0;height:1px;width:50%;transform:scaleX(0)}
+.pframe .tl{left:0;transform-origin:left}.pframe .tr{right:0;transform-origin:right}
+.xh{display:none!important}
+.folio,.shead .k b,.kick span:last-child{display:none}
+#intro{display:none}
+.runhead{border-bottom-color:transparent}
+.shead{border-bottom:0;padding-bottom:0}
+.arts{border-top:0}
+.art .body{border-top:0;padding-top:0}
+.art .spec{border-top:1px solid var(--rule)}
+.strip{border-top:0}
+.lines{border-top:0}
+.toc{border-top:1px solid var(--rule)}
+.spec2{border-top:1px solid var(--rule)}
+.pstats{border-top:2px solid var(--ink)}
+.pstats div + div{border-left-color:transparent}
+.psec{border-top:1px solid var(--rule)}
+.pnext{border-top:1px solid var(--rule)}
+.colo{border-top:0;padding-top:0}
+.ticker{border-block-color:transparent}
+.kick b,.lines .pg,.toc .pg,.steps .n,.psec .ph2 .mono,.strip button.on .p,.filters button sup{color:var(--ink-2)}
+.cover-deck em,.prof .lede em,.pintro .deck em,.big em{color:inherit}
+.prof .cols p:first-child::first-letter{color:inherit}
+.steps li::before{border-color:var(--ink-2)}
+.rail i{background:var(--spot)}
+.steps li::before{transition:background .35s,border-color .35s}.steps .n{transition:color .35s}
+.steps li.on::before{background:var(--spot);border-color:var(--spot)}.steps li.on .n{color:var(--spot)}
+.psec .pb li::before{border-color:var(--ink-2)}
+.stamp{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.progress{background:var(--ink)}
+.trow span::after{background:var(--rule)}
+.art .more{border-bottom-color:var(--ink)}
+.art .more:hover{border-bottom-color:var(--spot)}
+.scue b{background:var(--ink)}
+.lines button:hover .pg,.toc a:hover .pg{color:var(--spot)}
+.pcap p b{color:var(--ink-2)}
+.modes{border:0;background:none;gap:14px}
+.modes button{padding:2px 0;font-size:9.5px;color:var(--ink-2);background:none!important;border:0!important;position:relative}
+.modes button[aria-pressed="true"]{color:var(--ink)}
+.modes button[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:var(--spot)}
+.modes button:hover{color:var(--ink)}
+/* ===== Mobile pass (desktop untouched) ===== */
+@media (max-width:900px){
+  .mast{font-size:clamp(68px,22vw,150px)}
+  .mast .prox{display:block;white-space:nowrap}
+  .cover-left{position:relative;z-index:2}
+  .spread{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))!important}
+  .art .spec{display:none}
+  .art .more{margin-top:10px;display:inline-block}
+  #plate .ptop{left:14px;right:14px;top:12px}#plate .pcap{left:14px;right:14px;bottom:10px}
+  .pplate .ptop{left:14px;right:14px;top:12px}.pplate .figno small{display:none}
+  .modes{gap:12px}.modes button{white-space:nowrap}
+  .cover-fig figcaption{display:none}
+}
+</style>
+
+<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div class="bar mono"><span>Printing · <b id="count">000</b></span><span>Vol. 01 · 12 works</span></div></div>
+<div id="wipe" aria-hidden="true"><span class="mono" id="wipeK">Turning page</span><span class="t" id="wipeT">Works</span></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<svg id="leaders" aria-hidden="true"></svg>
+<div id="labels" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="scue" id="scue" aria-hidden="true"><span class="mono" id="scueT">Scroll</span><i><b></b></i></div>
+<div class="xh" aria-hidden="true"><i></i><span id="xhr">X 0000 · Y 0000</span></div>
+<div class="peek" id="peek" aria-hidden="true"></div>
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer"><button id="lbClose">Close · Esc</button><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
+
+<header class="runhead"><div class="inner">
+  <a href="#home" class="who">Mikel Arnao <em>· Product Design Engineer</em></a>
+  <nav aria-label="Sections">
+    <a href="#works" data-nav="works">Works</a><a href="#about" data-nav="about">About</a>
+  </nav>
+  <div class="right"><span class="folio">p. <b id="folio">01</b> / 21</span><button class="theme" id="themeBtn">Theme · Auto</button></div>
+</div>
+<nav class="mnav inner" aria-label="Sections (mobile)"><a href="#works" data-nav="works">Works</a><a href="#about" data-nav="about">About</a></nav>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div class="view" id="v-home">
+<section id="cover" class="wrap" data-folio="01">
+  <div class="inner cover">
+    
+    <h1 class="mast" aria-label="Mikel Arnao"><span class="ln"><span class="prox">Mikel</span> <em class="prox">Arnao</em></span></h1>
+    <div class="cover-left">
+      <p class="cover-deck">Industrial design and product development engineer. Objects that can be manufactured, interfaces that get used and the code that ties them together, <em>from idea to part.</em></p>
+      <ul class="lines">
+        <li><button data-go="0"><span class="pg">01</span><span class="tt">SEAT Ateca side mirror</span><span class="ct">Automotive</span></button></li>
+        <li><button data-go="1"><span class="pg">02</span><span class="tt">Ardura, self-sufficient smart pot</span><span class="ct">Product</span></button></li>
+        <li><button data-go="2"><span class="pg">03</span><span class="tt">Cycle Dry, Orbea rear rack</span><span class="ct">Cycling</span></button></li>
+        <li><button data-go="3"><span class="pg">04</span><span class="tt">Self-sufficient house in Gudamendi</span><span class="ct">Sustainability</span></button></li>
+        <li><button data-go="4"><span class="pg">05</span><span class="tt">Mercedes V-Class air vent LCA</span><span class="ct">Eco-design</span></button></li>
+      </ul>
+    </div>
+    <figure class="cover-fig" id="coverFig">
+      <span class="tag mono">On the cover</span>
+      <figcaption><b>Fig. 01</b><br>SEAT Ateca side mirror redesign, assembly view. Scroll to take it apart.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="theatre" aria-label="Selected projects">
+  <div class="spread wrap"><div class="inner">
+    <div class="arts">
+      <article class="art on" data-p="02">
+        <div class="kick mono"><span><b>Project 01</b> · Automotive</span><span>p. 02</span></div>
+        <h2><span class="ln"><span>SEAT Ateca</span></span><span class="ln"><span><em>side mirror</em></span></span></h2>
+        <p class="deck">A mirror that folds itself before it hits something, and keeps the driver seeing when it does.</p>
+        <div class="body"><span class="mono">Approach</span><p>Ultrasonic folding, camera view on the central screen, blind-spot radar and a dynamic LED indicator, validated against ECE R46 and in SolidWorks Simulation.</p></div>
+        <dl class="spec"><dt>My role</dt><dd>Regulatory analysis, circuit redesign, material specs, renders</dd><dt>Year</dt><dd>2025</dd></dl>
+        <a class="more" href="#seat-ateca">Open case study ↗</a>
+      </article>
+      <article class="art" data-p="03">
+        <div class="kick mono"><span><b>Project 02</b> · Product · IoT</span><span>p. 03</span></div>
+        <h2><span class="ln"><span>Ardura</span></span><span class="ln"><span><em>self-sufficient pot</em></span></span></h2>
+        <p class="deck">A plant pot that waters itself on indoor light, so the plant survives the holidays.</p>
+        <div class="body"><span class="mono">Approach</span><p>Organic photovoltaic film, a positive-displacement pump dosing 250 ml, a lift-out rPET tank and a recycled PP body with no glue or paint.</p></div>
+        <dl class="spec"><dt>My role</dt><dd>Led the development phase and CAD, renders</dd><dt>Distinction</dt><dd><span class="stamp">iF recognition</span></dd></dl>
+        <a class="more" href="#ardura">Open case study ↗</a>
+      </article>
+      <article class="art" data-p="04">
+        <div class="kick mono"><span><b>Project 03</b> · Cycling</span><span>p. 04</span></div>
+        <h2><span class="ln"><span>Cycle Dry</span></span><span class="ln"><span><em>Orbea rear rack</em></span></span></h2>
+        <p class="deck">A simpler, cheaper bikepacking rack with a hanger to dry clothes on the move.</p>
+        <div class="body"><span class="mono">Approach</span><p>Material teardown of the original rack, a single bent aluminium frame and a hanger that lifts 90° and turns 180° out of the wind.</p></div>
+        <dl class="spec"><dt>My role</dt><dd>Market and use analysis, ideation, specs, manufacturing</dd><dt>Year</dt><dd>2025</dd></dl>
+        <a class="more" href="#cycle-dry">Open case study ↗</a>
+      </article>
+      <article class="art" data-p="05">
+        <div class="kick mono"><span><b>Project 04</b> · Sustainability</span><span>p. 05</span></div>
+        <h2><span class="ln"><span>Self-sufficient house</span></span><span class="ln"><span><em>in Gudamendi</em></span></span></h2>
+        <p class="deck">A home on a windy hill above Donostia that makes its own energy and reuses its rain.</p>
+        <div class="body"><span class="mono">Approach</span><p>Hybrid PV-thermal panels, a small wind turbine, a heat pump, rainwater harvesting and recycled cellulose insulation.</p></div>
+        <dl class="spec"><dt>My role</dt><dd>Renewable energy systems</dd><dt>Distinction</dt><dd><span class="stamp">UPV contest winner</span></dd></dl>
+        <a class="more" href="#gudamendi-house">Open case study ↗</a>
+      </article>
+      <article class="art" data-p="06">
+        <div class="kick mono"><span><b>Project 05</b> · Eco-design · LCA</span><span>p. 06</span></div>
+        <h2><span class="ln"><span>Mercedes V-Class</span></span><span class="ln"><span><em>air vent</em></span></span></h2>
+        <p class="deck">Taking a premium air vent apart to find where its footprint hides, then cutting it.</p>
+        <div class="body"><span class="mono">Approach</span><p>Cradle-to-grave LCA with the IHOBE calculator, hotspot analysis and nine redesign concepts. The final concept cuts the carbon footprint by about 85 %.</p></div>
+        <dl class="spec"><dt>My role</dt><dd>LCA, improvement goals, environmental evaluation</dd><dt>Year</dt><dd>2025</dd></dl>
+        <a class="more" href="#mercedes-vent">Open case study ↗</a>
+      </article>
+    </div>
+    <figure class="plate" id="plate">
+      <span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span>
+      <span class="pframe" id="pframe" aria-hidden="true"><i class="b"></i><i class="l"></i><i class="r"></i><i class="tl"></i><i class="tr"></i></span>
+      <div class="ptop">
+        <span class="figno" id="figno">01<small>/ 05</small></span>
+        <div class="modes" role="group" aria-label="3D model view" data-modes="home"><button data-mode="solid" aria-pressed="true">Solid</button><button data-mode="wire" aria-pressed="false">Wireframe</button><button data-mode="xray" aria-pressed="false">X-ray</button></div>
+      </div>
+      <figcaption class="pcap">
+        <p><b id="capT">Fig. 01</b> <span id="capName">SEAT Ateca side mirror</span> · exploded view <span class="num" id="rEx">000 %</span></p>
+      </figcaption>
+    </figure>
+    <nav class="strip" id="strip" aria-label="Go to project">
+      <button class="on"><span class="p">01</span><span class="n">SEAT Ateca</span></button><button><span class="p">02</span><span class="n">Ardura</span></button><button><span class="p">03</span><span class="n">Cycle Dry</span></button><button><span class="p">04</span><span class="n">Gudamendi</span></button><button><span class="p">05</span><span class="n">Mercedes</span></button>
+    </nav>
+  </div></div>
+</section>
+
+<div class="paper">
+<div class="ticker wrap" aria-label="Tools"><div class="trow" data-dir="1"><span>SolidWorks</span><span>Siemens NX</span><span>Revit</span><span>Blender</span><span>KeyShot</span><span>3ds Max</span><span>Adobe CC</span><span>React</span><span>Next.js</span></div></div>
+
+<section class="sec wrap" id="proceso" data-folio="07">
+  <div class="inner">
+    <div class="shead"><div class="k mono"><b>p. 07</b><span>Procedure</span></div><h2>From sketch <em>to part.</em></h2></div>
+    <div class="proc">
+      <p class="intro">Five phases that repeat in every project, whether it is an injected housing, a robot or an app.</p>
+      <ol class="steps" id="steps">
+        <li><span class="n">Phase 1</span><h3>Research</h3><p>Users, context, regulations and competitors. Understand the problem before drawing anything.</p></li>
+        <li><span class="n">Phase 2</span><h3>Conceptualise</h3><p>Sketches, quick mock-ups and use scenarios. Many cheap ideas to pick a good one.</p></li>
+        <li><span class="n">Phase 3</span><h3>Model and validate</h3><p>CAD, calculation, manufacturability and rendering, to decide with data and with images.</p></li>
+        <li><span class="n">Phase 4</span><h3>Prototype</h3><p>3D printing, electronics and clickable interfaces. Test, break and fix.</p></li>
+        <li><span class="n">Phase 5</span><h3>Implement</h3><p>Drawings and documentation for production, automation or code ready to ship.</p></li>
+        <span class="rail" aria-hidden="true"><i id="railFill"></i></span>
+      </ol>
+    </div>
+  </div>
+</section>
+
+
+</div>
+</div>
+
+<!-- ============ WORKS ============ -->
+<div class="view vpage wrap" id="v-works" hidden>
+  <div class="inner">
+    <div class="shead"><div class="k mono"><b>p. 08</b><span>Works · complete index</span></div><h1>Every work, <em>every terrain.</em></h1></div>
+    <div class="filters" role="group" aria-label="Filter by terrain" id="filters"></div>
+    <ul class="toc" id="toc"></ul>
+  </div>
+  <div style="height:clamp(60px,10vw,140px)"></div>
+</div>
+
+<!-- ============ PROJECT ============ -->
+<div class="view vpage wrap ph" id="v-project" hidden></div>
+
+<!-- ============ ABOUT ============ -->
+<div class="view vpage wrap" id="v-about" hidden>
+  <section class="inner" style="padding-bottom:clamp(80px,10vw,160px)">
+    <div class="shead"><div class="k mono"><b>p. 21</b><span>About · Profile</span></div><h1>Form, engineering <em>and code.</em></h1></div>
+    <div class="prof">
+      <div class="text">
+        <p class="lede" id="lede">Industrial design, engineering, technology and digital experiences in one profile: <em>Product Design Engineering.</em></p>
+        <div class="cols">
+          <p>I am in the fourth year of the Bachelor's Degree in Industrial Design and Product Development Engineering at Mondragon Unibertsitatea, finishing in June 2027. Since September 2025 I have been doing dual training at ULMA Handling Systems in Oñati, in the Studies and Proposals department: I model in Revit and produce KeyShot renders and 3ds Max animations for pre-sales.</p>
+          <p>As a freelancer I design and build websites and applications with React, Next.js and Tailwind CSS. I am interested in artificial intelligence, robotics, automation, IoT, mobility, sustainability and connected products.</p>
+          <p>I am looking for specialised internships, graduate programmes and master's degrees in Product Design, Design Engineering and Integrated Product Design.</p>
+        </div>
+      </div>
+      <aside>
+        <dl class="spec2">
+          <dt>Degree</dt><dd>Bachelor's in Industrial Design and Product Development Engineering · 4th year, until June 2027</dd>
+          <dt>University</dt><dd>Mondragon Unibertsitatea · Faculty of Engineering</dd>
+          <dt>Experience</dt><dd>ULMA Handling Systems · Studies and Proposals · dual training since 2025</dd>
+          <dt>Tools</dt><dd><div class="chips"><span>SolidWorks</span><span>Siemens NX</span><span>Revit</span><span>Blender</span><span>KeyShot</span><span>3ds Max</span><span>Adobe CC</span><span>React</span><span>Next.js</span><span>TypeScript</span><span>Tailwind</span></div></dd>
+          <dt>Interests</dt><dd><div class="chips"><span>AI</span><span>Robotics</span><span>Automation</span><span>IoT</span><span>Mobility</span><span>Sustainability</span><span>Connected products</span></div></dd>
+          <dt>Languages</dt><dd><div class="lang"><div><span>Spanish</span><i></i><span>Native</span></div><div><span>Basque</span><i></i><span>Native</span></div><div><span>English</span><i class="p"></i><span>Professional</span></div></div></dd>
+          <dt>Base</dt><dd>Donostia · Basque Country</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+  <section class="inner" id="contact" style="padding-bottom:clamp(80px,10vw,160px)">
+    <div class="shead"><div class="k mono"><b>p. 21</b><span>Colophon · Contact</span></div><h2 class="sm">Internships, graduate programmes and web or product commissions.</h2></div>
+    <h2 class="big" aria-label="Let's talk"><span class="ln"><span class="prox">Let's talk</span><em>.</em></span></h2>
+    <div class="colo">
+      <p class="say">If you are looking for someone who brings design, engineering and code into the same project, write to me.</p>
+      <div class="mail">
+        <span class="addr" id="addr">arnaoazpiazu@gmail.com</span>
+        <div class="btns">
+          <button class="btn solid" id="copyBtn">Copy email</button>
+          <a class="btn" href="https://www.linkedin.com/in/mikelarnao" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a class="btn" href="https://github.com/Tovic-dev" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="https://mikelarnao.com" target="_blank" rel="noopener">mikelarnao.com ↗</a>
+        </div>
+      </div>
+      <div class="colophon">
+        <div><span class="mono">Typefaces</span><span>SF Pro / Inter Tight, Inter and IBM Plex Mono</span></div>
+        <div><span class="mono">Spot ink</span><span>Safety orange</span></div>
+        <div><span class="mono">Built with</span><span>Three.js, GSAP and Lenis</span></div>
+        <div><span class="mono">Models</span><span>SolidWorks CAD (SEAT Ateca, Ardura) and geometry generated in code</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="wrap"><div class="inner mono">
+  <span>© 2026 Mikel Arnao · Vol. 01</span>
+  <span>Donostia · <b id="clock">--:--:--</b></span>
+  <span>End of issue</span>
+</div></footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+/* =====================================================================
+   CONTENT (English). A second language can be added as another object.
+   ===================================================================== */
+const IMG={"ardura-1":[1600,2264],"ardura-2":[1051,743],"ardura-3":[1105,781],"ardura-4":[1101,780],"ardura-5":[735,433],"ardura-6":[460,626],"ardura-7":[704,996],"ardura-8":[1011,495],"bira-1":[1600,1141],"bira-2":[628,366],"bira-3":[822,462],"bira-4":[934,526],"bira-5":[562,796],"bira-6":[1600,900],"bira-7":[1600,1141],"bira-8":[1600,1141],"casa-1":[1600,1130],"casa-2":[1020,762],"casa-3":[1600,612],"casa-4":[1020,1356],"casa-5":[1020,1356],"ibili-1":[1400,990],"ibili-2":[1400,940],"merc-1":[1357,905],"merc-2":[325,433],"merc-3":[296,394],"merc-4":[338,451],"merc-5":[1079,506],"olea-1":[1348,876],"olea-2":[1600,1132],"olea-3":[1600,1132],"olea-4":[1600,1132],"olea-5":[1600,1132],"olea-6":[1600,1132],"olea-7":[1600,1132],"orbea-1":[818,1364],"orbea-2":[438,678],"orbea-3":[873,514],"orbea-4":[948,650],"orbea-5":[1051,1488],"orbea-6":[506,642],"orbea-7":[631,631],"orbea-8":[582,482],"seat-1":[1232,848],"seat-10":[427,293],"seat-11":[664,465],"seat-12":[761,1142],"seat-3":[604,416],"seat-4":[708,398],"seat-5":[883,496],"seat-6":[567,689],"seat-7":[1502,1070],"seat-8":[1486,1043],"seat-9":[943,460],"senda-1":[1600,1132],"senda-2":[1600,1132],"senda-3":[1600,1132],"senda-4":[1600,1132],"senda-5":[1600,1132],"senda-6":[1600,1132],"senda-7":[1600,1132]};
+const TERR={product:'Product',auto:'Automotive',sust:'Sustainability',pack:'Packaging & Brand',digital:'Digital'};
+const PROJ=[
+{id:'seat-ateca',title:'SEAT Ateca side mirror',sub:'Redesign of the exterior mirror of a family SUV',terr:['auto','product'],year:'2025',m3d:0,sk:1,cover:'seat-1',
+ ctx:'Academic · PBL 4, 2nd year · Mondragon Unibertsitatea',
+ team:'Ainhoa Alonso, Mikel Arnao, Maren Leston, Ane Pelayo, Garazi Portillo',
+ tools:'SolidWorks, SolidWorks Simulation, CES EduPack, KeyShot, resin 3D printing',
+ role:'Worked across the whole project. Led the regulatory analysis (ECE R46) in the product-analysis phase and most of the development phase: analysis and redesign of the new circuit, the material specification manual, the mould machining roadmap and the justification of the selected material. Led the final renders.',
+ deck:'A mirror that <em>folds itself</em> before it hits something, and keeps the driver seeing when it does.',
+ stats:[['7.0 Wh','energy for a 50-minute, 25 km trip, inside the 4–8 Wh target'],['0.016 mm','deflection under aerodynamic load at 180 km/h'],['5','new components: folding motor, camera, radar, ultrasonic sensor, blind-spot LED']],
+ hero:['seat-1','Final render of the redesigned mirror with dynamic LED indicator.'],
+ sec:[
+  ['Context and brief',['The Ateca is a compact family SUV. Of three archetypes, the team chose Maite, a mother who picks her children up from school on a narrow, chaotic street and is afraid of clipping the mirror while manoeuvring.','Brief: keep the Ateca family look, remove that stress with assistance systems and stay fully within ECE Regulation 46.'],[['seat-12','Storyboard of the school pick-up used to find the pain point.']]],
+  ['Research',['A benchmark of six rival SUV mirrors, mapped by price and technology, showed no affordable high-tech option. The regulatory study set the hard limits:'],[],['Minimum edge radius of 2.5 mm on housing and glass','Class III field of view: 20 m long and 4 m wide','No part above 2 m from the ground; vehicle width with mirrors under 2.55 m','Heated glass and LED indicator compliant with EU electrical and lighting rules']],
+  ['Concepts',['Brainstorming and four-step sketching produced three preliminary designs: one with a rain deflector, an aerodynamic one with blind-spot indicator, and a robust one with a hidden auxiliary mirror. A Pugh matrix chose concept 2, positive on viability, aesthetics, function and regulations.'],[['seat-7','Sketch of the chosen direction.'],['seat-8','Exploration of the folding geometry.']]],
+  ['Development',['An ultrasonic sensor folds the mirror when an obstacle gets close; a camera streams to the central screen while it is folded; a radar drives a blind-spot LED. The circuit was redesigned at 12 V with the sensors in parallel to the EFB battery.','SolidWorks Simulation checked aerodynamic load, a 33 J pedestrian impact, fatigue at one million cycles, 500 N vertical and 300 N lateral loads, modal and thermal behaviour.'],[['seat-6','Exploded CAD of the assembly.'],['seat-9','New electrical circuit.'],['seat-11','Positive mould for the housing.']]],
+  ['Specification',['The material specification manual turned functional, mechanical, thermal and chemical requirements into CES EduPack constraints and performance indices. The top five candidates were weighted after min–max normalisation; PCTFE was chosen for its UV, humidity and chemical resistance. Machining roadmaps were written for both mould halves.']],
+  ['Result',['A 1:1 aesthetic prototype printed in resin, filled, primed and painted, with an amber indicator and a laser-cut mirror on a hand-shaped curved base.'],[['seat-4','Aesthetic prototype, housing.'],['seat-5','Aesthetic prototype, mirror side.'],['seat-10','Render of the mirror glass and camera.'],['seat-3','Render on the vehicle.']]],
+  ['Reflection',['Simulation in SolidWorks went beyond the syllabus. The next step would be a functional prototype to test ergonomics, tolerances and assembly that virtual tools do not show.']]
+ ]},
+{id:'ardura',title:'Ardura',sub:'Self-sufficient smart plant pot',terr:['product','sust'],year:'2026',m3d:1,sk:0,cover:'ardura-1',award:'iF recognition',
+ ctx:'Academic · PBL 5, 3rd year · Mondragon Unibertsitatea',
+ team:'Mikel Arnao, Danel Iturbe, Egoitz Fernandez, Mikel Martin, Maria Martinez',
+ tools:'SolidWorks, KeyShot, IHOBE Climate & Circularity Calculator, Adobe CC',
+ role:'Worked with the team on the whole project and led the entire development phase, CAD included: architecture, hydraulic system, energy balance, materials and manufacturing, ergonomics and costing. Only the product and project panels were done by others. Led the final renders.',
+ deck:'A plant pot that <em>waters itself on indoor light</em>, so the plant survives the holidays.',
+ stats:[['15.09 Wh','generated per day by the OPV film, against 0.87 Wh consumed'],['3.5 L','retractable rPET reservoir with integrated handle'],['≈ €13','estimated unit cost ex-works, for a €79 retail price']],
+ hero:['ardura-1','Final render of Ardura in a living room.'],
+ sec:[
+  ['Context and brief',['The project tackles the "biophilic paradox": people want plants at home but lack the time to care for them. Interviews showed the real stress is not the care itself but absences, and watering "by eye".','The chosen persona, Rosa, 52, lives between two homes. The CUT brief asks for peace of mind, automatic watering by hydraulic pressure and recyclable materials.']],
+  ['Research',['A map of intelligence against sustainability showed the gap: smart gadgets are wasteful and sustainable pots are passive. The opportunity was a regenerative, battery-free and repairable pot that uses physics, not electronics, to be smart.'],[['ardura-8','Market opportunity map.']]],
+  ['Concepts',['Five product panels explored a universal add-on and an integrated pot. The integrated pot won: it controls the material, so no water is lost through porous ceramic, and its surface can carry the solar film without looking like a gadget.'],[['ardura-6','Ideation sketches.'],['ardura-3','Concept poster, integrated pot.'],['ardura-5','CMF moodboard.']]],
+  ['Development',['Three stacked modules: the living core with the organic photovoltaic film, a sealed tech module with PCB, 5000 mAh battery, micro-pump and mode slider, and a detachable rPET tank inside an rPP shell with a level window.','A positive-displacement pump delivers exact 250 ml doses whatever the water level. A "drop and lift" conical coupling, based on the medical Luer taper, seals by gravity so the tank comes out with one hand. A haptic slider picks Tropical, Standard or Desert watering.'],[['ardura-2','Product panel with the module architecture.']]],
+  ['Specification',[],[],['Body in recycled PP with mineral filler: matte stone texture, 1.8 mm walls, no paint','Clear rPET tank that nests in the shell by draft angle, no adhesives','Snap-fit electronics and threaded joints for disassembly','Bill of materials ≈ €13.13 per unit']],
+  ['Life-cycle assessment',['Manufacturing causes about 99 % of the climate impact. An impermeable rPP body saves around 140 litres of water over ten years compared with ceramic. The OPV film pays back its carbon in 0.2 years against more than two for silicon, and repair matters more than recycling: material separation changes the total impact by only 0.23 %.']],
+  ['Result',[],[['ardura-7','Project panel.'],['ardura-4','Alternative concept poster: universal add-on.']]],
+  ['Reflection',['For a device that uses so little energy, full self-sufficiency is not automatically greener; the solar film is justified by having no cables and by the value users see in it. A desktop version under one litre is the next step.']]
+ ]},
+{id:'cycle-dry',title:'Cycle Dry · Orbea',sub:'Rear rack redesign for bikepacking',terr:['product'],year:'2025',m3d:2,sk:2,cover:'orbea-1',
+ ctx:'Academic · PBL 3, 2nd year · reference product by Orbea',
+ team:'Ekain Ardanza, Mikel Arnao, Leire Arias, Laura Cuesta, Naroa Galdos',
+ tools:'SolidWorks, KeyShot, CES EduPack, Vickers and EDX testing',
+ role:'Led the market and usage analysis, the ideation phase (sketches developed with a teammate, except the preliminary designs), the specification document and the manufacturing process for the proposal. Led the final renders.',
+ deck:'A simpler, cheaper bikepacking rack with a <em>hanger to dry clothes</em> on the move.',
+ stats:[['€125 → €50–60','target price against the original rack'],['90° / 180°','the hanger lifts, then turns out of the wind'],['Al 6061','main alloy, identified by density, Vickers and EDX']],
+ hero:['orbea-1','Final render of Cycle Dry on a hardtail MTB.'],
+ sec:[
+  ['Context and brief',['Orbea\'s MTB hardtail rack costs €124.99 and has many parts. The brief: make it simpler and cheaper for bikepacking. The user is a young cyclist on long routes who needs to wash and hang her sweaty clothes without losing them.']],
+  ['Research',['The rack was cut into nine samples and tested for density, Vickers hardness and EDX composition: mostly Al 6061, an Al 3003 mudguard, an AISI 1030 steel rod, a PET bag panel and a DLC coating. Six competitors were mapped by price and added value to find the gap.'],[['orbea-6','Moodboard.'],['orbea-7','CMF moodboard.']]],
+  ['Concepts',['Rotating sketches produced many redesigns. The chosen one adds a rectangular hanger on the rear bar that lifts 90° to hang clothes and turns 180° to avoid drag, or to dry them when parked.'],[['orbea-4','Concept sketch of the hanger.'],['orbea-8','Ideation sketches.']]],
+  ['Development',['The side bar between the stays was removed, since panniers now hang from the top bars, and the frame became a single bent tube plus the front and rear bars.'],[['orbea-3','CAD detail of the hinge mechanism.']]],
+  ['Specification',['Specification sheet for the 50 cm strut to the rear axle:'],[],['20 kg without plastic deformation','190 MPa tensile strength, 69 GPa Young\'s modulus','−10 °C to 50 °C operating range','Al 6061, 2720 kg/m³, measured hardness 93.3 HV']],
+  ['Manufacturing',['Extruded aluminium tubes, CNC bending, MIG welding and anodising for the frame. The hinge is made from extruded profiles with CNC turning and milling, drilling and tapping.']],
+  ['Result',[],[['orbea-2','Render of the rack.'],['orbea-5','Final poster.']]]
+ ]},
+{id:'gudamendi-house',title:'Self-sufficient house',sub:'Ecological home in Gudamendi, Donostia',terr:['sust'],year:'2021',m3d:3,sk:4,cover:'casa-2',award:'UPV contest winner',
+ ctx:'Contest project',
+ team:'Bixen, Hugo, Mikel Arnao',
+ role:'Designed the renewable energy systems: hybrid solar panels, wind turbine, battery storage and heat pump.',
+ deck:'A home on a windy hill above Donostia that <em>makes its own energy</em> and reuses its rain.',
+ stats:[['13 m/s','average wind speed in Igeldo; the turbine works from 10 m/s'],['180 m','altitude of the plot: more sun, more wind, mild sea climate'],['3 : 1','energy delivered by the heat pump per unit consumed']],
+ hero:['casa-2','The house on its plot in Gudamendi.'],
+ sec:[
+  ['Context',['The plot sits on Gudamendi, in Igeldo, 180 m above the sea. The sea keeps temperatures regular, there is little shade and a steady wind, and sewage, water, power, phone and a bus stop are close. The main façade faces south to limit winter heat loss.']],
+  ['Envelope',['Stone on the ground floor resists rain splash; vertical timber cladding above. An asymmetric pitched roof in ventilated zinc, which is abundant, lasts a century and is endlessly recyclable. Triple glazing with two chambers, low-emissivity glass and micro-slat blinds; cellulose insulation made from recycled paper, recovering the old paper mills of the river Oria.'],[['casa-5','Façade section, joinery and insulation.']]],
+  ['Energy systems',['My part. Hybrid PV-thermal panels on the steep south slope preheat domestic hot water and make electricity for lighting, devices and the heat pump. A small wind turbine works from 10 m/s. Surplus energy is stored in batteries in the attic and the rest goes to the grid. The heat pump heats through the floor, finishes the hot water and reverses for cooling in summer.'],[['casa-3','Renewable energy and systems.']]],
+  ['Water',['The shallow roof slope collects rainwater into an underground tank used for the washing machine, toilets and garden irrigation.'],[['casa-4','Water management and extensive green roof.']]],
+  ['Result',[],[['casa-1','Full contest poster.']]]
+ ]},
+{id:'mercedes-vent',title:'Mercedes V-Class air vent',sub:'Eco-design and life-cycle assessment',terr:['auto','sust'],year:'2025',m3d:4,sk:3,cover:'merc-1',
+ ctx:'Academic · Environmental Aspects course',
+ team:'Aimar Arauzo, Mikel Arnao, Ander Martín',
+ tools:'IHOBE Climate & Circularity Calculator, MET matrix, weighted decision matrix',
+ role:'Worked with the team on the whole project and led the life-cycle assessment (LCA), the improvement goals and idea generation, and the evaluation of the environmental improvements. The brief covered analysis only, with no development phase.',
+ deck:'Taking a premium air vent apart to find <em>where its footprint hides</em>, then cutting it.',
+ stats:[['−85 %','carbon footprint with a mono-material PP body'],['−65 %','ReCiPe endpoint with an efficient LED and road logistics'],['84 %','of the plastic recyclable in a single stream']],
+ hero:['merc-1','Interior of the 2025 V-Class with the round vents and ambient light.'],
+ sec:[
+  ['Context and brief',['The round vent of the 2025 V-Class weighs 127 g and mixes PC+ABS, chrome-plated rings, brass-plated steel rods, TPE seals and an LED ambient-light board, for a 15-year, 250,000 km life. Chrome on ABS cannot be recycled and the parts cannot be separated at end of life.','Goal: quantify the impact and propose redesigns without losing the premium feel.']],
+  ['Teardown',['Every part was taken apart, weighed and identified to build the inventory.'],[['merc-2','Main body on the scale.'],['merc-3','Body and louvre assembly.'],['merc-4','Chrome trim ring.']]],
+  ['Life-cycle assessment',['Cradle-to-grave with the IHOBE calculator. Functional unit: directable airflow and ambient light for one occupant over 250,000 km. Four hotspots appeared:'],[],['Electronics (17 g) and PC+ABS (92 g) as raw materials','Air freight of the electronics from Taiwan','Chrome plating of the rings','LED energy in use: 3.75 kWh, about 1.5 L of diesel']],
+  ['Improvement goals and ideas',['Ideas from eight eco-design strategies were scored on technical and financial viability, environmental benefit and brand motivation. Three action families went forward: A, a more efficient LED (0.6 W to 0.1 W) built in Europe; B, colour-in-mould instead of chrome; C, recycled r-PC+ABS or mono-material PP.']],
+  ['Evaluation',['Nine concepts were assessed. Mono-material PP cut the carbon footprint by about 85 %; the wireless, efficient LED with road logistics cut the ReCiPe endpoint by about 65 %. Recycled PC+ABS came out worse than expected, probably because of dataset limits.'],[['merc-5','Reduction of total impact (ReCiPe endpoint) per concept.']]],
+  ['Result',['The final concept combines C2 + A2 + B2: mono-material, ultra-efficient and free of toxic plating. 84 % of the plastic becomes recyclable in a single stream.']],
+  ['Reflection',['Next steps: a heat-release joint so treatment plants can split rings from the body in one step, an LCA with the electric EQV\'s energy mix, and certified suppliers instead of generic proxies.']]
+ ]},
+{id:'bira',title:'BIRA',sub:'Energy bar made from surplus cherries',terr:['pack','sust'],year:'2026',sk:-1,cover:'bira-1',
+ ctx:'Academic · for the Ereindajan cooperative',client:'Ereindajan cooperative',
+ team:'Aimar Arauzo, Mikel Arnao, Jon Azpitarte, Ibai Esquivel, Manex Gonzalez',
+ tools:'KeyShot, Adobe Illustrator, Adobe Photoshop',
+ role:'Packaging structure, dielines and 3D visualisation of the bar, wrapper and display box.',
+ deck:'Turning the surplus of the Basque cherry harvest into <em>a natural energy bar</em> for amateur cyclists.',
+ stats:[['20–30 %','of the cherry harvest is discarded before reaching the market'],['n = 90','real survey, plus a synthetic AI sample of 300'],['EUIPO','trademark and Community design protection']],
+ hero:['bira-1','BIRA, cover of the project dossier.'],
+ sec:[
+  ['Context and brief',['The Ereindajan cooperative needed an outlet for the summer surplus of Basque cherries. BIRA turns it into a functional bar of cherry, legumes, oats and nuts, aimed at amateur cycling.']],
+  ['Research',['Trends, a benchmark of energy bars, three interviews and a 90-person survey showed distrust of additives and ultra-processed food, a need for steady energy and interest in real fruit flavours. A positioning map placed BIRA between sports nutrition and real food.'],[['bira-6','User persona.']]],
+  ['Concepts',['Product, packaging and brand concepts were developed in parallel, following the DBZ methodology.'],[['bira-7','Brand and product concept.']]],
+  ['Result',['Brand, wrapper, display box and 5Ps, with the trademark and design protected through EUIPO. The work closed with a technical report, two A1 panels and a promotional video.'],[['bira-2','Wrapper.'],['bira-3','Display box.'],['bira-4','Box render.'],['bira-8','Product spread.'],['bira-5','Panel.']]]
+ ]},
+{id:'olea',title:'OLEA × Alpesa',sub:'Premium olive-oil packaging in a cardboard tube',terr:['pack'],year:'2025',sk:-1,cover:'olea-1',
+ ctx:'Packaging Innovation Cluster · company brief',client:'Alpesa',
+ team:'Leire Arias, Mikel Arnao, Manex Gonzalez, Maria Martinez',
+ tools:'Adobe Illustrator, Adobe InDesign, KeyShot',
+ role:'Structural design of the tube and closures, technical drawings and renders.',
+ deck:'Proving that a cardboard tube can carry <em>a premium extra-virgin olive oil</em> brand.',
+ hero:['olea-1','OLEA tube in an Andalusian olive grove.'],
+ sec:[
+  ['Context and brief',['Alpesa makes cardboard tubes. The challenge was to show they can work in high-value segments. Premium extra-virgin olive oil grows around 12 % a year in the specialised European channel, yet most of its packaging does not live up to the product.']],
+  ['Research',['A benchmark of Castillo de Canena, Almazaras de la Subbética, Oro Bailén and Finca de la Torre found shared values: materiality over visual impact, origin as the main argument, typographic restraint and full coherence. None of them had explored the tube.'],[['olea-6','Inspiration: cortijo floors and olive-grove geometry.']]],
+  ['Concept',['From territory to object: unvarnished kraft recalls the walls and floors of the cortijo, a classical serif recalls oil-mill labels and the olive grove seen from the air becomes pattern.'],[['olea-4','Process: from line to form.'],['olea-5','Form and dimensions.']]],
+  ['Result',[],[['olea-2','The OLEA tube.'],['olea-7','Experience: from the shop shelf to the table.']]]
+ ]},
+{id:'senda-norte',title:'Senda Norte × Vidrala',sub:'Low-alcohol vermouth bottle and brand',terr:['pack','product'],year:'2026',sk:-1,cover:'senda-1',
+ ctx:'Company brief',client:'Vidrala',
+ team:'Mikel Arnao, Aimar Arauzo',
+ tools:'SolidWorks, KeyShot, Adobe Illustrator',
+ role:'Bottle design and engineering, closure system and secondary packaging.',
+ deck:'An 8 % vol. vermouth <em>designed for a lighter, everyday</em> aperitif.',
+ stats:[['303 mm','height of the 75 cl hybrid Rhine bottle'],['Ø 68 mm','grip waist for hands with less strength'],['8 % vol.','low-alcohol positioning']],
+ hero:['senda-1','Senda Norte, bottle and brand.'],
+ sec:[
+  ['Context and brief',['Senda Norte is a craft vermouth at 8 % vol. that keeps the ritual of the aperitif without the heaviness of high-strength vermouth. It sits between classic vermouth and light Atlantic wines.']],
+  ['Brand',['The naming evokes origin and path. A reinterpreted classical serif, deep green, warm cream and soft red, and a close, calm tone of voice.'],[['senda-6','Brand system.']]],
+  ['Development',[],[['senda-3','Bottle: hybrid Rhine silhouette.'],['senda-7','Closure and multilayer liner.']],['Hybrid Rhine bottle: 303 mm tall, Ø 80 mm base, Ø 68 mm grip, Ø 30 mm mouth, 75 cl','Stelvin Lux soft-touch cap, easy to open at home','Multilayer liner: EVOH barrier, oxygen scavenger, antimicrobial layer and food-grade PET contact layer','Kraft E-flute box, 93 × 93 × 316 mm, tuck top and auto-lock base, no lamination; 6-unit shipping cases']],
+  ['Result',[],[['senda-2','Label design.'],['senda-4','Secondary packaging.'],['senda-5','In use.']]]
+ ]},
+{id:'jario-09',title:'Jario 09 · Ibili',sub:'Graphic for the Hydrate & Reuse bottle line',terr:['product'],year:'2026',sk:-1,cover:'ibili-1',
+ ctx:'Individual project · design brief',client:'Ibili',
+ team:'Individual',
+ tools:'Adobe Illustrator, Adobe Photoshop',
+ role:'Individual project: concept, surface pattern and visualisation.',
+ deck:'Topographic contour lines that <em>turn into a river</em> around a reusable bottle.',
+ hero:['ibili-1','Jario 09 on the Ibili bottle.'],
+ sec:[
+  ['Concept',['Aimed at young adults, the pattern abstracts the contour lines of a mountain map. A blue-green palette brings the relief to life and the flowing lines read as a river running down the slopes: a metaphor for freshness, movement and hydration.']],
+  ['Specification',['A continuous pattern wraps the cylinder through 360°, designed for digital 3D printing with a textured powder-coat finish. The Ibili logo sits at the base. Print area 213.5 × 170 mm.'],[['ibili-2','Design template with cap and body colours.']]]
+ ]},
+{id:'hospital-robot',title:'Hospital sample robot',sub:'Autonomous transport of clinical samples',terr:['product'],year:'',sk:3,
+ ctx:'Academic project',team:'Team project',tools:'SolidWorks, KeyShot',
+ role:'Vehicle architecture, CAD of the chassis and lockable compartments, and final renders.',
+ deck:'Moving samples between hospital departments <em>without breaking the chain of custody</em>.',
+ sec:[
+  ['Context and brief',['Clinical samples travel many times a day between wards and laboratories, and every handover is a risk for traceability.']],
+  ['Approach',['Vehicle architecture, lockable compartments for samples and navigation through hospital corridors, with LiDAR and differential drive.']],
+  ['Status',['<span class="soon">Full case study coming soon.</span>']]
+ ]},
+{id:'donostia-mobility',title:'Donostia urban mobility',sub:'Multimodal journey app',terr:['digital'],year:'',sk:5,
+ ctx:'Academic project',team:'Team project',tools:'Figma',
+ role:'User research, information architecture and interface design.',
+ deck:'Bus, bike and walking <em>in a single journey</em> across the city.',
+ sec:[
+  ['Context and brief',['Getting around Donostia often means mixing bus, bike and walking, each with its own app.']],
+  ['Approach',['User research, information architecture and an interactive prototype that plans and guides a combined journey.']],
+  ['Status',['<span class="soon">Full case study coming soon.</span>']]
+ ]},
+{id:'pocketwise',title:'PocketWise',sub:'Personal finance app for young people',terr:['digital'],year:'',sk:6,
+ ctx:'Academic project · UX, usability and interface design',team:'Team project',tools:'Figma',
+ role:'User research, personas and interface design.',
+ deck:'Helping young people <em>see where their money goes</em> each month.',
+ sec:[
+  ['Context and brief',['Young people often lose track of small daily expenses and struggle to save.']],
+  ['Approach',['Personas, saving flows and an interface that explains without lecturing.']],
+  ['Status',['<span class="soon">Full case study coming soon.</span>']]
+ ]}
+];
+PROJ.forEach((p,i)=>{p.n=i+1;p.page=String(9+i).padStart(2,'0')});
+const HOME_IDS=['seat-ateca','ardura','cycle-dry','gudamendi-house','mercedes-vent'];
+const DRAW=[
+ '<path d="M72 72 L168 72 L158 144 L82 144 Z"/><path class="dash" d="M78 118 H162"/><path class="acc" d="M120 72 C112 46 94 34 78 30 C98 28 116 44 120 72 C124 48 142 34 166 36 C150 44 130 54 120 72"/><rect x="140" y="98" width="10" height="34"/>',
+ '<path class="dash" d="M20 78 H222"/><path d="M44 52 C44 32 72 24 122 26 L188 32 C204 34 210 48 208 72 L204 108 C202 122 190 128 170 128 L72 126 C52 126 44 114 44 98 Z"/><path class="acc" d="M58 58 C58 44 80 38 122 40 L182 45 C192 46 196 56 195 72 L192 102 C191 111 184 115 170 115 L76 113 C64 113 58 106 58 96 Z"/><path d="M70 126 L60 148 L104 148 L98 126"/>',
+ '<path d="M28 58 H204"/><path d="M28 70 H204"/><path d="M28 58 V70 M204 58 V70 M70 58 V70 M116 58 V70 M162 58 V70"/><path class="acc" d="M60 70 L36 132 M176 70 L200 132"/><path d="M150 154 A64 64 0 0 1 238 112"/>',
+ '<rect x="72" y="58" width="96" height="72" rx="10"/><rect class="acc" x="86" y="72" width="68" height="26" rx="3"/><circle cx="92" cy="136" r="10"/><circle cx="148" cy="136" r="10"/><circle class="acc" cx="120" cy="48" r="8"/><path class="dash" d="M20 146 H220"/>',
+ '<path d="M56 142 V84 L122 40 L188 84 V142 Z"/><path class="acc" d="M128 44 L182 80 M136 50 L130 58 M150 59 L144 67 M164 68 L158 76"/><rect x="108" y="108" width="24" height="34"/><circle class="acc" cx="52" cy="40" r="12"/><path d="M196 102 h22 v40 h-22 z"/>',
+ '<rect x="88" y="14" width="64" height="132" rx="10"/><path class="dash" d="M96 40 C110 60 104 80 120 92 C136 104 130 120 144 132"/><path class="acc" d="M96 40 C110 60 104 80 120 92"/><circle class="acc" cx="96" cy="40" r="4"/><circle cx="144" cy="132" r="4"/>',
+ '<rect x="88" y="14" width="64" height="132" rx="10"/><circle cx="120" cy="54" r="20"/><path class="acc" d="M120 34 A20 20 0 0 1 139 60"/><path d="M100 128 V112 M112 128 V100 M124 128 V106 M136 128 V92"/>'];
+
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine=matchMedia('(pointer:fine)').matches;
+const root=document.documentElement;root.lang='en';
+const hasGSAP=typeof gsap!=='undefined';
+const css=n=>getComputedStyle(root).getPropertyValue(n).trim();
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const smooth=x=>{x=clamp(x,0,1);return x*x*(3-2*x)};
+const $=id=>document.getElementById(id);
+let px=-9999,py=-9999;
+addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY},{passive:true});
+const N=5;
+const S={cf:0,heroP:0,view:'home'};
+const byId=Object.fromEntries(PROJ.map(p=>[p.id,p]));
+
+/* paper texture */
+if(false)try{const c=document.createElement('canvas');c.width=c.height=140;const x=c.getContext('2d');const d=x.createImageData(140,140);
+  for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}x.putImageData(d,0,0);
+  root.style.setProperty('--noise',`url(${c.toDataURL()})`)}catch(e){}
+
+/* theme */
+const themeBtn=$('themeBtn'),themes=['auto','light','dark'];let ti=0;
+try{const s=localStorage.getItem('ma-theme');if(themes.includes(s))ti=themes.indexOf(s)}catch(e){}
+const themeHooks=[];
+function setTheme(){const t=themes[ti];if(t==='auto')root.removeAttribute('data-theme');else root.setAttribute('data-theme',t);
+  themeBtn.textContent='Theme · '+{auto:'Auto',light:'Light',dark:'Dark'}[t];try{localStorage.setItem('ma-theme',t)}catch(e){}
+  requestAnimationFrame(()=>themeHooks.forEach(f=>f()))}
+setTheme();themeBtn.addEventListener('click',()=>{ti=(ti+1)%3;setTheme()});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>themeHooks.forEach(f=>f()));
+
+/* letters */
+document.querySelectorAll('.prox').forEach(el=>{const t=el.textContent;el.textContent='';[...t].forEach(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c===' '?' ':c;s.setAttribute('aria-hidden','true');el.appendChild(s)})});
+
+/* clock and email */
+function tick(){try{$('clock').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date())}catch(e){}}
+tick();setInterval(tick,1000);
+$('copyBtn').addEventListener('click',()=>{const b=$('copyBtn');
+  const done=()=>{b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy email',1800)};
+  const fb=()=>{const r=document.createRange();r.selectNodeContents($('addr'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected · copy it';setTimeout(()=>b.textContent='Copy email',2200)};
+  try{navigator.clipboard.writeText($('addr').textContent).then(done,fb)}catch(e){fb()}});
+
+/* ===================== 3D KIT ===================== */
+const K3=(function(){
+  if(typeof THREE==='undefined')return null;
+  const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+  function rshape(w,h,r){const s=new THREE.Shape(),x=-w/2,y=-h/2;r=Math.min(r,w/2,h/2);
+    s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s}
+  function rbox(w,h,d,r,b){b=b===undefined?Math.min(.04,d/4):b;
+    const g=new THREE.ExtrudeGeometry(rshape(w-b*2,h-b*2,Math.max(.001,r-b)),{depth:Math.max(.001,d-b*2),bevelEnabled:b>0,bevelThickness:b,bevelSize:b,bevelSegments:3,curveSegments:12});g.center();return g}
+  function tube(pts,r,closed){return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(p=>V(...p)),!!closed,'catmullrom',closed?0:.5),96,r,14,!!closed)}
+  function merge(geos){const pos=[],nor=[];geos.forEach(g=>{g=g.index?g.toNonIndexed():g;pos.push(...g.attributes.position.array);nor.push(...g.attributes.normal.array)});
+    const m=new THREE.BufferGeometry();m.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));m.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));return m}
+  function makeMats(){const P=o=>new THREE.MeshStandardMaterial(Object.assign({transparent:true},o));
+    return{body:P({roughness:.85,metalness:0}),paint:P({roughness:.5,metalness:.1}),dark:P({roughness:.7,metalness:0}),
+      metal:P({roughness:.3,metalness:.95}),mirror:P({roughness:.04,metalness:1}),accent:P({roughness:.55,metalness:0}),
+      pcb:P({roughness:.6,metalness:.1,side:THREE.DoubleSide}),glass:P({roughness:.1,metalness:0,opacity:.22,side:THREE.DoubleSide,depthWrite:false}),
+      ghost:P({roughness:1,opacity:.1,depthWrite:false}),edge:new THREE.LineBasicMaterial({transparent:true})}}
+  function Model(parent){const g=new THREE.Group();const m={g,parts:[],mats:makeMats(),scale:1,spinners:[]};parent.add(g);return m}
+  function part(M,geo,mk,pos,off,o={}){
+    const mesh=new THREE.Mesh(geo,M.mats[mk]);const holder=new THREE.Group();const inner=new THREE.Group();inner.add(mesh);holder.add(inner);
+    if(o.rot)inner.rotation.set(...o.rot);if(o.scale)inner.scale.set(...o.scale);if(o.shift)inner.position.set(...o.shift);
+    if(!o.noEdge){const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,o.th||28),M.mats.edge);inner.add(e)}
+    holder.position.copy(pos);M.g.add(holder);
+    const p={h:holder,inner,base:pos.clone(),off:off||V(0,0,0),rotOff:o.rotOff||null,label:o.label,mesh,mk};M.parts.push(p);
+    if(o.spin)M.spinners.push([inner,o.spin]);return p}
+  const B=[];
+  /* 0 · SEAT mirror */
+  B[0]=M=>{
+    part(M,new THREE.SphereGeometry(1,64,32,Math.PI/2,Math.PI),'paint',V(0,0,-.05),V(0,.1,-1.5),{label:'Housing · PCTFE',th:50,scale:[1.75,1.05,.85]});
+    part(M,rbox(3.0,1.75,.14,.55),'dark',V(0,0,.02),V(0,0,.55),{label:'Mirror carrier'});
+    part(M,rbox(2.9,1.65,.05,.52),'mirror',V(0,0,.12),V(0,0,1.5),{label:'Heated mirror glass'});
+    part(M,new THREE.CylinderGeometry(.34,.34,.42,40),'metal',V(0,0,-.42),V(0,.05,-.55),{rot:[Math.PI/2,0,0],label:'Folding motor'});
+    part(M,new THREE.TorusGeometry(1.0,.05,12,80,Math.PI*.55),'accent',V(.1,.05,-.1),V(.5,.45,-.9),{rot:[0,0,-.2],scale:[1.75,1.05,1],label:'Dynamic LED indicator'});
+    part(M,new THREE.CylinderGeometry(.11,.11,.18,24),'dark',V(1.1,-.82,-.3),V(.4,-.75,0),{label:'Camera'});
+    part(M,new THREE.CylinderGeometry(.09,.09,.12,20),'metal',V(-.4,-.86,-.35),V(-.2,-.8,0),{label:'Ultrasonic sensor'});
+    part(M,rbox(.55,1.1,.45,.14),'body',V(-1.35,-.95,-.35),V(-.9,-1.0,-.2),{label:'Base arm'});
+    M.scale=.92};
+  /* 1 · Ardura */
+  B[1]=M=>{
+    part(M,new THREE.CylinderGeometry(1.0,1.0,1.25,96),'body',V(0,-1.05,0),V(0,-1.3,0),{label:'Base shell · rPP + talc'});
+    part(M,rbox(.2,.8,.06,.1),'dark',V(0,-1.05,1.0),V(0,-1.3,.2),{label:'Level window'});
+    part(M,new THREE.CylinderGeometry(.86,.84,1.1,64,1,true),'glass',V(0,-1.0,0),V(1.9,-.1,0),{label:'Retractable tank · rPET',th:40});
+    part(M,new THREE.TorusGeometry(.32,.05,12,40,Math.PI),'glass',V(0,-.42,0),V(1.9,-.1,0),{th:40});
+    part(M,new THREE.CylinderGeometry(1.0,1.0,.3,96),'dark',V(0,-.27,0),V(0,.25,0),{label:'Tech module · PCB, battery'});
+    part(M,new THREE.CylinderGeometry(.14,.14,.26,24),'metal',V(.45,-.27,0),V(.55,.7,0),{label:'Micro-pump'});
+    part(M,rbox(.34,.08,.1,.035),'accent',V(0,-.27,1.02),V(0,.25,.35),{label:'Mode slider'});
+    const prof=[[0,-.6],[1.0,-.6],[1.03,.72],[.95,.72],[.92,-.5],[0,-.5]].map(p=>new THREE.Vector2(p[0],p[1]));
+    const pot=part(M,new THREE.LatheGeometry(prof,96),'body',V(0,.5,0),V(0,1.2,0),{label:'Pot · rPP'});
+    part(M,new THREE.CylinderGeometry(1.045,1.045,.85,96,1,true,-1,2),'pcb',V(0,.55,0),V(0,1.2,.45),{label:'OPV solar film',th:60});
+    part(M,new THREE.TorusGeometry(.6,.035,10,64),'accent',V(0,.15,0),V(0,2.0,0),{rot:[Math.PI/2,0,0],label:'Irrigation ring'});
+    const leaf=new THREE.Shape();leaf.moveTo(0,0);leaf.bezierCurveTo(.35,.25,.35,.75,0,1.05);leaf.bezierCurveTo(-.35,.75,-.35,.25,0,0);
+    const lg=new THREE.ShapeGeometry(leaf,20);M.leafMat=new THREE.MeshStandardMaterial({side:THREE.DoubleSide,roughness:.8,transparent:true});
+    const le=new THREE.EdgesGeometry(lg,10);
+    for(let i=0;i<6;i++){const l=new THREE.Mesh(lg,M.leafMat);const ll=new THREE.LineSegments(le,M.mats.edge);const gg=new THREE.Group();gg.add(l,ll);
+      gg.rotation.set(0,i/6*Math.PI*2,.3+(i%3)*.12);gg.scale.setScalar(.5+(i%3)*.12);gg.position.y=.55;pot.inner.add(gg)}
+    M.scale=.9};
+  /* 2 · Cycle Dry */
+  B[2]=M=>{
+    [-.45,.45].forEach((z,k)=>part(M,tube([[-1.75,.45,z],[0,.45,z],[1.3,.45,z],[1.62,.28,z]],.055),'metal',V(0,0,0),V(0,.5,z*.9),{label:k?'Bent frame · Al 6061':null}));
+    [-1.75,1.1].forEach((x,k)=>part(M,new THREE.CylinderGeometry(.045,.045,.95,16),'metal',V(x,.45,0),V(k?.4:-.5,.5,0),{rot:[Math.PI/2,0,0],label:k?'Front bar':'Rear bar'}));
+    part(M,rbox(2.3,.04,.62,.08),'body',V(-.1,.5,0),V(0,1.3,0),{label:'Load platform'});
+    [-.47,.47].forEach((z,k)=>{
+      part(M,tube([[1.25,.45,z],[1.15,-.4,z*1.08],[.95,-1.45,z*1.18]],.05),'metal',V(0,0,0),V(.2,-.55,z*.8),{label:k?'Axle strut':null});
+      part(M,rbox(.22,.22,.08,.04),'dark',V(.95,-1.5,z*1.18),V(.2,-1.0,z*1.3),{label:k?null:'Axle mount'})});
+    part(M,new THREE.TorusGeometry(1.45,.02,8,120),'ghost',V(.95,-1.5,0),V(0,0,0),{noEdge:true});
+    const hanger=tube([[0,0,-.42],[1.35,0,-.42],[1.35,0,.42],[0,0,.42]],.035,false);
+    part(M,hanger,'accent',V(-1.75,.62,0),V(-.3,1.35,0),{rotOff:[0,0,Math.PI/2],label:'Drying hanger'});
+    part(M,rbox(.22,.18,.3,.04),'dark',V(-1.75,.6,0),V(-.3,1.35,0),{label:'Hinge · lifts 90°, turns 180°'})};
+  /* 3 · House (rebuilt from renders + poster) */
+  B[3]=M=>{
+    const W=3,D=2.4,t=.12,g0=-1.25,g1=-.45,u0=-.4,u1=.5;
+    const RECT=(p,cx,cy,w,h)=>{p.moveTo(cx-w/2,cy-h/2);p.lineTo(cx+w/2,cy-h/2);p.lineTo(cx+w/2,cy+h/2);p.lineTo(cx-w/2,cy+h/2);p.closePath();return p};
+    /* wall in local XY (base at y=0, centred in x), extruded t, centred in z; holes [cx,cy,w,h] */
+    const wall=(w,h,holes,th)=>{th=th||t;const s=RECT(new THREE.Shape(),0,h/2,w,h);holes.forEach(o=>s.holes.push(RECT(new THREE.Path(),...o)));
+      const g=new THREE.ExtrudeGeometry(s,{depth:th,bevelEnabled:false});g.translate(0,0,-th/2);return g};
+    /* place: side='z' wall faces +/-z, side='x' wall faces +/-x (local x -> world z) */
+    const at=(g,x,y,z,side)=>{if(side==='x')g.rotateY(-Math.PI/2);g.translate(x,y,z);return g};
+    const box=(w,h,d,x,y,z)=>{const g=new THREE.BoxGeometry(w,h,d);g.translate(x,y,z);return g};
+    const panes=[];const pane=(x,y,z,w,h,side)=>panes.push(at(new THREE.BoxGeometry(w,h,.02),x,y,z,side));
+    const P=(geo,mk,off,anchor,o)=>{const p=part(M,geo,mk,V(0,0,0),off,Object.assign({th:20},o||{}));if(anchor)p.anchor=anchor;return p};
+    const zf=D/2-t/2,xs=W/2-t/2,Ls=D-2*t;
+
+    /* foundation slab + front terrace */
+    P(merge([box(W+.12,.1,D+.12,0,g0-.05,0),box(2.3,.08,.75,-.4,g0-.06,D/2+.42)]),'paint',V(0,-1.15,0),V(-1.2,g0-.05,D/2+.5),{label:'Foundation slab · terrace'});
+
+    /* systems on the slab (poster · water management) */
+    const sys=V(0,-.65,0);
+    P(merge([box(.5,.55,.32,-.95,g0+.275,-.72)]),'paint',sys,V(-.95,g0+.55,-.72),{label:'Heat pump'});
+    part(M,new THREE.CylinderGeometry(.13,.13,.04,28),'dark',V(-.95,g0+.3,-.555),sys,{rot:[Math.PI/2,0,0]});
+    part(M,new THREE.CylinderGeometry(.2,.2,.72,36),'metal',V(-.25,g0+.36,-.75),sys,{label:'Hot water tank · boiler'});
+    part(M,new THREE.CylinderGeometry(.15,.15,.5,32),'metal',V(.35,g0+.25,-.78),sys,{label:'Cold water tank'});
+    P(merge([tube([[-.95,g0+.55,-.72],[-.95,g0+.68,-.72],[-.25,g0+.8,-.75],[.35,g0+.68,-.78],[.35,g0+.5,-.78]],.022),
+             tube([[.35,g0+.05,-.6],[.9,g0+.05,-.45],[1.15,g0+.05,.1],[1.15,g0+.5,.3]],.02),
+             tube([[-.25,g0+.05,-.55],[-.6,g0+.05,-.2],[-.6,g0+.45,.2]],.02)]),'accent',sys,V(.9,g0+.05,-.45),{label:'Water network',noEdge:true});
+    /* rainwater tank outside, back-left, fed by the long back slope */
+    part(M,new THREE.CylinderGeometry(.3,.3,.75,40),'metal',V(-1.95,g0+.33,-1.55),V(-.55,-.65,-.3),{label:'Rainwater tank'});
+
+    /* ground floor · stone */
+    const gh=g1-g0,gOff=V(0,.75,0);
+    P(merge([at(wall(W,gh,[[-1.0,.33,.5,.62],[-.35,.33,.5,.62],[.85,.4,.5,.45]]),0,g0,zf),
+             at(wall(W,gh,[[-.6,.4,.5,.45],[.7,.33,.5,.62]]),0,g0,-zf),
+             at(wall(Ls,gh,[[0,.4,.5,.45]]),-xs,g0,0,'x'),
+             at(wall(Ls,gh,[[.3,.38,.6,.5]]),xs,g0,0,'x')]),'dark',gOff,V(1.5,g0+.55,.6),{label:'Stone ground floor'});
+    pane(-1.0,g0+.33,zf,.5,.62);pane(-.35,g0+.33,zf,.5,.62);pane(.85,g0+.4,zf,.5,.45);
+    pane(-.6,g0+.4,-zf,.5,.45);pane(.7,g0+.33,-zf,.5,.62);pane(-xs,g0+.4,0,.5,.45,'x');pane(xs,g0+.38,.3,.6,.5,'x');
+    P(merge(panes.splice(0)),'glass',gOff,V(-.35,g0+.5,zf+.02),{label:'Triple-glazed windows'});
+
+    /* intermediate floor */
+    P(box(W+.06,.08,D+.06,0,g1+.01,0),'paint',V(0,1.1,0),null,{});
+
+    /* upper floor · timber, with recessed corner terrace (x .5..1.5, z .2..1.2) */
+    const uh=u1-u0,uOff=V(0,1.3,0),rx=.5,rz=.2;
+    P(merge([at(wall(2.0,uh,[[-.5,.45,.42,.52],[.35,.38,.36,.66]]),-.5,u0,zf),
+             at(wall(W,uh,[[-.7,.45,.45,.5],[.6,.45,.45,.5]]),0,u0,-zf),
+             at(wall(Ls,uh,[[.2,.45,.45,.5]]),-xs,u0,0,'x'),
+             at(wall(rz+D/2-t,uh,[]),xs,u0,(-D/2+t+rz)/2,'x'),
+             at(wall(1.0,uh,[[0,.45,.36,.52]]),1.0,u0,rz+t/2),
+             at(wall(1.0,uh,[[0,.45,.36,.52]]),rx+t/2,u0,rz+.5,'x'),
+             at(wall(.72,.8,[[0,.4,.5,.6]],.1),-1.0,u0+.05,D/2+.04),
+             box(.1,uh,.1,1.45,u0+uh/2,1.15),box(1.0,.32,.07,1.0,u0+.16,1.165),box(.07,.32,1.0,1.465,u0+.16,.7),
+             box(.82,.05,.32,-.15,u0-.01,D/2+.16),box(.82,.3,.05,-.15,u0+.15,D/2+.3),box(.05,.3,.3,-.54,u0+.15,D/2+.16),box(.05,.3,.3,.24,u0+.15,D/2+.16)
+            ]),'body',uOff,V(-1.0,u0+.75,D/2+.05),{label:'Timber upper floor'});
+    pane(-1.0,u0+.45,zf,.42,.52);pane(-.15,u0+.38,zf,.36,.66);pane(-.7,u0+.45,-zf,.45,.5);pane(.6,u0+.45,-zf,.45,.5);
+    pane(-xs,u0+.45,.2,.45,.5,'x');pane(1.0,u0+.45,rz+t/2,.36,.52);pane(rx+t/2,u0+.45,rz+.5,.36,.52,'x');
+    P(merge(panes.splice(0)),'glass',uOff,null,{});
+
+    /* gables (grey, as in the renders) */
+    const gz=D/2,ry=.72,zr=.3;const gs=new THREE.Shape();
+    [[-gz,0],[gz,0],[gz,.1],[zr,ry],[-gz,.07]].forEach(([z,y],i)=>i?gs.lineTo(z,y):gs.moveTo(z,y));gs.closePath();
+    const gab=x=>{const g=new THREE.ExtrudeGeometry(gs,{depth:.1,bevelEnabled:false});g.translate(0,0,-.05);g.rotateY(-Math.PI/2);g.translate(x,u1,0);return g};
+    P(merge([gab(-xs),gab(xs)]),'paint',uOff,null,{});
+
+    /* cellulose insulation over the top floor */
+    P(box(W-.04,.1,D-.04,0,u1+.05,0),'paint',V(0,1.7,0),V(-1.2,u1+.1,-.6),{label:'Cellulose insulation'});
+
+    /* roof: asymmetric gable, short front slope with PV-T, long back slope collects rain */
+    const eo=.2,yR=u1+ry,zF=D/2+eo,zB=-D/2-eo;
+    const aF=Math.atan2(yR-u1,zF-zr),lF=Math.hypot(yR-u1,zF-zr),aB=Math.atan2(yR-u1,zr-zB),lB=Math.hypot(yR-u1,zr-zB);
+    const slope=(len,a,zc)=>{const g=new THREE.BoxGeometry(W+.4,.05,len);g.rotateX(a);g.translate(0,(u1+yR)/2,zc);return g};
+    const rOff=V(0,2.05,0);
+    P(merge([slope(lF,aF,(zF+zr)/2),slope(lB,-aB,(zB+zr)/2),box(W+.42,.05,.08,0,yR+.01,zr)]),'dark',rOff,V(-1.2,(u1+yR)/2+.05,(zB+zr)/2),{label:'Zinc roof'});
+    /* PV-T array: 6 x 2 modules on the front slope */
+    const mods=[];const mw=.5,ml=(lF-.12)/2;
+    for(let i=0;i<6;i++)for(let j=0;j<2;j++){const g=new THREE.BoxGeometry(mw-.03,.03,ml-.03);g.translate(-1.25+i*mw,0,-ml/2+j*ml);mods.push(g)}
+    const pv=merge(mods);pv.rotateX(aF);const n=V(0,Math.cos(aF),Math.sin(aF));
+    pv.translate(n.x*.05,(u1+yR)/2+n.y*.05,(zF+zr)/2+n.z*.05);
+    P(pv,'accent',V(0,2.5,0),V(.75,(u1+yR)/2+.1,(zF+zr)/2),{label:'Hybrid PV-T panels'});
+    M.scale=.86};
+  /* 4 · Mercedes vent (rebuilt from product photos + teardown inventory) */
+  B[4]=M=>{
+    const O=.9,X=Math.PI/2;          /* slightly oval, as the real bezel */
+    const ov={scale:[1,O,1]},ovc={rot:[X,0,0],scale:[1,1,O]};
+    /* main body: open drum with front lip and side tabs */
+    const drum=new THREE.CylinderGeometry(.92,.92,1.0,72,1,true);drum.rotateX(X);
+    const lip=new THREE.TorusGeometry(.92,.045,10,72);lip.translate(0,0,.5);
+    const tabs=[[1,0],[-1,0],[0,1],[0,-1]].map(([x,y])=>{const g=new THREE.BoxGeometry(x?.12:.34,y?.12:.34,.42);g.translate(x*.98,y*.98,-.05);return g});
+    const bp=part(M,merge([drum,lip,...tabs]),'dark',V(0,0,-.35),V(0,0,-1.25),Object.assign({label:'Main body · PC+ABS',th:30},ov));
+    /* spring clips (stamped steel) */
+    const cl=[[1,1],[-1,1],[1,-1],[-1,-1]].map(([x,y])=>{const g=new THREE.BoxGeometry(.16,.02,.3);g.rotateZ(Math.atan2(y,x));g.translate(x*.7,y*.7*O,-.2);return g});
+    part(M,merge(cl),'metal',V(0,0,-.35),V(0,0,-1.25),{label:'Spring clips · steel'});
+    /* foam seal band at the back */
+    part(M,new THREE.CylinderGeometry(.96,.96,.24,64,1,true),'pcb',V(0,0,-.95),V(0,0,-2.0),Object.assign({label:'Housing seal · TPE-SEBS'},ovc));
+    /* wiring + connector */
+    const w=tube([[0,-.85,-.7],[.2,-1.15,-.9],[.55,-1.25,-1.2],[.9,-1.1,-1.45]],.025);
+    const con=new THREE.BoxGeometry(.22,.14,.26);con.translate(.95,-1.08,-1.55);
+    part(M,merge([w,con]),'paint',V(0,0,0),V(.35,-.45,-1.5),{label:'LED wiring · PBT + Cu',th:40}).anchor=V(.95,-1.08,-1.55);
+    /* flow gate: butterfly flap on its axle */
+    const flap=new THREE.CylinderGeometry(.8,.8,.04,56);flap.rotateX(X);flap.scale(1,O,1);
+    const axle=new THREE.CylinderGeometry(.03,.03,1.8,12);axle.rotateZ(X);
+    const fg=part(M,merge([flap,axle]),'paint',V(0,0,-.45),V(0,0,-.6),{label:'Flow gate · PP + TPV',th:30});fg.inner.rotation.x=.35;
+    /* regulator gear + linkage */
+    const gear=[new THREE.CylinderGeometry(.16,.16,.08,24)];for(let i=0;i<14;i++){const g=new THREE.BoxGeometry(.05,.07,.08);g.translate(0,.18,0);g.rotateY(0);g.rotateZ(i/14*Math.PI*2);gear.push(g)}
+    const gg=merge(gear.map(g=>{g.rotateX(X);return g}));
+    part(M,gg,'dark',V(.55,-.25,-.15),V(.75,-.35,-.15),{label:'Regulator gear',th:30});
+    /* brass-plated rods and steel plates */
+    const rods=[-.3,0,.3].map(y=>{const g=new THREE.CylinderGeometry(.014,.014,1.3,8);g.rotateZ(X);g.translate(0,y,-.08);return g});
+    const plate=new THREE.BoxGeometry(.08,.7,.02);plate.translate(.62,0,-.08);
+    part(M,merge([...rods,plate]),'metal',V(0,0,0),V(0,.25,.25),{label:'Rods + plates · brass-plated steel',th:40}).anchor=V(.62,.3,-.08);
+    /* LED light guide ring */
+    part(M,new THREE.TorusGeometry(.86,.03,10,96),'accent',V(0,0,.08),V(0,0,.75),Object.assign({label:'LED light guide · PMMA'},ov));
+    /* turbine louvres: 12 pitched blades between hub and outer ring */
+    const bl=[];for(let i=0;i<14;i++){const g=new THREE.BoxGeometry(.48,.02,.24);g.rotateX(.95);g.translate(.6,0,0);g.rotateZ(i/14*Math.PI*2+.12);bl.push(g)}
+    const ring=new THREE.CylinderGeometry(.86,.86,.3,72,1,true);ring.rotateX(X);
+    const t=merge([...bl,ring]);t.scale(1,O,1);
+    part(M,t,'metal',V(0,0,.15),V(0,0,1.35),{label:'Turbine louvres',th:35}).anchor=V(.55,.35,.15);
+    /* chrome bezel with knurled outer edge */
+    const bez=new THREE.TorusGeometry(.96,.08,20,96);const flange=new THREE.RingGeometry(.86,1.03,96);flange.translate(0,0,.06);
+    part(M,merge([bez,flange]),'mirror',V(0,0,.32),V(0,0,2.0),Object.assign({label:'Chrome bezel ring',th:50},ov)).anchor=V(.96,0,.32);
+    /* central oval regulator knob with dark mesh insert */
+    const kn=rbox(.56,.3,.24,.15,.04),ins=rbox(.42,.17,.04,.085,.01);ins.translate(0,0,.13);
+    part(M,kn,'mirror',V(0,0,.28),V(0,0,2.75),{label:'Flow regulator knob',th:40});
+    part(M,ins,'dark',V(0,0,.28),V(0,0,2.75),{noEdge:true});
+    const hub=new THREE.CylinderGeometry(.05,.05,.6,12);hub.rotateX(X);
+    part(M,hub,'dark',V(0,0,.0),V(0,0,1.9),{noEdge:true});
+    M.scale=1.05};
+  /* ---- real CAD models (GLB). Offsets in model units (metres); labels shown in the balloons ---- */
+  const GLB={
+    0:{url:'models/seat.gltf.json',scale:.82,parts:[
+      ['Heated mirror glass','mirror',[0,0,.17],'Heated mirror glass'],
+      ['Mirror adjustment motor','metal',[0,0,.11],'Mirror adjustment motor'],
+      ['Door mount base','dark',[0,0,.055],'Mirror carrier'],
+      ['Injection-moulded housing','paint',[0,.005,-.085],'Injection-moulded housing'],
+      ['Lower housing base','dark',[.02,-.095,-.02],'Lower housing base'],
+      ['Lower housing','dark',[0,-.05,-.045],'Lower housing'],
+      ['Dynamic LED indicator','accent',[-.03,.075,-.055],'Dynamic LED indicator'],
+      ['Mirror arm','body',[.05,-.15,-.03],'Mirror arm'],
+      ['Folding pivot1','metal',[.11,-.055,0],'Folding mechanism'],
+      ['Folding pivot2','metal',[.135,-.075,0],null],
+      ['Folding pivot3','metal',[.17,-.115,0],null],
+      ['Folding pivot4','metal',[.085,-.03,0],null]]},
+    1:{url:'models/ardura.gltf.json',scale:.62,rotX:-Math.PI/2,parts:[
+      ['Tank shell', 'body', [0, -0.3, 0], 'Tank shell \u00b7 rPP'],
+      ['Retractable tank1', 'glass', [0, -0.2, 0], 'Retractable tank \u00b7 rPET'],
+      ['Retractable tank5', 'glass', [0, -0.15, 0], null],
+      ['Retractable tank2', 'glass', [0, -0.135, 0], null],
+      ['Retractable tank4', 'glass', [0, -0.12, 0], null],
+      ['Retractable tank3', 'glass', [0, -0.105, 0], null],
+      ['Baseshell4', 'dark', [0, -0.09, 0], null],
+      ['Base shell2', 'dark', [0, -0.06, 0], 'Tech module housing'],
+      ['Battery', 'metal', [0, -0.02, 0], 'Battery'],
+      ['Base shell3', 'dark', [0, 0.0, 0], null],
+      ['PCB', 'pcb', [0, 0.02, 0], 'PCB'],
+      ['Micro-pump', 'metal', [0, 0.04, 0], 'Micro-pump'],
+      ['Mode slider', 'accent', [0, -0.06, -0.06], 'Mode slider'],
+      ['Irrigation ring', 'accent', [0, 0.07, 0], 'Irrigation ring'],
+      ['Base shell1', 'body', [0, 0.1, 0], 'Base shell'],
+      ['Pot', 'paint', [0, 0.2, 0], 'Pot'],
+      ['OPV solar film', 'accent', [0, 0.3, 0], 'OPV solar film']]},
+    2:{url:'models/orbea.gltf.json',scale:1.1,parts:[
+      ['Main Frame','metal',[0,0,0],'Bent frame \u00b7 Al 6061'],
+      ['Main Frame2','metal',[.04,-.06,0],'Rear strut'],
+      ['Support','body',[.03,.07,0],'Cross support'],
+      ['Front support','body',[.11,.01,0],'Front support \u00b7 seat-post mount'],
+      ['Lower support','dark',[0,-.09,0],'Axle mount'],
+      ['Upper support','body',[-.1,-.02,0],'Rear support'],
+      ['Hinge1','dark',[-.11,.03,0],'Hinge \u00b7 lifts 90\u00b0, turns 180\u00b0'],
+      ['Hinge3','dark',[-.08,.03,0],null],
+      ['Hinge4','dark',[-.05,.03,0],null],
+      ['Hanger support','dark',[-.05,.07,0],'Hanger support'],
+      ['Hanger','accent',[-.02,.14,0],'Drying hanger']]},
+  };
+  const inst={},cache={},edgeCache=new Map();
+  function build(i,parent){const M=Model(parent);M.idx=i;M.ver=0;
+    if(GLB[i]&&cache[i])fromGLB(M,i);else B[i](M);
+    (inst[i]=inst[i]||[]).push(M);return M}
+  function fromGLB(M,i){
+    const spec=GLB[i],src=cache[i];
+    M.parts.forEach(p=>M.g.remove(p.h));M.parts=[];M.spinners=[];
+    const box=new THREE.Box3().setFromObject(src);const size=box.getSize(new THREE.Vector3()),ctr=box.getCenter(new THREE.Vector3());
+    const k=3.0/Math.max(size.x,size.y,size.z);
+    const norm=nm=>(nm||'').replace(/-\d+$/,'').replace(/_/g,' ').trim();
+    const nodes=[];src.traverse(o=>{const sp=spec.parts.find(sp=>norm(o.name)===sp[0]);if(!sp)return;
+      let a=o.parent,dup=false;while(a){if(nodes.find(n=>n.o===a))dup=true;a=a.parent}if(!dup)nodes.push({o,sp})});
+    const usedL=new Set();
+    nodes.forEach(({o,sp})=>{
+      const lab=sp[3]&&!usedL.has(sp[3])?sp[3]:null;if(lab)usedL.add(lab);
+      const holder=new THREE.Group(),wrap=new THREE.Group();
+      wrap.scale.setScalar(k);wrap.position.copy(ctr).multiplyScalar(-k);
+      const c=o.clone(true);o.updateWorldMatrix(true,false);
+      const mw=o.matrixWorld.clone();
+      const parent=new THREE.Group();parent.matrixAutoUpdate=false;parent.matrix.copy(mw);
+      c.position.set(0,0,0);c.quaternion.identity();c.scale.set(1,1,1);
+      parent.add(c);wrap.add(parent);holder.add(wrap);M.g.add(holder);
+      const meshes=[];
+      c.traverse(m=>{if(!m.isMesh)return;m.material=M.mats[sp[1]];meshes.push(m);
+        let eg=edgeCache.get(m.geometry.uuid);if(!eg){eg=new THREE.EdgesGeometry(m.geometry,32);edgeCache.set(m.geometry.uuid,eg)}
+        m.geometry.userData.shared=true;eg.userData.shared=true;
+        m.add(new THREE.LineSegments(eg,M.mats.edge))});
+      const bb=new THREE.Box3().setFromObject(o);const anc=bb.getCenter(new THREE.Vector3()).sub(ctr).multiplyScalar(k);
+      M.parts.push({h:holder,inner:wrap,base:new THREE.Vector3(),off:new THREE.Vector3(...sp[2]).multiplyScalar(k),label:lab,mesh:meshes[0],meshes,anchor:anc,mk:sp[1]})});
+    M.scale=spec.scale||1;M.ver++;M.real=true}
+  function loadReal(onDone){
+    if(!THREE.GLTFLoader)return;const L=new THREE.GLTFLoader();
+    /* models ship as small JS wrappers (window.__GLTF[name]) so they also load from file:// */
+    Object.entries(GLB).forEach(([i,spec])=>{
+      const name=spec.url.replace(/^.*\//,'').replace(/\.gltf.*$/,'');
+      const done=g=>{const sc=g.scene;if(spec.rotX)sc.rotation.x=spec.rotX;sc.updateMatrixWorld(true);cache[i]=sc;
+        (inst[i]||[]).forEach(M=>fromGLB(M,+i));onDone&&onDone(+i)};
+      const fail=err=>console.warn('GLB not loaded',spec.url,err);
+      const parse=()=>{try{L.parse(JSON.stringify(window.__GLTF[name]),'',done,fail);delete window.__GLTF[name]}catch(e){fail(e)}};
+      if(window.__GLTF&&window.__GLTF[name])return parse();
+      const s=document.createElement('script');s.src='models/'+name+'.gltf.js';s.async=true;s.onload=parse;s.onerror=fail;document.head.appendChild(s)})}
+
+  function makeStage(renderer){
+    const scene=new THREE.Scene();
+    const pmrem=new THREE.PMREMGenerator(renderer);
+    const env=new THREE.Scene();
+    const envBox=new THREE.Mesh(new THREE.BoxGeometry(20,20,20),new THREE.MeshBasicMaterial({color:0x888888,side:THREE.BackSide}));env.add(envBox);
+    [[0,9,0,14,14,Math.PI/2,0],[-9,2,4,6,10,0,Math.PI/2],[9,3,-2,4,8,0,-Math.PI/2]].forEach(([x,y,z,w,h,rx,ry])=>{
+      const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide}));m.material.color.setScalar(2.6);m.position.set(x,y,z);m.rotation.set(rx,ry,0);env.add(m)});
+    const key=new THREE.DirectionalLight(0xffffff,1.1);key.position.set(4,7,6);scene.add(key);
+    const hemi=new THREE.HemisphereLight(0xffffff,0x6b6b66,.75);scene.add(hemi);
+    const sc2=document.createElement('canvas');sc2.width=sc2.height=128;const sx2=sc2.getContext('2d');
+    const gr=sx2.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(0,0,0,.55)');gr.addColorStop(1,'rgba(0,0,0,0)');sx2.fillStyle=gr;sx2.fillRect(0,0,128,128);
+    const shadow=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sc2),transparent:true,depthWrite:false}));
+    shadow.rotation.x=-Math.PI/2;scene.add(shadow);
+    const st={scene,shadow,models:[],theme(){
+      const C=n=>new THREE.Color().setStyle(css(n)).convertSRGBToLinear();
+      const ink=C('--ink'),spot=C('--spot'),sheet=C('--sheet'),p2=C('--paper-2');
+      const dark=new THREE.Color().setStyle(css('--paper')).getHSL({}).l<.3;
+      st.models.forEach(M=>{const m=M.mats;
+        m.body.color.copy(dark?new THREE.Color(0x2c2c29):sheet);
+        m.paint.color.copy(dark?new THREE.Color(0x3c3c38):p2.clone().multiplyScalar(.82));
+        m.dark.color.copy(dark?new THREE.Color(0x0d0d0c):new THREE.Color(0x2a2a27).convertSRGBToLinear());
+        m.metal.color.copy(dark?new THREE.Color(0x9a9a96):new THREE.Color(0xc9c9c4));m.mirror.color.setScalar(.9);
+        m.accent.color.copy(spot);m.accent.emissive.copy(spot).multiplyScalar(M.idx===4?.35:.08);
+        m.pcb.color.copy(dark?new THREE.Color(0x1f2324):new THREE.Color(0x3a4142).convertSRGBToLinear());
+        m.glass.color.copy(dark?new THREE.Color(0x777770):new THREE.Color(0xffffff));m.ghost.color.copy(ink);
+        m.edge.color.copy(ink);if(M.leafMat)M.leafMat.color.copy(dark?new THREE.Color(0x2c2c29):sheet)});
+      shadow.material.color.copy(dark?new THREE.Color(0x000000):ink);
+      hemi.intensity=dark?.45:.8;key.intensity=dark?.8:1.1;envBox.material.color.setScalar(dark?.15:.55);
+      if(scene.environment)scene.environment.dispose();scene.environment=pmrem.fromScene(env,.04).texture}};
+    return st}
+  function pose(M,e,vis,md){
+    M.parts.forEach(p=>{p.h.position.set(p.base.x+p.off.x*e,p.base.y+p.off.y*e,p.base.z+p.off.z*e);
+      if(p.rotOff)p.h.rotation.set(p.rotOff[0]*e,p.rotOff[1]*e,p.rotOff[2]*e)});
+    const m=M.mats;
+    ['body','paint','dark','metal','mirror','accent','pcb'].forEach(q=>{m[q].opacity=vis*md.solid;m[q].depthWrite=md.solid>.6});
+    m.glass.opacity=vis*md.solid*.22;m.ghost.opacity=vis*.12;if(M.leafMat)M.leafMat.opacity=vis*md.solid;
+    m.edge.opacity=vis*md.edge;
+    M.parts.forEach(p=>(p.meshes||[p.mesh]).forEach(m=>m.visible=m.material.opacity>.005))}
+  function anchorWorld(p,out){if(p.anchor){out.copy(p.anchor);return p.h.localToWorld(out)}return p.h.getWorldPosition(out)}
+  const MODES={solid:{solid:1,edge:.85},wire:{solid:0,edge:1},xray:{solid:.14,edge:.8}};
+  return {build,makeStage,pose,MODES,loadReal,anchorWorld};
+})();
+
+/* ===================== HOME THEATRE ===================== */
+const home3D=(function(){
+  if(!K3)return null;
+  const canvas=$('gl');let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})}catch(e){return null}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputEncoding=THREE.sRGBEncoding;
+  const st=K3.makeStage(renderer),scene=st.scene;
+  const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,0,12);
+  const visH=2*Math.tan(15*Math.PI/180)*12;
+  for(let i=0;i<N;i++)st.models.push(K3.build(i,scene));
+  K3.loadReal();
+  st.theme();themeHooks.push(st.theme);
+  const md={solid:1,edge:.85},mt={solid:1,edge:.85};
+  document.querySelectorAll('[data-modes="home"] [data-mode]').forEach(b=>b.addEventListener('click',()=>{
+    b.parentNode.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));Object.assign(mt,K3.MODES[b.dataset.mode])}));
+  const NS='http://www.w3.org/2000/svg',lsvg=$('leaders'),lwrap=$('labels'),pool=[];
+  for(let i=0;i<12;i++){const ln=document.createElementNS(NS,'line'),c=document.createElementNS(NS,'circle');c.setAttribute('r','3');lsvg.append(ln,c);
+    const d=document.createElement('div');d.className='lbl';d.innerHTML='<b></b><span></span>';lwrap.appendChild(d);pool.push({ln,c,d,w:0})}
+  let mobile=false;
+  function size(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();mobile=w<900;lsvg.setAttribute('viewBox',`0 0 ${w} ${h}`)}
+  size();addEventListener('resize',size);
+  const tmp=new THREE.Vector3();
+  function toWorld(sx,sy){tmp.set(sx/innerWidth*2-1,-(sy/innerHeight)*2+1,.5).unproject(camera).sub(camera.position).normalize();const d=-camera.position.z/tmp.z;return camera.position.clone().add(tmp.multiplyScalar(d))}
+  const coverFig=$('coverFig'),plate=$('plate'),theatre=$('theatre');
+  let rx=0,ry=0,last=performance.now();const t0=last;const v3=new THREE.Vector3();
+  function hide(){canvas.style.visibility='hidden';lsvg.style.visibility=lwrap.style.visibility='hidden'}
+  function frame(now){
+    requestAnimationFrame(frame);
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    if(S.view!=='home'){hide();return}
+    const tb=theatre.getBoundingClientRect();
+    if(tb.bottom<-50){hide();return}
+    canvas.style.visibility='visible';lsvg.style.visibility=lwrap.style.visibility='visible';
+    const t=(now-t0)/1000;
+    const nx=px>-9000?(px/innerWidth-.5)*2:0,ny=py>-9000?(py/innerHeight-.5)*2:0;
+    rx+=(ny*.14-rx)*.05;ry+=(nx*.4-ry)*.05;
+    for(const k in md)md[k]+=(mt[k]-md[k])*.1;
+    const A=coverFig.getBoundingClientRect(),Bp=plate.getBoundingClientRect(),hp=S.heroP;
+    /* mobile: no travel across the cover text; fade out at the cover, fade in at the plate */
+    const k=mobile?(hp<.5?0:1):smooth(hp),fm=mobile?(hp<.5?1-smooth((hp-.12)/.3):smooth((hp-.6)/.3)):1;
+    const cx=lerp(A.left+A.width/2,Bp.left+Bp.width/2,k),cy=lerp(A.top+A.height*.46,Bp.top+Bp.height*.5,k);
+    const hh=lerp(Math.min(A.height,A.width*.85),Math.min(Bp.height,Bp.width*.85),k);
+    const anchor=toWorld(cx,cy);const HERO_ZOOM=mobile?1.1:1.6;const base=clamp(hh/innerHeight*visH*.165,.25,1.3)*lerp(HERO_ZOOM,1,k)*(mobile?.88:1);
+    const cf=S.cf,active=clamp(Math.floor(cf),0,N-1);
+    const items=[];let shadowVis=0,shadowS=1;
+    st.models.forEach((M,i)=>{
+      const lt=cf-i;const vin=i===0?1:smooth((lt+.12)/.2),vout=i===N-1?1:1-smooth((lt-.88)/.2);const vis=Math.min(vin,vout)*fm;
+      M.g.visible=vis>.002;if(!M.g.visible)return;
+      let e=smooth((lt-.1)/.28)*(1-smooth((lt-.66)/.22));if(reduce)e=lt>.2&&lt<.8?1:0;
+      const s=base*M.scale*(.75+.25*vis)*(mobile&&i===3?.74:1);
+      M.g.position.set(anchor.x,anchor.y+((1-vin)*-2.4+(1-vout)*2.6)*base,0);M.g.scale.setScalar(s);
+      const spin=reduce?0:(lt*Math.PI*1.4+(1-vin)*-1.2+(1-vout)*1.2+(1-k)*t*.25);
+      M.g.rotation.set(.22+rx,-.55+spin+ry,0);
+      K3.pose(M,e,vis,md);
+      M.spinners.forEach(([o,r])=>{if(!reduce)o.rotation.z+=r*dt});
+      if(vis>shadowVis){shadowVis=vis;shadowS=s}
+      if(i===active){
+        readout(e,((M.g.rotation.y*180/Math.PI)%360+360)%360,lt);
+        if(e>.55&&vis>.9&&!mobile&&k>.98)M.parts.forEach(p=>{if(!p.label)return;K3.anchorWorld(p,v3);v3.project(camera);
+          items.push({x:(v3.x*.5+.5)*innerWidth,y:(-v3.y*.5+.5)*innerHeight,t:p.label})});
+      }});
+    st.shadow.position.set(anchor.x,anchor.y-1.75*shadowS,-.5);st.shadow.scale.setScalar(shadowS*4.2);st.shadow.material.opacity=shadowVis*(md.solid*.5+.15);
+    const midX=Bp.left+Bp.width/2;const L=items.filter(o=>o.x<midX).sort((a,b)=>a.y-b.y),R=items.filter(o=>o.x>=midX).sort((a,b)=>a.y-b.y);
+    let pi=0;
+    [[L,'l'],[R,'r']].forEach(([arr,side])=>{let prev=Bp.top+50;
+      arr.forEach(o=>{if(pi>=pool.length)return;const P=pool[pi++];const ly=Math.max(clamp(o.y,Bp.top+80,Bp.bottom-88),prev+28);prev=ly;
+        P.d.className='lbl '+side;
+        if(P.d.dataset.t!==o.t){P.d.querySelector('span').textContent=o.t;P.d.dataset.t=o.t;P.w=P.d.offsetWidth}
+        P.d.querySelector('b').textContent=String(pi).padStart(2,'0');
+        const lx=side==='l'?Bp.left+32:Bp.right-32-P.w;const endX=side==='l'?lx+P.w+6:lx-6;
+        P.d.style.transform=`translate(${lx}px,${ly-10}px)`;P.d.style.opacity=1;
+        P.ln.setAttribute('x1',o.x);P.ln.setAttribute('y1',o.y);P.ln.setAttribute('x2',endX);P.ln.setAttribute('y2',ly);P.ln.style.opacity=1;
+        P.c.setAttribute('cx',o.x);P.c.setAttribute('cy',o.y);P.c.style.opacity=1})});
+    for(;pi<pool.length;pi++){pool[pi].d.style.opacity=0;pool[pi].ln.style.opacity=0;pool[pi].c.style.opacity=0}
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(frame);
+  return {};
+})();
+
+/* ===================== PROJECT VIEWER ===================== */
+function createViewer(box,idx){
+  if(!K3)return null;
+  const canvas=box.querySelector('canvas');let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})}catch(e){return null}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputEncoding=THREE.sRGBEncoding;
+  const st=K3.makeStage(renderer);const M=K3.build(idx,st.scene);st.models.push(M);st.theme();
+  const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,.2,12);
+  const md={solid:1,edge:.85},mt={solid:1,edge:.85};
+  box.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
+    box.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));Object.assign(mt,K3.MODES[b.dataset.mode])}));
+  const range=box.querySelector('input'),out=box.querySelector('output');
+  let eT=reduce?.6:0,e=0,yaw=-.55,pitch=.22,vy=reduce?0:.25,drag=null,touched=false;
+  range.addEventListener('input',()=>{eT=range.value/100;out.textContent=range.value+'%';touched=true});
+  canvas.addEventListener('pointerdown',ev=>{drag={x:ev.clientX,y:ev.clientY,yaw,pitch};canvas.setPointerCapture(ev.pointerId);vy=0;touched=true});
+  canvas.addEventListener('pointermove',ev=>{if(!drag)return;yaw=drag.yaw+(ev.clientX-drag.x)*.01;pitch=clamp(drag.pitch+(ev.clientY-drag.y)*.006,-.6,.9)});
+  const end=()=>{drag=null};canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);
+  let visible=true,alive=true;const io=new IntersectionObserver(es=>visible=es[0].isIntersecting);io.observe(box);
+  function size(){const r=box.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/Math.max(1,r.height);camera.updateProjectionMatrix();
+    const vh=2*Math.tan(15*Math.PI/180)*12;const fit=Math.min(vh,vh*camera.aspect);M.g.scale.setScalar(fit*.17*M.scale*(r.width<700?(idx===3?.78:.88):1))}
+  size();const ro=new ResizeObserver(size);ro.observe(box);
+  themeHooks.push(st.theme);
+  let last=performance.now(),t0=last,intro=0,lastVer=M.ver;
+  function frame(now){if(!alive)return;requestAnimationFrame(frame);const dt=Math.min(.05,(now-last)/1000);last=now;if(!visible)return;
+    const t=(now-t0)/1000;
+    if(!touched&&!reduce){eT=.5-.5*Math.cos(t*.55);range.value=Math.round(eT*100);out.textContent=range.value+'%'}
+    e+=(eT-e)*.08;for(const k in md)md[k]+=(mt[k]-md[k])*.1;
+    if(!drag)yaw+=vy*dt;
+    intro=Math.min(1,intro+dt*1.2);
+    M.g.rotation.set(pitch,yaw,0);M.g.position.y=(1-smooth(intro))*-1;
+    K3.pose(M,e,smooth(intro),md);M.spinners.forEach(([o,r])=>{if(!reduce)o.rotation.z+=r*dt});
+    if(M.ver!==lastVer){lastVer=M.ver;size();const lg=$('legend');if(lg)lg.innerHTML=M.parts.filter(p=>p.label).map(p=>`<li><span>${p.label}</span></li>`).join('')}
+    st.shadow.position.set(0,-1.8*M.g.scale.x,-.5);st.shadow.scale.setScalar(M.g.scale.x*4.2);st.shadow.material.opacity=md.solid*.5+.15;
+    renderer.render(st.scene,camera)}
+  requestAnimationFrame(frame);
+  return {destroy(){alive=false;io.disconnect();ro.disconnect();const i=themeHooks.indexOf(st.theme);if(i>-1)themeHooks.splice(i,1);
+    st.scene.traverse(o=>{if(o.geometry&&!o.geometry.userData.shared)o.geometry.dispose()});renderer.dispose();try{renderer.forceContextLoss()}catch(e){}},
+    get labels(){return M.parts.filter(p=>p.label).map(p=>p.label)},model:M};
+}
+
+/* ===================== HOME SPREADS STATE ===================== */
+const arts=[...document.querySelectorAll('.art')],stripB=[...document.querySelectorAll('#strip button')];
+const NAMES=['SEAT Ateca side mirror','Ardura self-sufficient smart pot','Cycle Dry, Orbea rear rack','Self-sufficient house in Gudamendi','Mercedes V-Class air vent'];
+let cur=0;const folio=$('folio');
+function setActive(i){if(i===cur)return;arts[cur].classList.remove('on');stripB[cur].classList.remove('on');cur=i;
+  const a=arts[i];a.classList.add('on');stripB[i].classList.add('on');
+  $('figno').innerHTML=String(i+1).padStart(2,'0')+'<small>/ 05</small>';$('capT').textContent='Fig. '+String(i+1).padStart(2,'0');$('capName').textContent=NAMES[i];
+  folio.textContent=a.dataset.p;
+  if(hasGSAP&&!reduce){gsap.fromTo(a.querySelectorAll('.ln > span'),{yPercent:110},{yPercent:0,duration:.9,ease:'expo.out',stagger:.07,overwrite:true});
+    gsap.fromTo(a.querySelectorAll('.kick,.deck,.body,.spec,.more'),{y:14,opacity:0},{y:0,opacity:1,duration:.7,ease:'power3.out',stagger:.06,delay:.1,overwrite:true});
+    gsap.fromTo('#figno',{yPercent:40,opacity:0},{yPercent:0,opacity:1,duration:.6,ease:'power3.out',overwrite:true})}}
+function readout(e){$('rEx').textContent=String(Math.round(e*100)).padStart(3,'0')+' %'}
+
+/* ===================== WORKS INDEX ===================== */
+const toc=$('toc'),filters=$('filters');
+toc.innerHTML=PROJ.map(p=>`<li data-terr="${p.terr.join(' ')}"><a href="#${p.id}" data-pid="${p.id}" data-cursor="Open"><span class="pg">${String(p.n).padStart(2,'0')}</span><span class="t">${p.title}<small>${p.sub}</small></span><span class="lead"></span><span class="ct">${p.terr.map(t=>TERR[t]).join(' · ')}</span><span class="yr">${p.year||'—'}</span><span class="go">↗</span></a></li>`).join('');
+const fkeys=['all',...Object.keys(TERR)];
+filters.innerHTML=fkeys.map(k=>`<button data-f="${k}" aria-pressed="${k==='all'}">${k==='all'?'All':TERR[k]} <sup>${k==='all'?PROJ.length:PROJ.filter(p=>p.terr.includes(k)).length}</sup></button>`).join('')+`<span class="wcount mono" id="wcount">${PROJ.length} works</span>`;
+filters.addEventListener('click',ev=>{const b=ev.target.closest('[data-f]');if(!b)return;const f=b.dataset.f;
+  filters.querySelectorAll('[data-f]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  const lis=[...toc.children];let n=0;
+  lis.forEach(li=>{const on=f==='all'||li.dataset.terr.split(' ').includes(f);li.classList.toggle('off',!on);if(on)n++});
+  $('wcount').textContent=n+(n===1?' work':' works');
+  if(hasGSAP&&!reduce)gsap.fromTo(lis.filter(li=>!li.classList.contains('off')),{y:18,opacity:0},{y:0,opacity:1,duration:.6,stagger:.04,ease:'power3.out',overwrite:true});
+  if(hasGSAP)ScrollTrigger.refresh()});
+
+/* ===================== PROJECT PAGE ===================== */
+const vProject=$('v-project');let viewer=null;
+function img(id,cap,lazy=true){const d=IMG[id]||[1600,1000];return `<img src="img/${id}.jpg" width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
+function renderProject(p){
+  let fig=1;const F=()=>`Fig. ${String(fig++).padStart(2,'0')}`;
+  const idx=PROJ.indexOf(p),next=PROJ[(idx+1)%PROJ.length];
+  const spec=[['My role',p.role,'role'],['Year',p.year],['Client',p.client],['Context',p.ctx],['Team',p.team],['Tools',p.tools],['Distinction',p.award?`<span class="stamp">${p.award}</span>`:'']].filter(r=>r[1]);
+  let h=`<div class="inner"><a class="pback" href="#works">← All works</a>
+  <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>Work ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${p.title}</span></span></h1></div>
+  <div class="pintro"><p class="deck">${p.deck}</p><dl class="spec2">${spec.map(r=>`<dt>${r[0]}</dt><dd${r[2]?` class="${r[2]}"`:''}>${r[1]}</dd>`).join('')}</dl></div>`;
+  if(p.m3d!==undefined){h+=`<figure class="plate pplate" id="pplate"><span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span><canvas aria-label="Interactive exploded 3D model of ${p.title}. Drag to rotate."></canvas>
+    <div class="ptop"><span class="figno">${F().replace('Fig. ','')}<small>3D · drag to rotate</small></span><div class="modes" role="group" aria-label="3D model view"><button data-mode="solid" aria-pressed="true">Solid</button><button data-mode="wire" aria-pressed="false">Wireframe</button><button data-mode="xray" aria-pressed="false">X-ray</button></div></div>
+    <ol class="legend" id="legend"></ol>
+    <figcaption class="pcap"><p><b>Exploded view</b> Simplified model of ${p.title}, generated in code.</p><div class="xbar mono"><label for="xr">Explode</label><input type="range" id="xr" min="0" max="100" value="0"><output>0%</output></div></figcaption></figure>`}
+  if(p.stats)h+=`<div class="pstats">${p.stats.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`;
+  if(p.hero)h+=`<figure class="pherofig">${img(p.hero[0],p.hero[1],false)}<figcaption><b>${F()}</b>${p.hero[1]}</figcaption></figure>`;
+  p.sec.forEach((s,i)=>{const [title,paras,figs,list]=s;
+    h+=`<section class="psec"><div class="ph2"><span class="mono">§ ${String(i+1).padStart(2,'0')}</span><h2>${title}</h2></div><div class="pb">${(paras||[]).map(t=>t.startsWith('<span')?t:`<p>${t}</p>`).join('')}${list?`<ul>${list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${figs&&figs.length?`<div class="figs">${figs.map(f=>`<figure>${img(f[0],f[1])}<figcaption><b>${F()}</b>${f[1]}</figcaption></figure>`).join('')}</div>`:''}</div></section>`});
+  h+=`<a class="pnext" href="#${next.id}" data-cursor="Next"><span class="mono">Next work</span><span class="t">${next.title} →</span></a></div><div style="height:40px"></div>`;
+  vProject.innerHTML=h;
+  if(p.m3d!==undefined){viewer=createViewer($('pplate'),p.m3d);if(viewer)$('legend').innerHTML=viewer.labels.map(l=>`<li><span>${l}</span></li>`).join('')}
+}
+
+/* lightbox */
+const lb=$('lb');
+document.addEventListener('click',ev=>{const im=ev.target.closest('[data-zoom]');if(!im)return;$('lbImg').src=im.src;$('lbImg').alt=im.alt;$('lbCap').textContent=im.dataset.cap;lb.hidden=false;lenis&&lenis.stop();$('lbClose').focus()});
+function closeLb(){if(lb.hidden)return;lb.hidden=true;lenis&&lenis.start()}
+$('lbClose').addEventListener('click',closeLb);lb.addEventListener('click',ev=>{if(ev.target===lb)closeLb()});
+addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLb()});
+
+/* ===================== ROUTER ===================== */
+let lenis=null;
+const views={home:$('v-home'),works:$('v-works'),project:vProject,about:$('v-about')};
+let ctx=null,pendingScroll=null,first=true;
+function parse(){const h=(location.hash||'').slice(1);if(!h||h==='home')return{v:'home'};if(h==='works')return{v:'works'};if(h==='about')return{v:'about'};if(byId[h])return{v:'project',p:byId[h]};return{v:'home'}}
+function navState(r){document.querySelectorAll('[data-nav]').forEach(a=>{const on=(r.v==='works'&&a.dataset.nav==='works')||(r.v==='about'&&a.dataset.nav==='about')||(r.v==='project'&&a.dataset.nav==='works');a.toggleAttribute('aria-current',on);if(on)a.setAttribute('aria-current','page')})}
+function show(r){
+  if(viewer){viewer.destroy();viewer=null}
+  if(ctx){ctx.revert();ctx=null}
+  Object.entries(views).forEach(([k,el])=>el.hidden=k!==r.v);
+  S.view=r.v;navState(r);
+  if(r.v==='project'){renderProject(r.p);folio.textContent=r.p.page;document.title=r.p.title+' · Mikel Arnao'}
+  else{document.title='Portfolio Mikel Arnao';folio.textContent={home:'01',works:'08',about:'21'}[r.v]}
+  if(lenis){lenis.resize();lenis.scrollTo(0,{immediate:true,force:true})}else scrollTo(0,0);
+  if(hasGSAP){ScrollTrigger.refresh();enter(r)}
+  if(pendingScroll){const t=pendingScroll;pendingScroll=null;setTimeout(()=>scrollToSection(t),60)}
+}
+const QUIET_TX=true; /* false = black wipe */
+function wipeLabel(r){return r.v==='project'?r.p.title:{home:'Home',works:'Works',about:'About'}[r.v]}
+function go(){const r=parse();
+  if(first||reduce||!hasGSAP){first=false;show(r);return}
+  if(QUIET_TX){const pg=views.home.parentNode;
+    gsap.timeline().to(pg,{opacity:0,y:-14,duration:.32,ease:'power2.in'})
+      .add(()=>{try{show(r)}catch(e){console.error(e)}}).set(pg,{y:18})
+      .to(pg,{opacity:1,y:0,duration:.6,ease:'power3.out',clearProps:'transform,opacity'});return}
+  $('wipeT').innerHTML=wipeLabel(r);$('wipeK').textContent=r.v==='project'?'Work '+String(r.p.n).padStart(2,'0'):'Turning page';
+  gsap.timeline().set('#wipe',{visibility:'visible',y:0,yPercent:100}).to('#wipe',{yPercent:0,duration:.55,ease:'expo.inOut'})
+    .add(()=>{try{show(r)}catch(e){console.error(e)}}).to('#wipe',{yPercent:-100,duration:.7,ease:'expo.inOut',delay:.12}).set('#wipe',{visibility:'hidden',yPercent:100})}
+addEventListener('hashchange',go);
+document.addEventListener('click',ev=>{const a=ev.target.closest('[data-home]');if(!a)return;ev.preventDefault();
+  if(S.view==='home'){scrollToSection(a.dataset.home)}else{pendingScroll=a.dataset.home;if(location.hash==='#home'||location.hash==='')go();else location.hash='home'}});
+function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollTo(el,{duration:1.6,offset:-40});else el.scrollIntoView({behavior:reduce?'auto':'smooth'})}
+
+if(!hasGSAP){go();return}
+gsap.registerPlugin(ScrollTrigger);
+if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+
+gsap.to('.progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3,invalidateOnRefresh:true}});
+const thST=ScrollTrigger.create({trigger:'#theatre',start:'top top',end:'bottom bottom',onUpdate:s=>{if(S.view!=='home')return;S.cf=s.progress*N;setActive(clamp(Math.floor(S.cf),0,N-1))},
+  onToggle:s=>{if(s.isActive&&S.view==='home')folio.textContent=arts[cur].dataset.p}});
+ScrollTrigger.create({trigger:'#cover',start:'top top',end:'bottom top',onUpdate:s=>{if(S.view==='home')S.heroP=s.progress}});
+/* plate frame: draws from bottom-centre outwards once the hero model docks */
+const PF=(()=>{const f=$('pframe');if(!f)return null;const q=c=>f.querySelector(c);const st={p:0};
+  const draw=()=>{const p=st.p,c=v=>Math.max(0,Math.min(1,v));
+    q('.b').style.transform=`scaleX(${c(p/.3)})`;
+    const sd=c((p-.3)/.35);q('.l').style.transform=q('.r').style.transform=`scaleY(${sd})`;
+    const tp=c((p-.65)/.35);q('.tl').style.transform=q('.tr').style.transform=`scaleX(${tp})`};
+  let on=false,tw=null;
+  return {check(){const want=S.heroP>.97;if(want===on)return;on=want;tw&&tw.kill();
+    tw=reduce?(st.p=on?1:0,draw(),null):gsap.to(st,{p:on?1:0,duration:on?1.6:.45,ease:on?'power2.inOut':'power1.in',onUpdate:draw})}}})();
+if(PF)gsap.ticker.add(()=>{if(S.view==='home')PF.check()});
+function goChapter(i){const run=()=>{const top=thST.start+(thST.end-thST.start)*((i+.45)/N);lenis?lenis.scrollTo(top,{duration:2}):scrollTo({top,behavior:reduce?'auto':'smooth'})};
+  if(S.view!=='home'){location.hash='home';setTimeout(run,1500)}else run()}
+stripB.forEach((b,i)=>b.addEventListener('click',()=>goChapter(i)));
+document.querySelectorAll('.lines [data-go]').forEach(b=>b.addEventListener('click',()=>goChapter(+b.dataset.go)));
+document.querySelectorAll('#v-home [data-folio]').forEach(sec=>ScrollTrigger.create({trigger:sec,start:'top 50%',end:'bottom 50%',onToggle:s=>{if(s.isActive&&S.view==='home')folio.textContent=sec.dataset.folio}}));
+
+/* intro */
+const intro=$('intro');
+function coverIn(){if(reduce||S.view!=='home')return;
+  gsap.from('.mast .ch',{yPercent:105,duration:1.3,ease:'expo.out',stagger:.035,delay:.05});
+  
+  gsap.from('.cover-deck, .lines li, .cover-fig > *',{y:18,opacity:0,duration:.9,stagger:.05,ease:'power3.out',delay:.35})}
+go();
+intro.style.display='none';coverIn();
+if(false){const o={v:0};gsap.from('.reg',{rotate:-90,scale:.6,duration:1.4,ease:'expo.out'});
+  gsap.to(o,{v:100,duration:1.4,ease:'power2.inOut',onUpdate:()=>$('count').textContent=String(Math.round(o.v)).padStart(3,'0'),
+    onComplete:()=>{gsap.to(intro,{clipPath:'inset(0 0 100% 0)',duration:.9,ease:'expo.inOut',onComplete:()=>intro.style.display='none'});coverIn()}})}
+
+/* page-level entrance animations (scoped, reverted on leave) */
+function enter(r){
+  if(reduce)return;
+  ctx=gsap.context(()=>{
+    if(r.v==='works'){
+      gsap.from('#v-works .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
+      gsap.from('#filters > *',{y:10,opacity:0,duration:.6,stagger:.04,ease:'power3.out',delay:.35});
+      gsap.from('#toc li:not(.off)',{y:30,opacity:0,duration:.8,stagger:.05,ease:'power3.out',delay:.4});
+    }
+    if(r.v==='project'){
+      gsap.from('#v-project .shead .ln > span',{yPercent:110,duration:1.2,ease:'expo.out',delay:.25});
+      gsap.from('#v-project .pintro > *, #v-project .pback',{y:24,opacity:0,duration:.9,stagger:.08,ease:'power3.out',delay:.4});
+      gsap.utils.toArray('#v-project .pstats > div').forEach((d,i)=>gsap.from(d,{y:30,opacity:0,duration:.8,delay:i*.08,ease:'power3.out',scrollTrigger:{trigger:d,start:'top 90%'}}));
+      gsap.utils.toArray('#v-project .psec').forEach(s=>{gsap.from(s.querySelector('.ph2'),{x:-20,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:s,start:'top 82%'}});
+        gsap.from(s.querySelectorAll('.pb > *'),{y:26,opacity:0,duration:.9,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:s,start:'top 80%'}})});
+      gsap.utils.toArray('#v-project .figs img, #v-project .pherofig img').forEach(im=>gsap.from(im,{clipPath:'inset(0 0 100% 0)',duration:1.2,ease:'expo.inOut',scrollTrigger:{trigger:im,start:'top 88%'}}));
+    }
+    if(r.v==='about'){
+      gsap.from('#v-about .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
+      gsap.fromTo('#lede .w',{opacity:.15},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:'#lede',start:'top 85%',end:'bottom 45%',scrub:true}});
+      gsap.from('.lang i',{scaleX:0,duration:1.2,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.lang',start:'top 92%'}});
+      gsap.from('.prof .cols p, .prof aside',{y:24,opacity:0,duration:.9,stagger:.1,ease:'power3.out',delay:.3});
+      gsap.from('.big .ch, .big em',{yPercent:105,duration:1.1,stagger:.04,ease:'expo.out',scrollTrigger:{trigger:'.big',start:'top 88%'}});
+      gsap.from('#contact .shead h2',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:'#contact',start:'top 85%'}});
+    }
+  });
+}
+
+/* cover parallax */
+if(!reduce){
+  gsap.to('.mast',{yPercent:-30,ease:'none',scrollTrigger:{trigger:'#cover',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('.cover-left,.issue,.cover-fig > *',{opacity:0,ease:'none',scrollTrigger:{trigger:'#cover',start:'30% top',end:'85% top',scrub:true}});
+}
+
+/* proximity type */
+function proximity(sel,radius){const chs=[...document.querySelectorAll(sel+' .ch')];let centers=[];const cv=chs.map(()=>0);
+  const measure=()=>{centers=chs.map(c=>{const r=c.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2+scrollY]})};
+  measure();addEventListener('resize',measure);document.fonts&&document.fonts.ready.then(measure);ScrollTrigger.addEventListener('refresh',measure);
+  gsap.ticker.add(()=>{if(px<-9000)return;chs.forEach((c,i)=>{if(!centers[i])return;const d=Math.hypot(px-centers[i][0],py-(centers[i][1]-scrollY));const kk=smooth(1-d/radius);cv[i]+=(kk-cv[i])*.15;
+    if(cv[i]<.003&&!c.style.fontWeight)return;c.style.fontWeight=Math.round(640-340*cv[i]);c.style.color=cv[i]>.55?'var(--spot)':''})})}
+if(fine&&!reduce){proximity('.mast',220);proximity('.big',260)}
+
+/* ticker */
+const rows=[...document.querySelectorAll('.trow')].map(r=>{r.innerHTML+=r.innerHTML+r.innerHTML;return{el:r,x:0,dir:+r.dataset.dir}});
+let vel=0;if(lenis)lenis.on('scroll',e=>vel=e.velocity||0);
+gsap.ticker.add((t,dt)=>{if(reduce||S.view!=='home')return;rows.forEach(r=>{const w=r.el.scrollWidth/3;r.x-=(.6+Math.abs(vel)*.4)*r.dir*(dt/16);if(r.x<-w)r.x+=w;if(r.x>0)r.x-=w;
+  r.el.style.transform=`translateX(${r.x}px) skewX(${clamp(-vel*.35,-8,8)}deg)`});vel*=.92});
+
+/* home section heads */
+if(!reduce)gsap.utils.toArray('#v-home .shead').forEach(h=>gsap.from(h.querySelector('h2'),{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:h,start:'top 85%'}}));
+
+/* works peek */
+const peek=$('peek');
+if(fine){const qx=gsap.quickTo(peek,'x',{duration:.5,ease:'power3'}),qy=gsap.quickTo(peek,'y',{duration:.5,ease:'power3'});
+  toc.addEventListener('pointerover',ev=>{const a=ev.target.closest('[data-pid]');if(!a||a.dataset.on)return;toc.querySelectorAll('[data-on]').forEach(x=>delete x.dataset.on);a.dataset.on=1;
+    const p=byId[a.dataset.pid];
+    if(p.cover){peek.innerHTML=`<img src="img/${p.cover}.jpg" alt=""><span class="cap">${p.title}</span>`}
+    else{peek.innerHTML='<svg viewBox="0 0 240 160">'+DRAW[p.sk]+'</svg><span class="cap">'+p.title+' · sketch</span>';
+      if(!reduce){const els=peek.querySelectorAll('path,rect,circle');els.forEach(el=>el.setAttribute('pathLength','1'));gsap.fromTo(els,{strokeDasharray:1,strokeDashoffset:1},{strokeDashoffset:0,duration:.9,stagger:.05,ease:'power2.out'})}}
+    peek.classList.add('on')});
+  toc.addEventListener('pointerleave',()=>{peek.classList.remove('on');toc.querySelectorAll('[data-on]').forEach(x=>delete x.dataset.on)});
+  addEventListener('pointermove',e=>{qx(e.clientX+26);qy(e.clientY-120)});
+  addEventListener('hashchange',()=>peek.classList.remove('on'))}
+
+/* appendix (guarded) */
+if($('cubeBox')){
+if(!reduce)gsap.from('.fig',{y:50,opacity:0,duration:.9,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.apx',start:'top 85%'}});
+const cube=$('cube'),cubeBox=$('cubeBox');let cr={x:-20,y:30};
+gsap.ticker.add(t=>{if(S.view!=='home')return;const c=cubeBox.getBoundingClientRect();if(c.bottom<0||c.top>innerHeight)return;const inside=px>c.left&&px<c.right&&py>c.top&&py<c.bottom;
+  const tx=inside?((py-c.top)/c.height-.5)*-120:-20,ty=inside?((px-c.left)/c.width-.5)*180:(reduce?30:t*25);
+  cr.x+=(tx-cr.x)*.08;cr.y+=(ty-cr.y)*.08;cube.style.transform=`rotateX(${cr.x}deg) rotateY(${cr.y}deg)`});
+const knob=$('knob'),sph=$('sphere');let ang=315,drag=false,idle=0;
+function setAng(a){ang=(a%360+360)%360;knob.style.transform=`rotate(${ang}deg)`;const r=(ang-90)*Math.PI/180;
+  sph.style.setProperty('--lx',(50+Math.cos(r)*30)+'%');sph.style.setProperty('--ly',(50+Math.sin(r)*30)+'%');$('knobRead').textContent=Math.round(ang)+'°';knob.setAttribute('aria-valuenow',Math.round(ang))}
+setAng(315);
+knob.addEventListener('pointerdown',e=>{drag=true;knob.setPointerCapture(e.pointerId)});
+knob.addEventListener('pointermove',e=>{if(!drag)return;const r=knob.getBoundingClientRect();setAng(Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI+90)});
+knob.addEventListener('pointerup',()=>drag=false);
+knob.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowUp'){setAng(ang+10);e.preventDefault()}if(e.key==='ArrowLeft'||e.key==='ArrowDown'){setAng(ang-10);e.preventDefault()}});
+if(!reduce)gsap.ticker.add((t,dt)=>{if(drag||document.activeElement===knob){idle=0;return}idle+=dt;if(idle>2500)setAng(ang+dt*.02)});
+const layers=$('layers'),lis=[];for(let i=0;i<18;i++){const s=document.createElement('i');s.style.width=(66+Math.sin(i*.55)*22+i)+'%';layers.appendChild(s);lis.push(s)}
+if(reduce){lis.forEach(l=>l.style.transform='scaleX(1)');$('layerRead').textContent='Layer 18 · 0.20 mm'}
+else{const tl=gsap.timeline({repeat:-1,repeatDelay:.8,paused:true});
+  lis.forEach((l,i)=>tl.to(l,{scaleX:1,duration:.2,ease:'none',onStart:()=>$('layerRead').textContent=`Layer ${String(i+1).padStart(2,'0')} · 0.20 mm`}));
+  tl.to(lis,{opacity:0,duration:.4}).set(lis,{scaleX:0,opacity:1});
+  ScrollTrigger.create({trigger:layers,start:'top bottom',end:'bottom top',onToggle:s=>s.isActive?tl.play():tl.pause()})}
+const tap=$('tap'),phs=[...document.querySelectorAll('.phone')];
+if(!reduce){const tt=gsap.timeline({repeat:-1});phs.forEach(p=>{const a=p.querySelector('.a');
+  tt.to(tap,{x:()=>p.offsetLeft+a.offsetLeft+a.offsetWidth/2-8,y:()=>p.offsetTop+a.offsetTop+a.offsetHeight/2-8,duration:.7,ease:'power2.inOut'})
+    .to(tap,{scale:.6,duration:.12,yoyo:true,repeat:1}).to(p,{y:-6,duration:.2,yoyo:true,repeat:1},'<')})}
+else tap.style.display='none';
+const codeEl=$('code');
+const src=[['c','// app/page.tsx\n'],['k','export default'],['',' function '],['k','Home'],['','() {\n  '],['k','return'],['',' (\n    <main className="grid min-h-svh">\n      <Model3D src="/ardura.glb" explode />\n      <h1>From idea to part</h1>\n    </main>\n  );\n}']];
+const flat=[];src.forEach(([c,t])=>[...t].forEach(ch=>flat.push([c,ch])));let ci=flat.length,typing=null;
+function renderCode(){let h='',cls=null;for(let i=0;i<ci;i++){const[c,ch]=flat[i];const e=ch.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if(c!==cls){if(cls!==null)h+='</span>';h+=c?`<span class="${c}">`:'<span>';cls=c}h+=e}if(cls!==null)h+='</span>';codeEl.innerHTML=h+'<span class="caret"></span>'}
+renderCode();
+if(!reduce)ScrollTrigger.create({trigger:codeEl,start:'top 85%',onEnter:startT,onEnterBack:startT});
+function startT(){if(typing)return;ci=0;typing=setInterval(()=>{ci++;renderCode();if(ci>=flat.length){clearInterval(typing);setTimeout(()=>typing=null,4000)}},26)}
+const arm=$('arm'),rf=$('robotFig'),Bs={x:60,y:150},L1=64,L2=56,T={x:170,y:60};
+gsap.ticker.add(t=>{if(S.view!=='home')return;const c=arm.getBoundingClientRect();if(c.bottom<0||c.top>innerHeight)return;
+  const box=rf.querySelector('.box').getBoundingClientRect();const inside=px>box.left&&px<box.right&&py>box.top&&py<box.bottom;
+  const gx=inside?(px-c.left)/c.width*240:150+Math.cos(t*.9)*45,gy=inside?(py-c.top)/c.height*170:80+Math.sin(t*1.4)*30;
+  T.x+=(gx-T.x)*.12;T.y+=(gy-T.y)*.12;
+  let dx=T.x-Bs.x,dy=T.y-Bs.y,d=Math.hypot(dx,dy);const mx=L1+L2-1;if(d>mx){dx*=mx/d;dy*=mx/d;d=mx}if(d<12)d=12;
+  const a2=Math.acos(clamp((d*d-L1*L1-L2*L2)/(2*L1*L2),-1,1)),a1=Math.atan2(dy,dx)-Math.atan2(L2*Math.sin(a2),L1+L2*Math.cos(a2));
+  const jx=Bs.x+L1*Math.cos(a1),jy=Bs.y+L1*Math.sin(a1),ex=jx+L2*Math.cos(a1+a2),ey=jy+L2*Math.sin(a1+a2);
+  ['l1','l1b'].forEach(i=>$(i).setAttribute('d',`M${Bs.x} ${Bs.y} L${jx} ${jy}`));['l2','l2b'].forEach(i=>$(i).setAttribute('d',`M${jx} ${jy} L${ex} ${ey}`));
+  $('j1').setAttribute('cx',jx);$('j1').setAttribute('cy',jy);$('j2').setAttribute('cx',ex);$('j2').setAttribute('cy',ey);$('tgt').setAttribute('cx',T.x);$('tgt').setAttribute('cy',T.y);
+  const an=a1+a2,o=7+Math.sin(t*4)*2,nx=Math.cos(an),ny=Math.sin(an);
+  $('grip').setAttribute('d',`M${ex-ny*o} ${ey+nx*o} l${nx*10} ${ny*10} M${ex+ny*o} ${ey-nx*o} l${nx*10} ${ny*10}`);
+  $('armRead').textContent=`θ1 ${Math.round(-a1*180/Math.PI)}° · θ2 ${Math.round(-a2*180/Math.PI)}°`});
+}
+
+/* procedure */
+if(!reduce){gsap.fromTo('#railFill',{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:'#steps',start:'top 65%',end:'bottom 70%',scrub:true}});
+  gsap.utils.toArray('#steps li').forEach(li=>gsap.from(li,{x:30,opacity:.15,duration:.9,ease:'power3.out',scrollTrigger:{trigger:li,start:'top 85%'}}));
+  gsap.utils.toArray('#steps li').forEach(li=>ScrollTrigger.create({trigger:li,start:'top 66%',onEnter:()=>li.classList.add('on'),onLeaveBack:()=>li.classList.remove('on')}))}
+
+/* about lede words */
+const lede=$('lede');
+lede.innerHTML=lede.innerHTML.replace(/(<em>.*?<\/em>)|([^\s<]+)/g,(m,em,w)=>`<span class="w">${em||w}</span>`);
+
+/* crosshair cursor (delegated, works on rendered pages too) */
+if(fine&&!reduce){const xh=document.querySelector('.xh'),xr=$('xhr');
+  const qx=gsap.quickTo(xh,'x',{duration:.12}),qy=gsap.quickTo(xh,'y',{duration:.12});
+  let label=null;
+  addEventListener('pointermove',e=>{qx(e.clientX);qy(e.clientY);xr.textContent=label||`X ${String(Math.round(e.clientX)).padStart(4,'0')} · Y ${String(Math.round(e.clientY)).padStart(4,'0')}`});
+  document.addEventListener('pointerover',e=>{const t=e.target.closest('a,button,[data-cursor],[data-zoom],input,.pplate canvas');xh.classList.toggle('big',!!t);
+    label=t?(t.dataset.cursor||(t.matches('[data-zoom]')?'Enlarge':t.matches('canvas')?'Drag':null)):null});
+  document.addEventListener('pointerover',e=>{const b=e.target.closest('.btn');if(!b||b.dataset.mag)return;b.dataset.mag=1;
+    b.addEventListener('pointermove',ev=>{const r=b.getBoundingClientRect();gsap.to(b,{x:(ev.clientX-r.left-r.width/2)*.25,y:(ev.clientY-r.top-r.height/2)*.3,duration:.4,ease:'power3.out'})});
+    b.addEventListener('pointerleave',()=>gsap.to(b,{x:0,y:0,duration:.7,ease:'elastic.out(1,.4)'}))})}
+
+addEventListener('load',()=>ScrollTrigger.refresh());
+
+/* scroll cue: home only, hidden near the end */
+(function(){const cue=$('scue'),txt=$('scueT');
+  function upd(){const doc=document.documentElement;const end=doc.scrollHeight-innerHeight-scrollY<160;
+    const th=$('theatre').getBoundingClientRect();
+    const on=S.view==='home'&&!end&&!(innerWidth<900&&th.top<=innerHeight*.5);cue.classList.toggle('off',!on);
+    if(!on)return;
+    txt.textContent=th.top>innerHeight*.5?'Scroll to open the projects':(th.bottom>innerHeight?'Scroll · next project':'Scroll')}
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);addEventListener('hashchange',()=>setTimeout(upd,1400));setInterval(upd,800);upd()})();
+})();
+</script>
