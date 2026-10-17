@@ -1349,13 +1349,20 @@ const K3=(function(){
 })();
 
 /* ===================== HOME THEATRE ===================== */
+/* WebGL without a GPU (SwiftShader, llvmpipe…: GPU-less machines, blocklisted GPUs, lab tools) draws on the CPU,
+   where 1.75x pixels with antialiasing cost every frame its full length. There, render at 1x without antialiasing;
+   with a GPU nothing changes. */
+const SOFT_GL=(()=>{try{const g=document.createElement('canvas').getContext('webgl');if(!g)return false;
+  const d=g.getExtension('WEBGL_debug_renderer_info'),r=d?String(g.getParameter(d.UNMASKED_RENDERER_WEBGL)):'';
+  const x=g.getExtension('WEBGL_lose_context');x&&x.loseContext();return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r)}catch(e){return false}})();
+function makeRenderer(canvas){const r=new THREE.WebGLRenderer({canvas,antialias:!SOFT_GL,alpha:true});
+  r.setPixelRatio(SOFT_GL?1:Math.min(devicePixelRatio,1.75));r.outputEncoding=THREE.sRGBEncoding;return r}
 /* started on the frame after the first paint, so building the scene and compiling its shaders
    doesn't hold back the text */
 function startHome3D(){
   if(!K3)return null;
   const canvas=$('gl');let renderer;
-  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})}catch(e){return null}
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputEncoding=THREE.sRGBEncoding;
+  try{renderer=makeRenderer(canvas)}catch(e){return null}
   const st=K3.makeStage(renderer),scene=st.scene;
   const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,0,12);
   const visH=2*Math.tan(15*Math.PI/180)*12;
@@ -1440,8 +1447,7 @@ requestAnimationFrame(()=>setTimeout(startHome3D,0));
 function createViewer(box,idx){
   if(!K3)return null;
   const canvas=box.querySelector('canvas');let renderer;
-  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})}catch(e){return null}
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputEncoding=THREE.sRGBEncoding;
+  try{renderer=makeRenderer(canvas)}catch(e){return null}
   const st=K3.makeStage(renderer);const M=K3.build(idx,st.scene);st.models.push(M);st.theme();
   const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,.2,12);
   const md={solid:1,edge:.85},mt={solid:1,edge:.85};
