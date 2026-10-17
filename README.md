@@ -5,6 +5,7 @@ Product Design Engineer portfolio. Static site.
 - `index.html`: the whole site (HTML, CSS and JS). Routes: `/`, `/works/`, `/about/`, `/works/<project-id>/`. Old `#<route>` links redirect to these. Opened from disk it falls back to `#/works/…` URLs.
 - `tools/build-pages.mjs`: builds `dist/`, one static page per route with its view pre-rendered and its own title, description, canonical, Open Graph/Twitter tags and JSON-LD, plus `404.html`, `sitemap.xml` and `robots.txt`. No dependencies. `SITE_URL` sets the absolute URL (default: the Vercel production domain).
 - `favicon.svg`, `img/og.jpg`: favicon and default share image (1200×630).
+- `tools/build-og.mjs`: renders `img/og/<project-id>.jpg` (1200×630 share card per project), `apple-touch-icon.png` and `favicon-32.png` with the installed Chrome. Run it after changing a project's title, subtitle or cover, or the favicon (`cd tools && npm install && npm run og`), and commit the images.
 - `img/`: project photos.
 - `models/`: CAD models (SEAT mirror, Ardura, Orbea rack).
   - `*.glb`: what the site loads. Draco-compressed, with the feature edges baked in, loaded one at a time.

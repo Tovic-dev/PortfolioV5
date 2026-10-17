@@ -35,7 +35,10 @@ const once = (html, find, repl) => {
 
 function render(r, urlPath, { noindex = false, canonical = urlPath } = {}) {
   const meta = C.pageMeta(r), url = SITE + urlPath;
-  const [image, w, h] = meta.image ? [`${SITE}/img/${meta.image}.jpg`, ...(C.IMG[meta.image] || [1600, 1000])] : [`${SITE}/img/og.jpg`, 1200, 630];
+  // share image: the project's 1200×630 card (tools/build-og.mjs), else its cover photo, else the site card
+  const card = r.v === 'project' && `img/og/${r.p.id}.jpg`;
+  const [image, w, h] = card && fs.existsSync(path.join(ROOT, card)) ? [`${SITE}/${card}`, 1200, 630]
+    : meta.image ? [`${SITE}/img/${meta.image}.jpg`, ...(C.IMG[meta.image] || [1600, 1000])] : [`${SITE}/img/og.jpg`, 1200, 630];
   const ld = r.v === 'project'
     ? { '@context': 'https://schema.org', '@type': 'CreativeWork', name: r.p.title, description: meta.description, url, image,
         dateCreated: r.p.year, creator: { '@id': PERSON['@id'] }, isPartOf: { '@id': SITE + '/#website' } }
@@ -44,6 +47,9 @@ function render(r, urlPath, { noindex = false, canonical = urlPath } = {}) {
         { '@type': { about: 'ProfilePage', works: 'CollectionPage' }[r.v] || 'WebPage', name: meta.title, url, mainEntity: { '@id': PERSON['@id'] } }] };
   const head = [
     `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`,
+    `<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">`,
+    `<link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
+    `<meta name="theme-color" content="#ECECE7">`,
     canonical && `<link rel="canonical" href="${esc(SITE + canonical)}">`,
     noindex && `<meta name="robots" content="noindex">`,
     `<meta property="og:type" content="${r.v === 'project' ? 'article' : 'website'}">`,
@@ -54,6 +60,7 @@ function render(r, urlPath, { noindex = false, canonical = urlPath } = {}) {
     `<meta property="og:image" content="${esc(image)}">`,
     `<meta property="og:image:width" content="${w}">`,
     `<meta property="og:image:height" content="${h}">`,
+    `<meta property="og:image:alt" content="${esc(meta.title)}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${esc(meta.title)}">`,
     `<meta name="twitter:description" content="${esc(meta.description)}">`,
@@ -98,6 +105,6 @@ write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`)
 // static assets the pages use (the *.gltf.js wrappers are only for opening index.html from disk)
 fs.cpSync(path.join(ROOT, 'img'), path.join(OUT, 'img'), { recursive: true });
 fs.cpSync(path.join(ROOT, 'models'), path.join(OUT, 'models'), { recursive: true, filter: f => !f.endsWith('.gltf.js') });
-fs.copyFileSync(path.join(ROOT, 'favicon.svg'), path.join(OUT, 'favicon.svg'));
+for (const f of ['favicon.svg', 'favicon-32.png', 'apple-touch-icon.png']) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 
 console.log(`dist/: ${pages.length} pages + @motion, 404, sitemap.xml, robots.txt  (site ${SITE})`);
