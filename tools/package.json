@@ -3,13 +3,15 @@
   "type": "module",
   "scripts": {
     "models": "node build-models.mjs",
-    "og": "node build-og.mjs"
+    "og": "node build-og.mjs",
+    "vendor": "esbuild ../vendor/three-0.128.0/GLTFLoader.js --minify --outfile=../vendor/three-0.128.0/GLTFLoader.min.js && esbuild ../vendor/three-0.128.0/DRACOLoader.js --minify --outfile=../vendor/three-0.128.0/DRACOLoader.min.js"
   },
   "devDependencies": {
     "@gltf-transform/core": "4.4.2",
     "@gltf-transform/extensions": "4.4.2",
     "@gltf-transform/functions": "4.4.2",
     "draco3dgltf": "1.5.7",
+    "esbuild": "0.28.2",
     "playwright-core": "1.63.0",
     "three": "0.128.0"
   }

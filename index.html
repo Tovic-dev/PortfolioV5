@@ -742,8 +742,8 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 <script src="vendor/gsap-3.12.5/gsap.min.js" defer></script>
 <script src="vendor/gsap-3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="vendor/lenis-1.1.13/lenis.min.js" defer></script>
-<script src="vendor/three-0.128.0/GLTFLoader.js" defer></script>
-<script src="vendor/three-0.128.0/DRACOLoader.js" defer></script>
+<script src="vendor/three-0.128.0/GLTFLoader.min.js" defer></script>
+<script src="vendor/three-0.128.0/DRACOLoader.min.js" defer></script>
 <script>
 /* =====================================================================
    CONTENT (English). A second language can be added as another object.
@@ -1350,8 +1350,8 @@ const K3=(function(){
 
 /* ===================== HOME THEATRE ===================== */
 /* WebGL without a GPU (SwiftShader, llvmpipe…: GPU-less machines, blocklisted GPUs, lab tools) draws on the CPU,
-   where 1.75x pixels with antialiasing cost every frame its full length. There, render without antialiasing and at
-   most ~360k pixels (a phone screen at 1x; a desktop canvas is upscaled); with a GPU nothing changes. */
+   where 1.75x pixels with antialiasing cost every frame its full length. There, render without antialiasing, at
+   most ~360k pixels (a phone screen at 1x; a desktop canvas is upscaled) and ~30 fps; with a GPU nothing changes. */
 const SOFT_GL=(()=>{try{const g=document.createElement('canvas').getContext('webgl');if(!g)return false;
   const d=g.getExtension('WEBGL_debug_renderer_info'),r=d?String(g.getParameter(d.UNMASKED_RENDERER_WEBGL)):'';
   const x=g.getExtension('WEBGL_lose_context');x&&x.loseContext();return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r)}catch(e){return false}})();
@@ -1390,6 +1390,7 @@ function startHome3D(){
   function hide(){canvas.style.visibility='hidden';lsvg.style.visibility=lwrap.style.visibility='hidden'}
   function frame(now){
     requestAnimationFrame(frame);
+    if(SOFT_GL&&now-last<30)return; /* software WebGL: ~30 fps */
     const dt=Math.min(.05,(now-last)/1000);last=now;
     if(S.view!=='home'){hide();return}
     const tb=theatre.getBoundingClientRect();
@@ -1468,7 +1469,7 @@ function createViewer(box,idx){
   size();const ro=new ResizeObserver(size);ro.observe(box);
   themeHooks.push(st.theme);
   let last=performance.now(),t0=last,intro=0,lastVer=M.ver;
-  function frame(now){if(!alive)return;requestAnimationFrame(frame);const dt=Math.min(.05,(now-last)/1000);last=now;if(!visible)return;
+  function frame(now){if(!alive)return;requestAnimationFrame(frame);if(SOFT_GL&&now-last<30)return;const dt=Math.min(.05,(now-last)/1000);last=now;if(!visible)return;
     const t=(now-t0)/1000;
     if(!touched&&!reduce){eT=.5-.5*Math.cos(t*.55);range.value=Math.round(eT*100);out.textContent=range.value+'%'}
     e+=(eT-e)*.08;for(const k in md)md[k]+=(mt[k]-md[k])*.1;

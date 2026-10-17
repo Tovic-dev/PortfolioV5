@@ -11,7 +11,8 @@ Product Design Engineer portfolio. Static site.
   - `*.glb`: what the site loads. Draco-compressed, with the feature edges baked in, loaded one at a time.
   - `*.gltf.js`: the SolidWorks exports wrapped in JS. Source for the GLBs, and the fallback when opening `index.html` directly (`file://`).
 - `tools/build-models.mjs`: rebuilds the GLBs after changing a `*.gltf.js` (`cd tools && npm install && npm run models`).
-- Libraries from CDN: three.js r128 + GLTFLoader + DRACOLoader, GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13.
+- `vendor/<library>-<version>/`: self-hosted libraries, loaded with `defer`: three.js r128 + GLTFLoader + DRACOLoader (and the Draco decoder), GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13. The loaders ship minified (`*.min.js`, from the `.js` next to them: `cd tools && npm run vendor`).
+- `fonts/`: self-hosted Inter Tight, Inter and IBM Plex Mono (latin + latin-ext).
 
 ## Run locally
 
