@@ -416,7 +416,7 @@ footer b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
 .xh.big i{inset:-14px;background:color-mix(in srgb,var(--spot) 18%,transparent)}
 .xh span{position:absolute;left:20px;top:16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
 @media (pointer:fine){.xh{display:block}}
-@media (prefers-reduced-motion: reduce){#intro{display:none}.xh{display:none!important}}
+@media (prefers-reduced-motion: reduce){#intro{display:none}:root:not(.force-motion) .xh{display:none!important}}
 
 /* ===== Grotesk variant: neutral sans, flat paper ===== */
 body::after{display:none}
@@ -444,7 +444,7 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 @keyframes scue{to{top:22px}}
 .scue.off{opacity:0;transform:translate(-50%,10px)}
 .spread{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))!important}
-@media (prefers-reduced-motion: reduce){.scue b{animation:none;top:7px}}
+@media (prefers-reduced-motion: reduce){:root:not(.force-motion) .scue b{animation:none;top:7px}}
 
 /* ===== Minimal pass ===== */
 .plate{border:0}.plate .cm{display:none}
@@ -897,10 +897,11 @@ const DRAW=[
  '<rect x="88" y="14" width="64" height="132" rx="10"/><circle cx="120" cy="54" r="20"/><path class="acc" d="M120 34 A20 20 0 0 1 139 60"/><path d="M100 128 V112 M112 128 V100 M124 128 V106 M136 128 V92"/>'];
 
 (function(){
+/* /@motion or ?motion in the URL forces full motion even with reduced motion turned on */
+const forceMotion=location.pathname.includes('@motion')||/(^|[?&])motion(=|&|$)/.test(location.search.slice(1));
+const reduce=!forceMotion&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(pointer:fine)').matches;
-/* touch devices: keep scroll animations even when battery saver / "remove animations" sets reduced motion */
-const reduce=fine&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-const root=document.documentElement;root.lang='en';
+const root=document.documentElement;root.lang='en';root.classList.toggle('force-motion',forceMotion);
 const hasGSAP=typeof gsap!=='undefined';
 const css=n=>getComputedStyle(root).getPropertyValue(n).trim();
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
@@ -1476,8 +1477,7 @@ function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollT
 
 if(!hasGSAP){go();return}
 gsap.registerPlugin(ScrollTrigger);
-/* Lenis only for mouse/trackpad; touch keeps native scroll, which ScrollTrigger tracks directly */
-if(!reduce&&fine&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
 
 gsap.to('.progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3,invalidateOnRefresh:true}});
 const thST=ScrollTrigger.create({trigger:'#theatre',start:'top top',end:'bottom bottom',onUpdate:s=>{if(S.view!=='home')return;S.cf=s.progress*N;setActive(clamp(Math.floor(S.cf),0,N-1))},

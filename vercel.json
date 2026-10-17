@@ -18,5 +18,18 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/@motion/",
+      "destination": "/@motion",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/@motion",
+      "destination": "/index.html"
+    }
   ]
 }
