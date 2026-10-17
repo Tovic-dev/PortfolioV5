@@ -1,0 +1,49 @@
+{
+  "order": 11,
+  "title": "Donostia urban mobility",
+  "subtitle": "Multimodal journey app",
+  "categories": [
+    "digital"
+  ],
+  "year": "",
+  "model": "none",
+  "sketch": "route-app",
+  "deck": "Bus, bike and walking <em>in a single journey</em> across the city.",
+  "role": "User research, information architecture and interface design.",
+  "client": "",
+  "context": "Academic project",
+  "team": "Team project",
+  "tools": "Figma",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "Getting around Donostia often means mixing bus, bike and walking, each with its own app."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Approach",
+      "paragraphs": [
+        "User research, information architecture and an interactive prototype that plans and guides a combined journey."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Status",
+      "paragraphs": [
+        "<span class=\"soon\">Full case study coming soon.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ]
+}

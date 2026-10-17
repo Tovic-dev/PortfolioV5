@@ -6,12 +6,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
+import { ROOT, i18n, loadContent } from './content.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// the content block of index.html with the default-locale content (cards are made once, in that language)
 const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-const C = vm.runInContext(src.slice(src.indexOf('const IMG='), src.indexOf('\n/* the app: ')) + ';({PROJ,TERR,DRAW})', vm.createContext({}));
+const D = loadContent(i18n().defaultLang);
+const C = vm.runInContext(src.slice(src.indexOf('const D='), src.indexOf('\n/* the app: '))
+  .replace('/*@content*/null/*@end*/', JSON.stringify(D)) + ';({PROJ,TERR,DRAW})', vm.createContext({}));
 const dataUrl = (file, type) => `data:${type};base64,${fs.readFileSync(file).toString('base64')}`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -31,12 +33,12 @@ h1{font-weight:600;line-height:.92;letter-spacing:-.05em;margin:24px 0 0;text-wr
 function card(p) {
   const size = p.title.length <= 12 ? 104 : p.title.length <= 20 ? 84 : 70;
   const fig = p.cover
-    ? `<div class="fig" style="background-image:url(${dataUrl(path.join(ROOT, 'img', p.cover + '.jpg'), 'image/jpeg')})"></div>`
+    ? `<div class="fig" style="background-image:url(${dataUrl(path.join(ROOT, p.cover), /\.png$/i.test(p.cover) ? 'image/png' : /\.webp$/i.test(p.cover) ? 'image/webp' : 'image/jpeg')})"></div>`
     : `<div class="fig"><span class="no">${String(p.n).padStart(2, '0')}</span><svg viewBox="0 0 240 160">${C.DRAW[p.sk] || ''}</svg></div>`;
   return `<!doctype html><html><head>${FONTS}<style>${CSS}</style></head><body><div class="rule"></div>
 <div class="l"><div class="m">Work ${String(p.n).padStart(2, '0')} · ${p.terr.map(t => C.TERR[t]).join(' · ')}${p.year ? ' · ' + p.year : ''}</div>
 <h1 style="font-size:${size}px">${esc(p.title).split(' ').map(w => `<span style="white-space:nowrap">${w}</span>`).join(' ')}</h1><div class="sub">${esc(p.sub)}</div>
-<div class="by m"><span>Mikel Arnao · Product Design Engineer</span><b>●</b></div></div>${fig}</body></html>`;
+<div class="by m"><span>${esc(D.site.name)} · ${esc(D.site.role)}</span><b>●</b></div></div>${fig}</body></html>`;
 }
 
 const browser = await chromium.launch({ channel: 'chrome' });

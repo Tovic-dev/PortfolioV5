@@ -1,0 +1,35 @@
+{
+  "kicker": "About · Profile",
+  "title": "Form, engineering <em>and code.</em>",
+  "lede": "Industrial design, engineering, technology and digital experiences in one profile: <em>Product Design Engineering.</em>",
+  "paragraphs": [
+    "I am in the fourth year of the Bachelor's Degree in Industrial Design and Product Development Engineering at Mondragon Unibertsitatea, finishing in June 2027. Since September 2025 I have been doing dual training at ULMA Handling Systems in Oñati, in the Studies and Proposals department: I model in Revit and produce KeyShot renders and 3ds Max animations for pre-sales.",
+    "As a freelancer I design and build websites and applications with React, Next.js and Tailwind CSS. I am interested in artificial intelligence, robotics, automation, IoT, mobility, sustainability and connected products.",
+    "I am looking for specialised internships, graduate programmes and master's degrees in Product Design, Design Engineering and Integrated Product Design."
+  ],
+  "facts": [
+    { "type": "text", "label": "Degree", "text": "Bachelor's in Industrial Design and Product Development Engineering · 4th year, until June 2027" },
+    { "type": "text", "label": "University", "text": "Mondragon Unibertsitatea · Faculty of Engineering" },
+    { "type": "text", "label": "Experience", "text": "ULMA Handling Systems · Studies and Proposals · dual training since 2025" },
+    { "type": "chips", "label": "Tools", "items": ["SolidWorks", "Siemens NX", "Revit", "Blender", "KeyShot", "3ds Max", "Adobe CC", "React", "Next.js", "TypeScript", "Tailwind"] },
+    { "type": "chips", "label": "Interests", "items": ["AI", "Robotics", "Automation", "IoT", "Mobility", "Sustainability", "Connected products"] },
+    { "type": "languages", "label": "Languages", "languages": [
+      { "name": "Spanish", "level": "Native", "full": true },
+      { "name": "Basque", "level": "Native", "full": true },
+      { "name": "English", "level": "Professional", "full": false }
+    ] },
+    { "type": "text", "label": "Base", "text": "Donostia · Basque Country" }
+  ],
+  "contact": {
+    "kicker": "Colophon · Contact",
+    "subtitle": "Internships, graduate programmes and web or product commissions.",
+    "title": "Let's talk",
+    "text": "If you are looking for someone who brings design, engineering and code into the same project, write to me."
+  },
+  "colophon": [
+    { "label": "Typefaces", "text": "SF Pro / Inter Tight, Inter and IBM Plex Mono" },
+    { "label": "Spot ink", "text": "Safety orange" },
+    { "label": "Built with", "text": "Three.js, GSAP and Lenis" },
+    { "label": "Models", "text": "SolidWorks CAD (SEAT Ateca, Ardura) and geometry generated in code" }
+  ]
+}

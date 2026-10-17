@@ -1,0 +1,49 @@
+{
+  "order": 10,
+  "title": "Hospital sample robot",
+  "subtitle": "Autonomous transport of clinical samples",
+  "categories": [
+    "product"
+  ],
+  "year": "",
+  "model": "none",
+  "sketch": "robot",
+  "deck": "Moving samples between hospital departments <em>without breaking the chain of custody</em>.",
+  "role": "Vehicle architecture, CAD of the chassis and lockable compartments, and final renders.",
+  "client": "",
+  "context": "Academic project",
+  "team": "Team project",
+  "tools": "SolidWorks, KeyShot",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "Clinical samples travel many times a day between wards and laboratories, and every handover is a risk for traceability."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Approach",
+      "paragraphs": [
+        "Vehicle architecture, lockable compartments for samples and navigation through hospital corridors, with LiDAR and differential drive."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Status",
+      "paragraphs": [
+        "<span class=\"soon\">Full case study coming soon.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ]
+}

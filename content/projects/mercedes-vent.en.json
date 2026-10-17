@@ -1,0 +1,120 @@
+{
+  "order": 5,
+  "title": "Mercedes V-Class air vent",
+  "subtitle": "Eco-design and life-cycle assessment",
+  "categories": [
+    "auto",
+    "sust"
+  ],
+  "year": "2025",
+  "model": "vent",
+  "sketch": "robot",
+  "cover": "/img/merc-1.jpg",
+  "deck": "Taking a premium air vent apart to find <em>where its footprint hides</em>, then cutting it.",
+  "role": "Worked with the team on the whole project and led the life-cycle assessment (LCA), the improvement goals and idea generation, and the evaluation of the environmental improvements. The brief covered analysis only, with no development phase.",
+  "client": "",
+  "context": "Academic · Environmental Aspects course",
+  "team": "Aimar Arauzo, Mikel Arnao, Ander Martín",
+  "tools": "IHOBE Climate & Circularity Calculator, MET matrix, weighted decision matrix",
+  "award": "",
+  "stats": [
+    {
+      "value": "−85 %",
+      "label": "carbon footprint with a mono-material PP body"
+    },
+    {
+      "value": "−65 %",
+      "label": "ReCiPe endpoint with an efficient LED and road logistics"
+    },
+    {
+      "value": "84 %",
+      "label": "of the plastic recyclable in a single stream"
+    }
+  ],
+  "hero": {
+    "image": "/img/merc-1.jpg",
+    "caption": "Interior of the 2025 V-Class with the round vents and ambient light."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "The round vent of the 2025 V-Class weighs 127 g and mixes PC+ABS, chrome-plated rings, brass-plated steel rods, TPE seals and an LED ambient-light board, for a 15-year, 250,000 km life. Chrome on ABS cannot be recycled and the parts cannot be separated at end of life.",
+        "Goal: quantify the impact and propose redesigns without losing the premium feel."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Teardown",
+      "paragraphs": [
+        "Every part was taken apart, weighed and identified to build the inventory."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/merc-2.jpg",
+          "caption": "Main body on the scale."
+        },
+        {
+          "image": "/img/merc-3.jpg",
+          "caption": "Body and louvre assembly."
+        },
+        {
+          "image": "/img/merc-4.jpg",
+          "caption": "Chrome trim ring."
+        }
+      ]
+    },
+    {
+      "title": "Life-cycle assessment",
+      "paragraphs": [
+        "Cradle-to-grave with the IHOBE calculator. Functional unit: directable airflow and ambient light for one occupant over 250,000 km. Four hotspots appeared:"
+      ],
+      "list": [
+        "Electronics (17 g) and PC+ABS (92 g) as raw materials",
+        "Air freight of the electronics from Taiwan",
+        "Chrome plating of the rings",
+        "LED energy in use: 3.75 kWh, about 1.5 L of diesel"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Improvement goals and ideas",
+      "paragraphs": [
+        "Ideas from eight eco-design strategies were scored on technical and financial viability, environmental benefit and brand motivation. Three action families went forward: A, a more efficient LED (0.6 W to 0.1 W) built in Europe; B, colour-in-mould instead of chrome; C, recycled r-PC+ABS or mono-material PP."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Evaluation",
+      "paragraphs": [
+        "Nine concepts were assessed. Mono-material PP cut the carbon footprint by about 85 %; the wireless, efficient LED with road logistics cut the ReCiPe endpoint by about 65 %. Recycled PC+ABS came out worse than expected, probably because of dataset limits."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/merc-5.jpg",
+          "caption": "Reduction of total impact (ReCiPe endpoint) per concept."
+        }
+      ]
+    },
+    {
+      "title": "Result",
+      "paragraphs": [
+        "The final concept combines C2 + A2 + B2: mono-material, ultra-efficient and free of toxic plating. 84 % of the plastic becomes recyclable in a single stream."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Reflection",
+      "paragraphs": [
+        "Next steps: a heat-release joint so treatment plants can split rings from the body in one step, an LCA with the electric EQV's energy mix, and certified suppliers instead of generic proxies."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ]
+}

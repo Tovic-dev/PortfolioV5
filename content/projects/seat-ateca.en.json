@@ -1,0 +1,147 @@
+{
+  "order": 1,
+  "title": "SEAT Ateca side mirror",
+  "subtitle": "Redesign of the exterior mirror of a family SUV",
+  "categories": [
+    "auto",
+    "product"
+  ],
+  "year": "2025",
+  "model": "seat",
+  "sketch": "mirror",
+  "cover": "/img/seat-1.jpg",
+  "deck": "A mirror that <em>folds itself</em> before it hits something, and keeps the driver seeing when it does.",
+  "role": "Worked across the whole project. Led the regulatory analysis (ECE R46) in the product-analysis phase and most of the development phase: analysis and redesign of the new circuit, the material specification manual, the mould machining roadmap and the justification of the selected material. Led the final renders.",
+  "client": "",
+  "context": "Academic · PBL 4, 2nd year · Mondragon Unibertsitatea",
+  "team": "Ainhoa Alonso, Mikel Arnao, Maren Leston, Ane Pelayo, Garazi Portillo",
+  "tools": "SolidWorks, SolidWorks Simulation, CES EduPack, KeyShot, resin 3D printing",
+  "award": "",
+  "stats": [
+    {
+      "value": "7.0 Wh",
+      "label": "energy for a 50-minute, 25 km trip, inside the 4–8 Wh target"
+    },
+    {
+      "value": "0.016 mm",
+      "label": "deflection under aerodynamic load at 180 km/h"
+    },
+    {
+      "value": "5",
+      "label": "new components: folding motor, camera, radar, ultrasonic sensor, blind-spot LED"
+    }
+  ],
+  "hero": {
+    "image": "/img/seat-1.jpg",
+    "caption": "Final render of the redesigned mirror with dynamic LED indicator."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "The Ateca is a compact family SUV. Of three archetypes, the team chose Maite, a mother who picks her children up from school on a narrow, chaotic street and is afraid of clipping the mirror while manoeuvring.",
+        "Brief: keep the Ateca family look, remove that stress with assistance systems and stay fully within ECE Regulation 46."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-12.jpg",
+          "caption": "Storyboard of the school pick-up used to find the pain point."
+        }
+      ]
+    },
+    {
+      "title": "Research",
+      "paragraphs": [
+        "A benchmark of six rival SUV mirrors, mapped by price and technology, showed no affordable high-tech option. The regulatory study set the hard limits:"
+      ],
+      "list": [
+        "Minimum edge radius of 2.5 mm on housing and glass",
+        "Class III field of view: 20 m long and 4 m wide",
+        "No part above 2 m from the ground; vehicle width with mirrors under 2.55 m",
+        "Heated glass and LED indicator compliant with EU electrical and lighting rules"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Concepts",
+      "paragraphs": [
+        "Brainstorming and four-step sketching produced three preliminary designs: one with a rain deflector, an aerodynamic one with blind-spot indicator, and a robust one with a hidden auxiliary mirror. A Pugh matrix chose concept 2, positive on viability, aesthetics, function and regulations."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-7.jpg",
+          "caption": "Sketch of the chosen direction."
+        },
+        {
+          "image": "/img/seat-8.jpg",
+          "caption": "Exploration of the folding geometry."
+        }
+      ]
+    },
+    {
+      "title": "Development",
+      "paragraphs": [
+        "An ultrasonic sensor folds the mirror when an obstacle gets close; a camera streams to the central screen while it is folded; a radar drives a blind-spot LED. The circuit was redesigned at 12 V with the sensors in parallel to the EFB battery.",
+        "SolidWorks Simulation checked aerodynamic load, a 33 J pedestrian impact, fatigue at one million cycles, 500 N vertical and 300 N lateral loads, modal and thermal behaviour."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-6.jpg",
+          "caption": "Exploded CAD of the assembly."
+        },
+        {
+          "image": "/img/seat-9.jpg",
+          "caption": "New electrical circuit."
+        },
+        {
+          "image": "/img/seat-11.jpg",
+          "caption": "Positive mould for the housing."
+        }
+      ]
+    },
+    {
+      "title": "Specification",
+      "paragraphs": [
+        "The material specification manual turned functional, mechanical, thermal and chemical requirements into CES EduPack constraints and performance indices. The top five candidates were weighted after min–max normalisation; PCTFE was chosen for its UV, humidity and chemical resistance. Machining roadmaps were written for both mould halves."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Result",
+      "paragraphs": [
+        "A 1:1 aesthetic prototype printed in resin, filled, primed and painted, with an amber indicator and a laser-cut mirror on a hand-shaped curved base."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-4.jpg",
+          "caption": "Aesthetic prototype, housing."
+        },
+        {
+          "image": "/img/seat-5.jpg",
+          "caption": "Aesthetic prototype, mirror side."
+        },
+        {
+          "image": "/img/seat-10.jpg",
+          "caption": "Render of the mirror glass and camera."
+        },
+        {
+          "image": "/img/seat-3.jpg",
+          "caption": "Render on the vehicle."
+        }
+      ]
+    },
+    {
+      "title": "Reflection",
+      "paragraphs": [
+        "Simulation in SolidWorks went beyond the syllabus. The next step would be a functional prototype to test ergonomics, tolerances and assembly that virtual tools do not show."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ]
+}

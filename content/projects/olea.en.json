@@ -1,0 +1,79 @@
+{
+  "order": 7,
+  "title": "OLEA × Alpesa",
+  "subtitle": "Premium olive-oil packaging in a cardboard tube",
+  "categories": [
+    "pack"
+  ],
+  "year": "2025",
+  "model": "none",
+  "sketch": "none",
+  "cover": "/img/olea-1.jpg",
+  "deck": "Proving that a cardboard tube can carry <em>a premium extra-virgin olive oil</em> brand.",
+  "role": "Structural design of the tube and closures, technical drawings and renders.",
+  "client": "Alpesa",
+  "context": "Packaging Innovation Cluster · company brief",
+  "team": "Leire Arias, Mikel Arnao, Manex Gonzalez, Maria Martinez",
+  "tools": "Adobe Illustrator, Adobe InDesign, KeyShot",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "/img/olea-1.jpg",
+    "caption": "OLEA tube in an Andalusian olive grove."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "Alpesa makes cardboard tubes. The challenge was to show they can work in high-value segments. Premium extra-virgin olive oil grows around 12 % a year in the specialised European channel, yet most of its packaging does not live up to the product."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Research",
+      "paragraphs": [
+        "A benchmark of Castillo de Canena, Almazaras de la Subbética, Oro Bailén and Finca de la Torre found shared values: materiality over visual impact, origin as the main argument, typographic restraint and full coherence. None of them had explored the tube."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-6.jpg",
+          "caption": "Inspiration: cortijo floors and olive-grove geometry."
+        }
+      ]
+    },
+    {
+      "title": "Concept",
+      "paragraphs": [
+        "From territory to object: unvarnished kraft recalls the walls and floors of the cortijo, a classical serif recalls oil-mill labels and the olive grove seen from the air becomes pattern."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-4.jpg",
+          "caption": "Process: from line to form."
+        },
+        {
+          "image": "/img/olea-5.jpg",
+          "caption": "Form and dimensions."
+        }
+      ]
+    },
+    {
+      "title": "Result",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-2.jpg",
+          "caption": "The OLEA tube."
+        },
+        {
+          "image": "/img/olea-7.jpg",
+          "caption": "Experience: from the shop shelf to the table."
+        }
+      ]
+    }
+  ]
+}

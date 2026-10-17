@@ -1,0 +1,100 @@
+{
+  "order": 8,
+  "title": "Senda Norte × Vidrala",
+  "subtitle": "Low-alcohol vermouth bottle and brand",
+  "categories": [
+    "pack",
+    "product"
+  ],
+  "year": "2026",
+  "model": "none",
+  "sketch": "none",
+  "cover": "/img/senda-1.jpg",
+  "deck": "An 8 % vol. vermouth <em>designed for a lighter, everyday</em> aperitif.",
+  "role": "Bottle design and engineering, closure system and secondary packaging.",
+  "client": "Vidrala",
+  "context": "Company brief",
+  "team": "Mikel Arnao, Aimar Arauzo",
+  "tools": "SolidWorks, KeyShot, Adobe Illustrator",
+  "award": "",
+  "stats": [
+    {
+      "value": "303 mm",
+      "label": "height of the 75 cl hybrid Rhine bottle"
+    },
+    {
+      "value": "Ø 68 mm",
+      "label": "grip waist for hands with less strength"
+    },
+    {
+      "value": "8 % vol.",
+      "label": "low-alcohol positioning"
+    }
+  ],
+  "hero": {
+    "image": "/img/senda-1.jpg",
+    "caption": "Senda Norte, bottle and brand."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "Senda Norte is a craft vermouth at 8 % vol. that keeps the ritual of the aperitif without the heaviness of high-strength vermouth. It sits between classic vermouth and light Atlantic wines."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Brand",
+      "paragraphs": [
+        "The naming evokes origin and path. A reinterpreted classical serif, deep green, warm cream and soft red, and a close, calm tone of voice."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/senda-6.jpg",
+          "caption": "Brand system."
+        }
+      ]
+    },
+    {
+      "title": "Development",
+      "paragraphs": [],
+      "list": [
+        "Hybrid Rhine bottle: 303 mm tall, Ø 80 mm base, Ø 68 mm grip, Ø 30 mm mouth, 75 cl",
+        "Stelvin Lux soft-touch cap, easy to open at home",
+        "Multilayer liner: EVOH barrier, oxygen scavenger, antimicrobial layer and food-grade PET contact layer",
+        "Kraft E-flute box, 93 × 93 × 316 mm, tuck top and auto-lock base, no lamination; 6-unit shipping cases"
+      ],
+      "figures": [
+        {
+          "image": "/img/senda-3.jpg",
+          "caption": "Bottle: hybrid Rhine silhouette."
+        },
+        {
+          "image": "/img/senda-7.jpg",
+          "caption": "Closure and multilayer liner."
+        }
+      ]
+    },
+    {
+      "title": "Result",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/senda-2.jpg",
+          "caption": "Label design."
+        },
+        {
+          "image": "/img/senda-4.jpg",
+          "caption": "Secondary packaging."
+        },
+        {
+          "image": "/img/senda-5.jpg",
+          "caption": "In use."
+        }
+      ]
+    }
+  ]
+}

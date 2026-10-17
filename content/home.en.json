@@ -1,0 +1,102 @@
+{
+  "first": "Mikel",
+  "last": "Arnao",
+  "deck": "Industrial design and product development engineer. Objects that can be manufactured, interfaces that get used and the code that ties them together, <em>from idea to part.</em>",
+  "coverTag": "On the cover",
+  "coverCaption": "SEAT Ateca side mirror redesign, assembly view. Scroll to take it apart.",
+  "featured": [
+    {
+      "project": "seat-ateca",
+      "line": "SEAT Ateca side mirror",
+      "lineCategory": "Automotive",
+      "kicker": "Automotive",
+      "titleA": "SEAT Ateca",
+      "titleB": "side mirror",
+      "deck": "A mirror that folds itself before it hits something, and keeps the driver seeing when it does.",
+      "approach": "Ultrasonic folding, camera view on the central screen, blind-spot radar and a dynamic LED indicator, validated against ECE R46 and in SolidWorks Simulation.",
+      "role": "Regulatory analysis, circuit redesign, material specs, renders",
+      "factLabel": "Year",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "SEAT Ateca",
+      "figure": "SEAT Ateca side mirror"
+    },
+    {
+      "project": "ardura",
+      "line": "Ardura, self-sufficient smart pot",
+      "lineCategory": "Product",
+      "kicker": "Product · IoT",
+      "titleA": "Ardura",
+      "titleB": "self-sufficient pot",
+      "deck": "A plant pot that waters itself on indoor light, so the plant survives the holidays.",
+      "approach": "Organic photovoltaic film, a positive-displacement pump dosing 250 ml, a lift-out rPET tank and a recycled PP body with no glue or paint.",
+      "role": "Led the development phase and CAD, renders",
+      "factLabel": "Distinction",
+      "factValue": "iF recognition",
+      "factStamp": true,
+      "short": "Ardura",
+      "figure": "Ardura self-sufficient smart pot"
+    },
+    {
+      "project": "cycle-dry",
+      "line": "Cycle Dry, Orbea rear rack",
+      "lineCategory": "Cycling",
+      "kicker": "Cycling",
+      "titleA": "Cycle Dry",
+      "titleB": "Orbea rear rack",
+      "deck": "A simpler, cheaper bikepacking rack with a hanger to dry clothes on the move.",
+      "approach": "Material teardown of the original rack, a single bent aluminium frame and a hanger that lifts 90° and turns 180° out of the wind.",
+      "role": "Market and use analysis, ideation, specs, manufacturing",
+      "factLabel": "Year",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Cycle Dry",
+      "figure": "Cycle Dry, Orbea rear rack"
+    },
+    {
+      "project": "gudamendi-house",
+      "line": "Self-sufficient house in Gudamendi",
+      "lineCategory": "Sustainability",
+      "kicker": "Sustainability",
+      "titleA": "Self-sufficient house",
+      "titleB": "in Gudamendi",
+      "deck": "A home on a windy hill above Donostia that makes its own energy and reuses its rain.",
+      "approach": "Hybrid PV-thermal panels, a small wind turbine, a heat pump, rainwater harvesting and recycled cellulose insulation.",
+      "role": "Renewable energy systems",
+      "factLabel": "Distinction",
+      "factValue": "UPV contest winner",
+      "factStamp": true,
+      "short": "Gudamendi",
+      "figure": "Self-sufficient house in Gudamendi"
+    },
+    {
+      "project": "mercedes-vent",
+      "line": "Mercedes V-Class air vent LCA",
+      "lineCategory": "Eco-design",
+      "kicker": "Eco-design · LCA",
+      "titleA": "Mercedes V-Class",
+      "titleB": "air vent",
+      "deck": "Taking a premium air vent apart to find where its footprint hides, then cutting it.",
+      "approach": "Cradle-to-grave LCA with the IHOBE calculator, hotspot analysis and nine redesign concepts. The final concept cuts the carbon footprint by about 85 %.",
+      "role": "LCA, improvement goals, environmental evaluation",
+      "factLabel": "Year",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Mercedes",
+      "figure": "Mercedes V-Class air vent"
+    }
+  ],
+  "tools": ["SolidWorks", "Siemens NX", "Revit", "Blender", "KeyShot", "3ds Max", "Adobe CC", "React", "Next.js"],
+  "procedure": {
+    "kicker": "Procedure",
+    "title": "From sketch <em>to part.</em>",
+    "intro": "Five phases that repeat in every project, whether it is an injected housing, a robot or an app.",
+    "steps": [
+      { "label": "Phase 1", "title": "Research", "text": "Users, context, regulations and competitors. Understand the problem before drawing anything." },
+      { "label": "Phase 2", "title": "Conceptualise", "text": "Sketches, quick mock-ups and use scenarios. Many cheap ideas to pick a good one." },
+      { "label": "Phase 3", "title": "Model and validate", "text": "CAD, calculation, manufacturability and rendering, to decide with data and with images." },
+      { "label": "Phase 4", "title": "Prototype", "text": "3D printing, electronics and clickable interfaces. Test, break and fix." },
+      { "label": "Phase 5", "title": "Implement", "text": "Drawings and documentation for production, automation or code ready to ship." }
+    ]
+  }
+}

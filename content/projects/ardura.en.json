@@ -1,0 +1,139 @@
+{
+  "order": 2,
+  "title": "Ardura",
+  "subtitle": "Self-sufficient smart plant pot",
+  "categories": [
+    "product",
+    "sust"
+  ],
+  "year": "2026",
+  "model": "ardura",
+  "sketch": "plant-pot",
+  "cover": "/img/ardura-1.jpg",
+  "deck": "A plant pot that <em>waters itself on indoor light</em>, so the plant survives the holidays.",
+  "role": "Worked with the team on the whole project and led the entire development phase, CAD included: architecture, hydraulic system, energy balance, materials and manufacturing, ergonomics and costing. Only the product and project panels were done by others. Led the final renders.",
+  "client": "",
+  "context": "Academic · PBL 5, 3rd year · Mondragon Unibertsitatea",
+  "team": "Mikel Arnao, Danel Iturbe, Egoitz Fernandez, Mikel Martin, Maria Martinez",
+  "tools": "SolidWorks, KeyShot, IHOBE Climate & Circularity Calculator, Adobe CC",
+  "award": "iF recognition",
+  "stats": [
+    {
+      "value": "15.09 Wh",
+      "label": "generated per day by the OPV film, against 0.87 Wh consumed"
+    },
+    {
+      "value": "3.5 L",
+      "label": "retractable rPET reservoir with integrated handle"
+    },
+    {
+      "value": "≈ €13",
+      "label": "estimated unit cost ex-works, for a €79 retail price"
+    }
+  ],
+  "hero": {
+    "image": "/img/ardura-1.jpg",
+    "caption": "Final render of Ardura in a living room."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "The project tackles the \"biophilic paradox\": people want plants at home but lack the time to care for them. Interviews showed the real stress is not the care itself but absences, and watering \"by eye\".",
+        "The chosen persona, Rosa, 52, lives between two homes. The CUT brief asks for peace of mind, automatic watering by hydraulic pressure and recyclable materials."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Research",
+      "paragraphs": [
+        "A map of intelligence against sustainability showed the gap: smart gadgets are wasteful and sustainable pots are passive. The opportunity was a regenerative, battery-free and repairable pot that uses physics, not electronics, to be smart."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-8.jpg",
+          "caption": "Market opportunity map."
+        }
+      ]
+    },
+    {
+      "title": "Concepts",
+      "paragraphs": [
+        "Five product panels explored a universal add-on and an integrated pot. The integrated pot won: it controls the material, so no water is lost through porous ceramic, and its surface can carry the solar film without looking like a gadget."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-6.jpg",
+          "caption": "Ideation sketches."
+        },
+        {
+          "image": "/img/ardura-3.jpg",
+          "caption": "Concept poster, integrated pot."
+        },
+        {
+          "image": "/img/ardura-5.jpg",
+          "caption": "CMF moodboard."
+        }
+      ]
+    },
+    {
+      "title": "Development",
+      "paragraphs": [
+        "Three stacked modules: the living core with the organic photovoltaic film, a sealed tech module with PCB, 5000 mAh battery, micro-pump and mode slider, and a detachable rPET tank inside an rPP shell with a level window.",
+        "A positive-displacement pump delivers exact 250 ml doses whatever the water level. A \"drop and lift\" conical coupling, based on the medical Luer taper, seals by gravity so the tank comes out with one hand. A haptic slider picks Tropical, Standard or Desert watering."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-2.jpg",
+          "caption": "Product panel with the module architecture."
+        }
+      ]
+    },
+    {
+      "title": "Specification",
+      "paragraphs": [],
+      "list": [
+        "Body in recycled PP with mineral filler: matte stone texture, 1.8 mm walls, no paint",
+        "Clear rPET tank that nests in the shell by draft angle, no adhesives",
+        "Snap-fit electronics and threaded joints for disassembly",
+        "Bill of materials ≈ €13.13 per unit"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Life-cycle assessment",
+      "paragraphs": [
+        "Manufacturing causes about 99 % of the climate impact. An impermeable rPP body saves around 140 litres of water over ten years compared with ceramic. The OPV film pays back its carbon in 0.2 years against more than two for silicon, and repair matters more than recycling: material separation changes the total impact by only 0.23 %."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Result",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-7.jpg",
+          "caption": "Project panel."
+        },
+        {
+          "image": "/img/ardura-4.jpg",
+          "caption": "Alternative concept poster: universal add-on."
+        }
+      ]
+    },
+    {
+      "title": "Reflection",
+      "paragraphs": [
+        "For a device that uses so little energy, full self-sufficiency is not automatically greener; the solar film is justified by having no cables and by the value users see in it. A desktop version under one litre is the next step."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ]
+}

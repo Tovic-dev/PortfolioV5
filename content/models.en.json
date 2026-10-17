@@ -1,0 +1,228 @@
+{
+  "labels": [
+    {
+      "part": "Housing · PCTFE",
+      "label": "Housing · PCTFE"
+    },
+    {
+      "part": "Mirror carrier",
+      "label": "Mirror carrier"
+    },
+    {
+      "part": "Heated mirror glass",
+      "label": "Heated mirror glass"
+    },
+    {
+      "part": "Folding motor",
+      "label": "Folding motor"
+    },
+    {
+      "part": "Dynamic LED indicator",
+      "label": "Dynamic LED indicator"
+    },
+    {
+      "part": "Camera",
+      "label": "Camera"
+    },
+    {
+      "part": "Ultrasonic sensor",
+      "label": "Ultrasonic sensor"
+    },
+    {
+      "part": "Base arm",
+      "label": "Base arm"
+    },
+    {
+      "part": "Base shell · rPP + talc",
+      "label": "Base shell · rPP + talc"
+    },
+    {
+      "part": "Level window",
+      "label": "Level window"
+    },
+    {
+      "part": "Retractable tank · rPET",
+      "label": "Retractable tank · rPET"
+    },
+    {
+      "part": "Tech module · PCB, battery",
+      "label": "Tech module · PCB, battery"
+    },
+    {
+      "part": "Micro-pump",
+      "label": "Micro-pump"
+    },
+    {
+      "part": "Mode slider",
+      "label": "Mode slider"
+    },
+    {
+      "part": "Pot · rPP",
+      "label": "Pot · rPP"
+    },
+    {
+      "part": "OPV solar film",
+      "label": "OPV solar film"
+    },
+    {
+      "part": "Irrigation ring",
+      "label": "Irrigation ring"
+    },
+    {
+      "part": "Load platform",
+      "label": "Load platform"
+    },
+    {
+      "part": "Drying hanger",
+      "label": "Drying hanger"
+    },
+    {
+      "part": "Hinge · lifts 90°, turns 180°",
+      "label": "Hinge · lifts 90°, turns 180°"
+    },
+    {
+      "part": "Foundation slab · terrace",
+      "label": "Foundation slab · terrace"
+    },
+    {
+      "part": "Heat pump",
+      "label": "Heat pump"
+    },
+    {
+      "part": "Hot water tank · boiler",
+      "label": "Hot water tank · boiler"
+    },
+    {
+      "part": "Cold water tank",
+      "label": "Cold water tank"
+    },
+    {
+      "part": "Water network",
+      "label": "Water network"
+    },
+    {
+      "part": "Rainwater tank",
+      "label": "Rainwater tank"
+    },
+    {
+      "part": "Stone ground floor",
+      "label": "Stone ground floor"
+    },
+    {
+      "part": "Triple-glazed windows",
+      "label": "Triple-glazed windows"
+    },
+    {
+      "part": "Timber upper floor",
+      "label": "Timber upper floor"
+    },
+    {
+      "part": "Cellulose insulation",
+      "label": "Cellulose insulation"
+    },
+    {
+      "part": "Zinc roof",
+      "label": "Zinc roof"
+    },
+    {
+      "part": "Hybrid PV-T panels",
+      "label": "Hybrid PV-T panels"
+    },
+    {
+      "part": "Main body · PC+ABS",
+      "label": "Main body · PC+ABS"
+    },
+    {
+      "part": "Spring clips · steel",
+      "label": "Spring clips · steel"
+    },
+    {
+      "part": "Housing seal · TPE-SEBS",
+      "label": "Housing seal · TPE-SEBS"
+    },
+    {
+      "part": "LED wiring · PBT + Cu",
+      "label": "LED wiring · PBT + Cu"
+    },
+    {
+      "part": "Flow gate · PP + TPV",
+      "label": "Flow gate · PP + TPV"
+    },
+    {
+      "part": "Regulator gear",
+      "label": "Regulator gear"
+    },
+    {
+      "part": "Rods + plates · brass-plated steel",
+      "label": "Rods + plates · brass-plated steel"
+    },
+    {
+      "part": "LED light guide · PMMA",
+      "label": "LED light guide · PMMA"
+    },
+    {
+      "part": "Turbine louvres",
+      "label": "Turbine louvres"
+    },
+    {
+      "part": "Chrome bezel ring",
+      "label": "Chrome bezel ring"
+    },
+    {
+      "part": "Flow regulator knob",
+      "label": "Flow regulator knob"
+    },
+    {
+      "part": "Mirror adjustment motor",
+      "label": "Mirror adjustment motor"
+    },
+    {
+      "part": "Injection-moulded housing",
+      "label": "Injection-moulded housing"
+    },
+    {
+      "part": "Lower housing base",
+      "label": "Lower housing base"
+    },
+    {
+      "part": "Lower housing",
+      "label": "Lower housing"
+    },
+    {
+      "part": "Mirror arm",
+      "label": "Mirror arm"
+    },
+    {
+      "part": "Folding mechanism",
+      "label": "Folding mechanism"
+    },
+    {
+      "part": "Bent frame · Al 6061",
+      "label": "Bent frame · Al 6061"
+    },
+    {
+      "part": "Rear strut",
+      "label": "Rear strut"
+    },
+    {
+      "part": "Cross support",
+      "label": "Cross support"
+    },
+    {
+      "part": "Front support · seat-post mount",
+      "label": "Front support · seat-post mount"
+    },
+    {
+      "part": "Axle mount",
+      "label": "Axle mount"
+    },
+    {
+      "part": "Rear support",
+      "label": "Rear support"
+    },
+    {
+      "part": "Hanger support",
+      "label": "Hanger support"
+    }
+  ]
+}

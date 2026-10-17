@@ -1,0 +1,49 @@
+{
+  "order": 12,
+  "title": "PocketWise",
+  "subtitle": "Personal finance app for young people",
+  "categories": [
+    "digital"
+  ],
+  "year": "",
+  "model": "none",
+  "sketch": "finance-app",
+  "deck": "Helping young people <em>see where their money goes</em> each month.",
+  "role": "User research, personas and interface design.",
+  "client": "",
+  "context": "Academic project · UX, usability and interface design",
+  "team": "Team project",
+  "tools": "Figma",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "Young people often lose track of small daily expenses and struggle to save."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Approach",
+      "paragraphs": [
+        "Personas, saving flows and an interface that explains without lecturing."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Status",
+      "paragraphs": [
+        "<span class=\"soon\">Full case study coming soon.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ]
+}

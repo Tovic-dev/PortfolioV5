@@ -1,0 +1,47 @@
+{
+  "order": 9,
+  "title": "Jario 09 · Ibili",
+  "subtitle": "Graphic for the Hydrate & Reuse bottle line",
+  "categories": [
+    "product"
+  ],
+  "year": "2026",
+  "model": "none",
+  "sketch": "none",
+  "cover": "/img/ibili-1.jpg",
+  "deck": "Topographic contour lines that <em>turn into a river</em> around a reusable bottle.",
+  "role": "Individual project: concept, surface pattern and visualisation.",
+  "client": "Ibili",
+  "context": "Individual project · design brief",
+  "team": "Individual",
+  "tools": "Adobe Illustrator, Adobe Photoshop",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "/img/ibili-1.jpg",
+    "caption": "Jario 09 on the Ibili bottle."
+  },
+  "sections": [
+    {
+      "title": "Concept",
+      "paragraphs": [
+        "Aimed at young adults, the pattern abstracts the contour lines of a mountain map. A blue-green palette brings the relief to life and the flowing lines read as a river running down the slopes: a metaphor for freshness, movement and hydration."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Specification",
+      "paragraphs": [
+        "A continuous pattern wraps the cylinder through 360°, designed for digital 3D printing with a textured powder-coat finish. The Ibili logo sits at the base. Print area 213.5 × 170 mm."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ibili-2.jpg",
+          "caption": "Design template with cap and body colours."
+        }
+      ]
+    }
+  ]
+}

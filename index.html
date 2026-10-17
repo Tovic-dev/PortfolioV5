@@ -119,6 +119,7 @@ img{display:block;max-width:100%;height:auto}
 .folio b{color:var(--ink);font-weight:500}
 .theme{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border:1px solid var(--rule);white-space:nowrap}
 .theme:hover{border-color:var(--ink)}
+.langs{display:inline-flex;gap:10px}.langs a{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-decoration:none}.langs a:hover,.langs a[aria-current]{color:var(--ink)}
 .runhead .mnav{display:none;height:auto;grid-template-columns:none;gap:14px;padding:8px 0 10px;border-top:1px solid var(--rule)}
 .mnav a{text-decoration:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
 .mnav a[aria-current="page"]{color:var(--spot)}
@@ -529,25 +530,97 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 </head>
 <body>
 
-<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div class="bar mono"><span>Printing · <b id="count">000</b></span><span>Vol. 01 · 12 works</span></div></div>
-<div id="wipe" aria-hidden="true"><span class="mono" id="wipeK">Turning page</span><span class="t" id="wipeT">Works</span></div>
+<!--@body-->
+
+<script src="vendor/three-0.128.0/three.min.js" defer></script>
+<script src="vendor/gsap-3.12.5/gsap.min.js" defer></script>
+<script src="vendor/gsap-3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="vendor/lenis-1.1.13/lenis.min.js" defer></script>
+<script src="vendor/three-0.128.0/GLTFLoader.min.js" defer></script>
+<script src="vendor/three-0.128.0/DRACOLoader.min.js" defer></script>
+<script>
+/* =====================================================================
+   CONTENT. D is filled in by tools/build-pages.mjs from content/*.json (edited in /admin/), one locale per page.
+   ===================================================================== */
+const D=/*@content*/null/*@end*/;
+const UI=D.site.ui,IMG=D.img,PROJ=D.projects,FEAT=D.home.featured;
+const TERR=Object.fromEntries(D.works.categories.map(c=>[c.key,c.label]));
+PROJ.forEach((p,i)=>{p.n=i+1;p.page=String(9+i).padStart(2,'0')});
+const HOME_IDS=FEAT.map(f=>f.project);
+/* 3D part labels, by their original English name */
+const LBL=s=>(s&&D.labels[s])||s;
+const DRAW=[
+ '<path d="M72 72 L168 72 L158 144 L82 144 Z"/><path class="dash" d="M78 118 H162"/><path class="acc" d="M120 72 C112 46 94 34 78 30 C98 28 116 44 120 72 C124 48 142 34 166 36 C150 44 130 54 120 72"/><rect x="140" y="98" width="10" height="34"/>',
+ '<path class="dash" d="M20 78 H222"/><path d="M44 52 C44 32 72 24 122 26 L188 32 C204 34 210 48 208 72 L204 108 C202 122 190 128 170 128 L72 126 C52 126 44 114 44 98 Z"/><path class="acc" d="M58 58 C58 44 80 38 122 40 L182 45 C192 46 196 56 195 72 L192 102 C191 111 184 115 170 115 L76 113 C64 113 58 106 58 96 Z"/><path d="M70 126 L60 148 L104 148 L98 126"/>',
+ '<path d="M28 58 H204"/><path d="M28 70 H204"/><path d="M28 58 V70 M204 58 V70 M70 58 V70 M116 58 V70 M162 58 V70"/><path class="acc" d="M60 70 L36 132 M176 70 L200 132"/><path d="M150 154 A64 64 0 0 1 238 112"/>',
+ '<rect x="72" y="58" width="96" height="72" rx="10"/><rect class="acc" x="86" y="72" width="68" height="26" rx="3"/><circle cx="92" cy="136" r="10"/><circle cx="148" cy="136" r="10"/><circle class="acc" cx="120" cy="48" r="8"/><path class="dash" d="M20 146 H220"/>',
+ '<path d="M56 142 V84 L122 40 L188 84 V142 Z"/><path class="acc" d="M128 44 L182 80 M136 50 L130 58 M150 59 L144 67 M164 68 L158 76"/><rect x="108" y="108" width="24" height="34"/><circle class="acc" cx="52" cy="40" r="12"/><path d="M196 102 h22 v40 h-22 z"/>',
+ '<rect x="88" y="14" width="64" height="132" rx="10"/><path class="dash" d="M96 40 C110 60 104 80 120 92 C136 104 130 120 144 132"/><path class="acc" d="M96 40 C110 60 104 80 120 92"/><circle class="acc" cx="96" cy="40" r="4"/><circle cx="144" cy="132" r="4"/>',
+ '<rect x="88" y="14" width="64" height="132" rx="10"/><circle cx="120" cy="54" r="20"/><path class="acc" d="M120 34 A20 20 0 0 1 139 60"/><path d="M100 128 V112 M112 128 V100 M124 128 V106 M136 128 V92"/>'];
+
+/* ---- routes, page metadata and every view, as HTML built from D.
+   Pure functions: tools/build-pages.mjs runs everything from "const D=" up to here to build dist/ ---- */
+const LP=D.lang===D.defaultLang?'':'/'+D.lang; /* locale prefix: '' for the default language, '/es' etc. */
+const ROUTE={home:LP+'/',works:LP+'/works/',about:LP+'/about/',project:id=>`${LP}/works/${id}/`};
+const plain=s=>String(s||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+const attr=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+const fill=(t,v)=>String(t||'').replace(/\{(\w+)\}/g,(m,k)=>k in v?v[k]:m);
+const pad=n=>String(n).padStart(2,'0');
+function pageMeta(r){const S=D.site.seo;
+  if(r.v==='project'){const p=r.p;return{title:fill(S.projectTitle,{title:p.title}),image:p.cover,
+    description:fill(S.projectDescription,{deck:plain(p.deck),categories:p.terr.map(t=>TERR[t]).join(', '),title:p.title})}}
+  return {
+    home:{title:S.homeTitle,description:S.homeDescription},
+    works:{title:S.worksTitle,description:fill(S.worksDescription,{count:PROJ.length,categories:Object.values(TERR).join(', ')})},
+    about:{title:S.aboutTitle,description:S.aboutDescription},
+    404:{title:S.notFoundTitle,description:S.notFoundDescription}}[r.v]}
+function img(src,cap,lazy=true){const d=IMG[src]||[1600,1000];return `<img src="${src}" width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
+function tocHTML(){return PROJ.map(p=>`<li data-terr="${p.terr.join(' ')}"><a href="${ROUTE.project(p.id)}" data-pid="${p.id}" data-cursor="${attr(UI.cursorOpen)}"><span class="pg">${String(p.n).padStart(2,'0')}</span><span class="t">${p.title}<small>${p.sub}</small></span><span class="lead"></span><span class="ct">${p.terr.map(t=>TERR[t]).join(' · ')}</span><span class="yr">${p.year||'—'}</span><span class="go">↗</span></a></li>`).join('')}
+function filtersHTML(){return ['all',...Object.keys(TERR)].map(k=>`<button data-f="${k}" aria-pressed="${k==='all'}">${k==='all'?UI.filterAll:TERR[k]} <sup>${k==='all'?PROJ.length:PROJ.filter(p=>p.terr.includes(k)).length}</sup></button>`).join('')+`<span class="wcount mono" id="wcount">${PROJ.length} ${UI.workPlural}</span>`}
+function projectHTML(p){
+  let fig=1;const F=()=>`${UI.fig} ${String(fig++).padStart(2,'0')}`;
+  const idx=PROJ.indexOf(p),next=PROJ[(idx+1)%PROJ.length];
+  const spec=[[UI.myRole,p.role,'role'],[UI.year,p.year],[UI.client,p.client],[UI.context,p.ctx],[UI.team,p.team],[UI.tools,p.tools],[UI.distinction,p.award?`<span class="stamp">${p.award}</span>`:'']].filter(r=>r[1]);
+  let h=`<div class="inner"><a class="pback" href="${ROUTE.works}">${UI.allWorks}</a>
+  <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>${UI.work} ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${p.title}</span></span></h1></div>
+  <div class="pintro"><p class="deck">${p.deck}</p><dl class="spec2">${spec.map(r=>`<dt>${r[0]}</dt><dd${r[2]?` class="${r[2]}"`:''}>${r[1]}</dd>`).join('')}</dl></div>`;
+  if(p.m3d!==undefined){h+=`<figure class="plate pplate" id="pplate"><span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span><canvas aria-label="${attr(fill(UI.model3DAria,{title:plain(p.title)}))}"></canvas>
+    <div class="ptop"><span class="figno">${F().replace(UI.fig+' ','')}<small>${UI.drag3D}</small></span><div class="modes" role="group" aria-label="${attr(UI.view3D)}"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="wire" aria-pressed="false">${UI.wireframe}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div></div>
+    <ol class="legend" id="legend"></ol>
+    <figcaption class="pcap"><p><b>${UI.explodedViewTitle}</b> ${fill(UI.simplifiedModel,{title:p.title})}</p><div class="xbar mono"><label for="xr">${UI.explode}</label><input type="range" id="xr" min="0" max="100" value="0"><output>0%</output></div></figcaption></figure>`}
+  if(p.stats)h+=`<div class="pstats">${p.stats.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`;
+  if(p.hero)h+=`<figure class="pherofig">${img(p.hero[0],p.hero[1],false)}<figcaption><b>${F()}</b>${p.hero[1]}</figcaption></figure>`;
+  p.sec.forEach((s,i)=>{const [title,paras,figs,list]=s;
+    h+=`<section class="psec"><div class="ph2"><span class="mono">§ ${String(i+1).padStart(2,'0')}</span><h2>${title}</h2></div><div class="pb">${(paras||[]).map(t=>t.startsWith('<span')?t:`<p>${t}</p>`).join('')}${list?`<ul>${list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${figs&&figs.length?`<div class="figs">${figs.map(f=>`<figure>${img(f[0],f[1])}<figcaption><b>${F()}</b>${f[1]}</figcaption></figure>`).join('')}</div>`:''}</div></section>`});
+  h+=`<a class="pnext" href="${ROUTE.project(next.id)}" data-cursor="${attr(UI.cursorNext)}"><span class="mono">${UI.nextWork}</span><span class="t">${next.title} →</span></a></div><div style="height:40px"></div>`;
+  return h}
+/* the language switch only appears once there is more than one locale; the app points each link at the current page */
+function langsHTML(){if(D.locales.length<2)return '';
+  return `<span class="langs" aria-label="${attr(UI.language)}">${D.locales.map(l=>`<a href="${l===D.defaultLang?'/':'/'+l+'/'}" hreflang="${l}" lang="${l}" data-lang="${l}"${l===D.lang?' aria-current="true"':''}>${l.toUpperCase()}</a>`).join('')}</span>`}
+function aboutFactsHTML(){return D.about.facts.map(f=>`<dt>${f.label}</dt><dd>${
+  f.type==='chips'?`<div class="chips">${(f.items||[]).map(x=>`<span>${x}</span>`).join('')}</div>`:
+  f.type==='languages'?`<div class="lang">${(f.languages||[]).map(l=>`<div><span>${l.name}</span><i${l.full?'':' class="p"'}></i><span>${l.level}</span></div>`).join('')}</div>`:
+  f.text}</dd>`).join('\n          ')}
+function bodyHTML(){const S=D.site,H=D.home,W=D.works,A=D.about,N=S.notFound,n=FEAT.length,P=id=>PROJ.find(p=>p.id===id)||{};
+return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div class="bar mono"><span>Printing · <b id="count">000</b></span><span>Vol. 01 · ${PROJ.length} ${UI.workPlural}</span></div></div>
+<div id="wipe" aria-hidden="true"><span class="mono" id="wipeK">${UI.turningPage}</span><span class="t" id="wipeT">${UI.works}</span></div>
 <canvas id="gl" aria-hidden="true"></canvas>
 <svg id="leaders" aria-hidden="true"></svg>
 <div id="labels" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
-<div class="scue" id="scue" aria-hidden="true"><span class="mono" id="scueT">Scroll</span><i><b></b></i></div>
+<div class="scue" id="scue" aria-hidden="true"><span class="mono" id="scueT">${UI.scroll}</span><i><b></b></i></div>
 <div class="xh" aria-hidden="true"><i></i><span id="xhr">X 0000 · Y 0000</span></div>
 <div class="peek" id="peek" aria-hidden="true"></div>
-<div id="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer"><button id="lbClose">Close · Esc</button><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="${attr(UI.imageViewer)}"><button id="lbClose">${UI.close}</button><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
 
 <header class="runhead"><div class="inner">
-  <a href="/" class="who">Mikel Arnao <em>· Product Design Engineer</em></a>
-  <nav aria-label="Sections">
-    <a href="/works/" data-nav="works">Works</a><a href="/about/" data-nav="about">About</a>
+  <a href="${ROUTE.home}" class="who">${S.name} <em>· ${S.role}</em></a>
+  <nav aria-label="${attr(UI.navAria)}">
+    <a href="${ROUTE.works}" data-nav="works">${UI.navWorks}</a><a href="${ROUTE.about}" data-nav="about">${UI.navAbout}</a>
   </nav>
-  <div class="right"><span class="folio">p. <b id="folio">01</b> / 21</span><button class="theme" id="themeBtn">Theme · Auto</button></div>
+  <div class="right">${langsHTML()}<span class="folio">p. <b id="folio">01</b> / 21</span><button class="theme" id="themeBtn">${UI.theme} · ${UI.themeAuto}</button></div>
 </div>
-<nav class="mnav inner" aria-label="Sections (mobile)"><a href="/works/" data-nav="works">Works</a><a href="/about/" data-nav="about">About</a></nav>
+<nav class="mnav inner" aria-label="${attr(UI.navMobileAria)}"><a href="${ROUTE.works}" data-nav="works">${UI.navWorks}</a><a href="${ROUTE.about}" data-nav="about">${UI.navAbout}</a></nav>
 </header>
 
 <main>
@@ -555,115 +628,72 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 <div class="view" id="v-home">
 <section id="cover" class="wrap" data-folio="01">
   <div class="inner cover">
-    
-    <h1 class="mast" aria-label="Mikel Arnao"><span class="ln"><span class="prox">Mikel</span> <em class="prox">Arnao</em></span></h1>
+    <h1 class="mast" aria-label="${attr(H.first+' '+H.last)}"><span class="ln"><span class="prox">${H.first}</span> <em class="prox">${H.last}</em></span></h1>
     <div class="cover-left">
-      <p class="cover-deck">Industrial design and product development engineer. Objects that can be manufactured, interfaces that get used and the code that ties them together, <em>from idea to part.</em></p>
+      <p class="cover-deck">${H.deck}</p>
       <ul class="lines">
-        <li><button data-go="0"><span class="pg">01</span><span class="tt">SEAT Ateca side mirror</span><span class="ct">Automotive</span></button></li>
-        <li><button data-go="1"><span class="pg">02</span><span class="tt">Ardura, self-sufficient smart pot</span><span class="ct">Product</span></button></li>
-        <li><button data-go="2"><span class="pg">03</span><span class="tt">Cycle Dry, Orbea rear rack</span><span class="ct">Cycling</span></button></li>
-        <li><button data-go="3"><span class="pg">04</span><span class="tt">Self-sufficient house in Gudamendi</span><span class="ct">Sustainability</span></button></li>
-        <li><button data-go="4"><span class="pg">05</span><span class="tt">Mercedes V-Class air vent LCA</span><span class="ct">Eco-design</span></button></li>
+        ${FEAT.map((f,i)=>`<li><button data-go="${i}"><span class="pg">${pad(i+1)}</span><span class="tt">${f.line}</span><span class="ct">${f.lineCategory}</span></button></li>`).join('\n        ')}
       </ul>
     </div>
     <figure class="cover-fig" id="coverFig">
-      <span class="tag mono">On the cover</span>
-      <figcaption><b>Fig. 01</b><br>SEAT Ateca side mirror redesign, assembly view. Scroll to take it apart.</figcaption>
+      <span class="tag mono">${H.coverTag}</span>
+      <figcaption><b>${UI.fig} 01</b><br>${H.coverCaption}</figcaption>
     </figure>
   </div>
 </section>
 
-<section id="theatre" aria-label="Selected projects">
+<section id="theatre" aria-label="${attr(UI.selectedProjects)}">
   <div class="spread wrap"><div class="inner">
     <div class="arts">
-      <article class="art on" data-p="02">
-        <div class="kick mono"><span><b>Project 01</b> · Automotive</span><span>p. 02</span></div>
-        <h2><span class="ln"><span>SEAT Ateca</span></span><span class="ln"><span><em>side mirror</em></span></span></h2>
-        <p class="deck">A mirror that folds itself before it hits something, and keeps the driver seeing when it does.</p>
-        <div class="body"><span class="mono">Approach</span><p>Ultrasonic folding, camera view on the central screen, blind-spot radar and a dynamic LED indicator, validated against ECE R46 and in SolidWorks Simulation.</p></div>
-        <dl class="spec"><dt>My role</dt><dd>Regulatory analysis, circuit redesign, material specs, renders</dd><dt>Year</dt><dd>2025</dd></dl>
-        <a class="more" href="/works/seat-ateca/">Open case study ↗</a>
-      </article>
-      <article class="art" data-p="03">
-        <div class="kick mono"><span><b>Project 02</b> · Product · IoT</span><span>p. 03</span></div>
-        <h2><span class="ln"><span>Ardura</span></span><span class="ln"><span><em>self-sufficient pot</em></span></span></h2>
-        <p class="deck">A plant pot that waters itself on indoor light, so the plant survives the holidays.</p>
-        <div class="body"><span class="mono">Approach</span><p>Organic photovoltaic film, a positive-displacement pump dosing 250 ml, a lift-out rPET tank and a recycled PP body with no glue or paint.</p></div>
-        <dl class="spec"><dt>My role</dt><dd>Led the development phase and CAD, renders</dd><dt>Distinction</dt><dd><span class="stamp">iF recognition</span></dd></dl>
-        <a class="more" href="/works/ardura/">Open case study ↗</a>
-      </article>
-      <article class="art" data-p="04">
-        <div class="kick mono"><span><b>Project 03</b> · Cycling</span><span>p. 04</span></div>
-        <h2><span class="ln"><span>Cycle Dry</span></span><span class="ln"><span><em>Orbea rear rack</em></span></span></h2>
-        <p class="deck">A simpler, cheaper bikepacking rack with a hanger to dry clothes on the move.</p>
-        <div class="body"><span class="mono">Approach</span><p>Material teardown of the original rack, a single bent aluminium frame and a hanger that lifts 90° and turns 180° out of the wind.</p></div>
-        <dl class="spec"><dt>My role</dt><dd>Market and use analysis, ideation, specs, manufacturing</dd><dt>Year</dt><dd>2025</dd></dl>
-        <a class="more" href="/works/cycle-dry/">Open case study ↗</a>
-      </article>
-      <article class="art" data-p="05">
-        <div class="kick mono"><span><b>Project 04</b> · Sustainability</span><span>p. 05</span></div>
-        <h2><span class="ln"><span>Self-sufficient house</span></span><span class="ln"><span><em>in Gudamendi</em></span></span></h2>
-        <p class="deck">A home on a windy hill above Donostia that makes its own energy and reuses its rain.</p>
-        <div class="body"><span class="mono">Approach</span><p>Hybrid PV-thermal panels, a small wind turbine, a heat pump, rainwater harvesting and recycled cellulose insulation.</p></div>
-        <dl class="spec"><dt>My role</dt><dd>Renewable energy systems</dd><dt>Distinction</dt><dd><span class="stamp">UPV contest winner</span></dd></dl>
-        <a class="more" href="/works/gudamendi-house/">Open case study ↗</a>
-      </article>
-      <article class="art" data-p="06">
-        <div class="kick mono"><span><b>Project 05</b> · Eco-design · LCA</span><span>p. 06</span></div>
-        <h2><span class="ln"><span>Mercedes V-Class</span></span><span class="ln"><span><em>air vent</em></span></span></h2>
-        <p class="deck">Taking a premium air vent apart to find where its footprint hides, then cutting it.</p>
-        <div class="body"><span class="mono">Approach</span><p>Cradle-to-grave LCA with the IHOBE calculator, hotspot analysis and nine redesign concepts. The final concept cuts the carbon footprint by about 85 %.</p></div>
-        <dl class="spec"><dt>My role</dt><dd>LCA, improvement goals, environmental evaluation</dd><dt>Year</dt><dd>2025</dd></dl>
-        <a class="more" href="/works/mercedes-vent/">Open case study ↗</a>
-      </article>
+      ${FEAT.map((f,i)=>`<article class="art${i?'':' on'}" data-p="${pad(i+2)}">
+        <div class="kick mono"><span><b>${UI.project} ${pad(i+1)}</b> · ${f.kicker}</span><span>p. ${pad(i+2)}</span></div>
+        <h2><span class="ln"><span>${f.titleA}</span></span><span class="ln"><span><em>${f.titleB}</em></span></span></h2>
+        <p class="deck">${f.deck}</p>
+        <div class="body"><span class="mono">${UI.approach}</span><p>${f.approach}</p></div>
+        <dl class="spec"><dt>${UI.myRole}</dt><dd>${f.role}</dd><dt>${f.factLabel}</dt><dd>${f.factStamp?`<span class="stamp">${f.factValue}</span>`:f.factValue}</dd></dl>
+        <a class="more" href="${ROUTE.project(f.project)}">${UI.openCaseStudy}</a>
+      </article>`).join('\n      ')}
     </div>
     <figure class="plate" id="plate">
       <span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span>
       <span class="pframe" id="pframe" aria-hidden="true"><i class="b"></i><i class="l"></i><i class="r"></i><i class="tl"></i><i class="tr"></i></span>
       <div class="ptop">
-        <span class="figno" id="figno">01<small>/ 05</small></span>
-        <div class="modes" role="group" aria-label="3D model view" data-modes="home"><button data-mode="solid" aria-pressed="true">Solid</button><button data-mode="wire" aria-pressed="false">Wireframe</button><button data-mode="xray" aria-pressed="false">X-ray</button></div>
+        <span class="figno" id="figno">01<small>/ ${pad(n)}</small></span>
+        <div class="modes" role="group" aria-label="${attr(UI.view3D)}" data-modes="home"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="wire" aria-pressed="false">${UI.wireframe}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div>
       </div>
       <figcaption class="pcap">
-        <p><b id="capT">Fig. 01</b> <span id="capName">SEAT Ateca side mirror</span> · exploded view <span class="num" id="rEx">000 %</span></p>
+        <p><b id="capT">${UI.fig} 01</b> <span id="capName">${FEAT[0].figure}</span> · ${UI.explodedView} <span class="num" id="rEx">000 %</span></p>
       </figcaption>
     </figure>
-    <nav class="strip" id="strip" aria-label="Go to project">
-      <button class="on"><span class="p">01</span><span class="n">SEAT Ateca</span></button><button><span class="p">02</span><span class="n">Ardura</span></button><button><span class="p">03</span><span class="n">Cycle Dry</span></button><button><span class="p">04</span><span class="n">Gudamendi</span></button><button><span class="p">05</span><span class="n">Mercedes</span></button>
+    <nav class="strip" id="strip" aria-label="${attr(UI.goToProject)}">
+      ${FEAT.map((f,i)=>`<button${i?'':' class="on"'}><span class="p">${pad(i+1)}</span><span class="n">${f.short}</span></button>`).join('')}
     </nav>
   </div></div>
 </section>
 
 <div class="paper">
-<div class="ticker wrap" aria-label="Tools"><div class="trow" data-dir="1"><span>SolidWorks</span><span>Siemens NX</span><span>Revit</span><span>Blender</span><span>KeyShot</span><span>3ds Max</span><span>Adobe CC</span><span>React</span><span>Next.js</span></div></div>
+<div class="ticker wrap" aria-label="${attr(UI.toolsAria)}"><div class="trow" data-dir="1">${H.tools.map(t=>`<span>${t}</span>`).join('')}</div></div>
 
 <section class="sec wrap" id="proceso" data-folio="07">
   <div class="inner">
-    <div class="shead"><div class="k mono"><b>p. 07</b><span>Procedure</span></div><h2>From sketch <em>to part.</em></h2></div>
+    <div class="shead"><div class="k mono"><b>p. 07</b><span>${H.procedure.kicker}</span></div><h2>${H.procedure.title}</h2></div>
     <div class="proc">
-      <p class="intro">Five phases that repeat in every project, whether it is an injected housing, a robot or an app.</p>
+      <p class="intro">${H.procedure.intro}</p>
       <ol class="steps" id="steps">
-        <li><span class="n">Phase 1</span><h3>Research</h3><p>Users, context, regulations and competitors. Understand the problem before drawing anything.</p></li>
-        <li><span class="n">Phase 2</span><h3>Conceptualise</h3><p>Sketches, quick mock-ups and use scenarios. Many cheap ideas to pick a good one.</p></li>
-        <li><span class="n">Phase 3</span><h3>Model and validate</h3><p>CAD, calculation, manufacturability and rendering, to decide with data and with images.</p></li>
-        <li><span class="n">Phase 4</span><h3>Prototype</h3><p>3D printing, electronics and clickable interfaces. Test, break and fix.</p></li>
-        <li><span class="n">Phase 5</span><h3>Implement</h3><p>Drawings and documentation for production, automation or code ready to ship.</p></li>
+        ${H.procedure.steps.map(s=>`<li><span class="n">${s.label}</span><h3>${s.title}</h3><p>${s.text}</p></li>`).join('\n        ')}
         <span class="rail" aria-hidden="true"><i id="railFill"></i></span>
       </ol>
     </div>
   </div>
 </section>
-
-
 </div>
 </div>
 
 <!-- ============ WORKS ============ -->
 <div class="view vpage wrap" id="v-works" hidden>
   <div class="inner">
-    <div class="shead"><div class="k mono"><b>p. 08</b><span>Works · complete index</span></div><h1>Every work, <em>every terrain.</em></h1></div>
-    <div class="filters" role="group" aria-label="Filter by terrain" id="filters"></div>
+    <div class="shead"><div class="k mono"><b>p. 08</b><span>${W.kicker}</span></div><h1>${W.title}</h1></div>
+    <div class="filters" role="group" aria-label="${attr(UI.filterAria)}" id="filters"></div>
     <ul class="toc" id="toc"></ul>
   </div>
   <div style="height:clamp(60px,10vw,140px)"></div>
@@ -675,288 +705,55 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 <!-- ============ NOT FOUND ============ -->
 <div class="view vpage wrap" id="v-404" hidden>
   <section class="inner" style="padding-bottom:clamp(80px,10vw,160px)">
-    <div class="shead"><div class="k mono"><b>p. 00</b><span>Not found</span></div><h1>Not in <em>this issue.</em></h1></div>
-    <p class="deck" style="max-width:34ch;margin-bottom:28px">The page you are looking for does not exist or has moved.</p>
-    <p><a class="btn" href="/">Cover</a> <a class="btn" href="/works/">All works</a></p>
+    <div class="shead"><div class="k mono"><b>p. 00</b><span>${N.kicker}</span></div><h1>${N.title}</h1></div>
+    <p class="deck" style="max-width:34ch;margin-bottom:28px">${N.text}</p>
+    <p><a class="btn" href="${ROUTE.home}">${N.home}</a> <a class="btn" href="${ROUTE.works}">${N.works}</a></p>
   </section>
 </div>
 
 <!-- ============ ABOUT ============ -->
 <div class="view vpage wrap" id="v-about" hidden>
   <section class="inner" style="padding-bottom:clamp(80px,10vw,160px)">
-    <div class="shead"><div class="k mono"><b>p. 21</b><span>About · Profile</span></div><h1>Form, engineering <em>and code.</em></h1></div>
+    <div class="shead"><div class="k mono"><b>p. 21</b><span>${A.kicker}</span></div><h1>${A.title}</h1></div>
     <div class="prof">
       <div class="text">
-        <p class="lede" id="lede">Industrial design, engineering, technology and digital experiences in one profile: <em>Product Design Engineering.</em></p>
+        <p class="lede" id="lede">${A.lede}</p>
         <div class="cols">
-          <p>I am in the fourth year of the Bachelor's Degree in Industrial Design and Product Development Engineering at Mondragon Unibertsitatea, finishing in June 2027. Since September 2025 I have been doing dual training at ULMA Handling Systems in Oñati, in the Studies and Proposals department: I model in Revit and produce KeyShot renders and 3ds Max animations for pre-sales.</p>
-          <p>As a freelancer I design and build websites and applications with React, Next.js and Tailwind CSS. I am interested in artificial intelligence, robotics, automation, IoT, mobility, sustainability and connected products.</p>
-          <p>I am looking for specialised internships, graduate programmes and master's degrees in Product Design, Design Engineering and Integrated Product Design.</p>
+          ${A.paragraphs.map(t=>`<p>${t}</p>`).join('\n          ')}
         </div>
       </div>
       <aside>
         <dl class="spec2">
-          <dt>Degree</dt><dd>Bachelor's in Industrial Design and Product Development Engineering · 4th year, until June 2027</dd>
-          <dt>University</dt><dd>Mondragon Unibertsitatea · Faculty of Engineering</dd>
-          <dt>Experience</dt><dd>ULMA Handling Systems · Studies and Proposals · dual training since 2025</dd>
-          <dt>Tools</dt><dd><div class="chips"><span>SolidWorks</span><span>Siemens NX</span><span>Revit</span><span>Blender</span><span>KeyShot</span><span>3ds Max</span><span>Adobe CC</span><span>React</span><span>Next.js</span><span>TypeScript</span><span>Tailwind</span></div></dd>
-          <dt>Interests</dt><dd><div class="chips"><span>AI</span><span>Robotics</span><span>Automation</span><span>IoT</span><span>Mobility</span><span>Sustainability</span><span>Connected products</span></div></dd>
-          <dt>Languages</dt><dd><div class="lang"><div><span>Spanish</span><i></i><span>Native</span></div><div><span>Basque</span><i></i><span>Native</span></div><div><span>English</span><i class="p"></i><span>Professional</span></div></div></dd>
-          <dt>Base</dt><dd>Donostia · Basque Country</dd>
+          ${aboutFactsHTML()}
         </dl>
       </aside>
     </div>
   </section>
   <section class="inner" id="contact" style="padding-bottom:clamp(80px,10vw,160px)">
-    <div class="shead"><div class="k mono"><b>p. 21</b><span>Colophon · Contact</span></div><h2 class="sm">Internships, graduate programmes and web or product commissions.</h2></div>
-    <h2 class="big" aria-label="Let's talk"><span class="ln"><span class="prox">Let's talk</span><em>.</em></span></h2>
+    <div class="shead"><div class="k mono"><b>p. 21</b><span>${A.contact.kicker}</span></div><h2 class="sm">${A.contact.subtitle}</h2></div>
+    <h2 class="big" aria-label="${attr(plain(A.contact.title))}"><span class="ln"><span class="prox">${A.contact.title}</span><em>.</em></span></h2>
     <div class="colo">
-      <p class="say">If you are looking for someone who brings design, engineering and code into the same project, write to me.</p>
+      <p class="say">${A.contact.text}</p>
       <div class="mail">
-        <span class="addr" id="addr">arnaoazpiazu@gmail.com</span>
+        <span class="addr" id="addr">${S.email}</span>
         <div class="btns">
-          <button class="btn solid" id="copyBtn">Copy email</button>
-          <a class="btn" href="https://www.linkedin.com/in/mikelarnao" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a class="btn" href="https://github.com/Tovic-dev" target="_blank" rel="noopener">GitHub ↗</a>
-          <a class="btn" href="https://mikelarnao.com" target="_blank" rel="noopener">mikelarnao.com ↗</a>
+          <button class="btn solid" id="copyBtn">${UI.copyEmail}</button>
+          ${S.links.map(l=>`<a class="btn" href="${attr(l.url)}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('\n          ')}
         </div>
       </div>
       <div class="colophon">
-        <div><span class="mono">Typefaces</span><span>SF Pro / Inter Tight, Inter and IBM Plex Mono</span></div>
-        <div><span class="mono">Spot ink</span><span>Safety orange</span></div>
-        <div><span class="mono">Built with</span><span>Three.js, GSAP and Lenis</span></div>
-        <div><span class="mono">Models</span><span>SolidWorks CAD (SEAT Ateca, Ardura) and geometry generated in code</span></div>
+        ${A.colophon.map(c=>`<div><span class="mono">${c.label}</span><span>${c.text}</span></div>`).join('\n        ')}
       </div>
     </div>
   </section>
 </div>
 
 <footer class="wrap"><div class="inner mono">
-  <span>© 2026 Mikel Arnao · Vol. 01</span>
-  <span>Donostia · <b id="clock">--:--:--</b></span>
-  <span>End of issue</span>
+  <span>${S.footer.left}</span>
+  <span>${S.footer.place} · <b id="clock">--:--:--</b></span>
+  <span>${S.footer.right}</span>
 </div></footer>
-</main>
-
-<script src="vendor/three-0.128.0/three.min.js" defer></script>
-<script src="vendor/gsap-3.12.5/gsap.min.js" defer></script>
-<script src="vendor/gsap-3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="vendor/lenis-1.1.13/lenis.min.js" defer></script>
-<script src="vendor/three-0.128.0/GLTFLoader.min.js" defer></script>
-<script src="vendor/three-0.128.0/DRACOLoader.min.js" defer></script>
-<script>
-/* =====================================================================
-   CONTENT (English). A second language can be added as another object.
-   ===================================================================== */
-const IMG={"ardura-1":[1600,2264],"ardura-2":[1051,743],"ardura-3":[1105,781],"ardura-4":[1101,780],"ardura-5":[735,433],"ardura-6":[460,626],"ardura-7":[704,996],"ardura-8":[1011,495],"bira-1":[1600,1141],"bira-2":[628,366],"bira-3":[822,462],"bira-4":[934,526],"bira-5":[562,796],"bira-6":[1600,900],"bira-7":[1600,1141],"bira-8":[1600,1141],"casa-1":[1600,1130],"casa-2":[1020,762],"casa-3":[1600,612],"casa-4":[1020,1356],"casa-5":[1020,1356],"ibili-1":[1400,990],"ibili-2":[1400,940],"merc-1":[1357,905],"merc-2":[325,433],"merc-3":[296,394],"merc-4":[338,451],"merc-5":[1079,506],"olea-1":[1348,876],"olea-2":[1600,1132],"olea-3":[1600,1132],"olea-4":[1600,1132],"olea-5":[1600,1132],"olea-6":[1600,1132],"olea-7":[1600,1132],"orbea-1":[818,1364],"orbea-2":[438,678],"orbea-3":[873,514],"orbea-4":[948,650],"orbea-5":[1051,1488],"orbea-6":[506,642],"orbea-7":[631,631],"orbea-8":[582,482],"seat-1":[1232,848],"seat-10":[427,293],"seat-11":[664,465],"seat-12":[761,1142],"seat-3":[604,416],"seat-4":[708,398],"seat-5":[883,496],"seat-6":[567,689],"seat-7":[1502,1070],"seat-8":[1486,1043],"seat-9":[943,460],"senda-1":[1600,1132],"senda-2":[1600,1132],"senda-3":[1600,1132],"senda-4":[1600,1132],"senda-5":[1600,1132],"senda-6":[1600,1132],"senda-7":[1600,1132]};
-const TERR={product:'Product',auto:'Automotive',sust:'Sustainability',pack:'Packaging & Brand',digital:'Digital'};
-const PROJ=[
-{id:'seat-ateca',title:'SEAT Ateca side mirror',sub:'Redesign of the exterior mirror of a family SUV',terr:['auto','product'],year:'2025',m3d:0,sk:1,cover:'seat-1',
- ctx:'Academic · PBL 4, 2nd year · Mondragon Unibertsitatea',
- team:'Ainhoa Alonso, Mikel Arnao, Maren Leston, Ane Pelayo, Garazi Portillo',
- tools:'SolidWorks, SolidWorks Simulation, CES EduPack, KeyShot, resin 3D printing',
- role:'Worked across the whole project. Led the regulatory analysis (ECE R46) in the product-analysis phase and most of the development phase: analysis and redesign of the new circuit, the material specification manual, the mould machining roadmap and the justification of the selected material. Led the final renders.',
- deck:'A mirror that <em>folds itself</em> before it hits something, and keeps the driver seeing when it does.',
- stats:[['7.0 Wh','energy for a 50-minute, 25 km trip, inside the 4–8 Wh target'],['0.016 mm','deflection under aerodynamic load at 180 km/h'],['5','new components: folding motor, camera, radar, ultrasonic sensor, blind-spot LED']],
- hero:['seat-1','Final render of the redesigned mirror with dynamic LED indicator.'],
- sec:[
-  ['Context and brief',['The Ateca is a compact family SUV. Of three archetypes, the team chose Maite, a mother who picks her children up from school on a narrow, chaotic street and is afraid of clipping the mirror while manoeuvring.','Brief: keep the Ateca family look, remove that stress with assistance systems and stay fully within ECE Regulation 46.'],[['seat-12','Storyboard of the school pick-up used to find the pain point.']]],
-  ['Research',['A benchmark of six rival SUV mirrors, mapped by price and technology, showed no affordable high-tech option. The regulatory study set the hard limits:'],[],['Minimum edge radius of 2.5 mm on housing and glass','Class III field of view: 20 m long and 4 m wide','No part above 2 m from the ground; vehicle width with mirrors under 2.55 m','Heated glass and LED indicator compliant with EU electrical and lighting rules']],
-  ['Concepts',['Brainstorming and four-step sketching produced three preliminary designs: one with a rain deflector, an aerodynamic one with blind-spot indicator, and a robust one with a hidden auxiliary mirror. A Pugh matrix chose concept 2, positive on viability, aesthetics, function and regulations.'],[['seat-7','Sketch of the chosen direction.'],['seat-8','Exploration of the folding geometry.']]],
-  ['Development',['An ultrasonic sensor folds the mirror when an obstacle gets close; a camera streams to the central screen while it is folded; a radar drives a blind-spot LED. The circuit was redesigned at 12 V with the sensors in parallel to the EFB battery.','SolidWorks Simulation checked aerodynamic load, a 33 J pedestrian impact, fatigue at one million cycles, 500 N vertical and 300 N lateral loads, modal and thermal behaviour.'],[['seat-6','Exploded CAD of the assembly.'],['seat-9','New electrical circuit.'],['seat-11','Positive mould for the housing.']]],
-  ['Specification',['The material specification manual turned functional, mechanical, thermal and chemical requirements into CES EduPack constraints and performance indices. The top five candidates were weighted after min–max normalisation; PCTFE was chosen for its UV, humidity and chemical resistance. Machining roadmaps were written for both mould halves.']],
-  ['Result',['A 1:1 aesthetic prototype printed in resin, filled, primed and painted, with an amber indicator and a laser-cut mirror on a hand-shaped curved base.'],[['seat-4','Aesthetic prototype, housing.'],['seat-5','Aesthetic prototype, mirror side.'],['seat-10','Render of the mirror glass and camera.'],['seat-3','Render on the vehicle.']]],
-  ['Reflection',['Simulation in SolidWorks went beyond the syllabus. The next step would be a functional prototype to test ergonomics, tolerances and assembly that virtual tools do not show.']]
- ]},
-{id:'ardura',title:'Ardura',sub:'Self-sufficient smart plant pot',terr:['product','sust'],year:'2026',m3d:1,sk:0,cover:'ardura-1',award:'iF recognition',
- ctx:'Academic · PBL 5, 3rd year · Mondragon Unibertsitatea',
- team:'Mikel Arnao, Danel Iturbe, Egoitz Fernandez, Mikel Martin, Maria Martinez',
- tools:'SolidWorks, KeyShot, IHOBE Climate & Circularity Calculator, Adobe CC',
- role:'Worked with the team on the whole project and led the entire development phase, CAD included: architecture, hydraulic system, energy balance, materials and manufacturing, ergonomics and costing. Only the product and project panels were done by others. Led the final renders.',
- deck:'A plant pot that <em>waters itself on indoor light</em>, so the plant survives the holidays.',
- stats:[['15.09 Wh','generated per day by the OPV film, against 0.87 Wh consumed'],['3.5 L','retractable rPET reservoir with integrated handle'],['≈ €13','estimated unit cost ex-works, for a €79 retail price']],
- hero:['ardura-1','Final render of Ardura in a living room.'],
- sec:[
-  ['Context and brief',['The project tackles the "biophilic paradox": people want plants at home but lack the time to care for them. Interviews showed the real stress is not the care itself but absences, and watering "by eye".','The chosen persona, Rosa, 52, lives between two homes. The CUT brief asks for peace of mind, automatic watering by hydraulic pressure and recyclable materials.']],
-  ['Research',['A map of intelligence against sustainability showed the gap: smart gadgets are wasteful and sustainable pots are passive. The opportunity was a regenerative, battery-free and repairable pot that uses physics, not electronics, to be smart.'],[['ardura-8','Market opportunity map.']]],
-  ['Concepts',['Five product panels explored a universal add-on and an integrated pot. The integrated pot won: it controls the material, so no water is lost through porous ceramic, and its surface can carry the solar film without looking like a gadget.'],[['ardura-6','Ideation sketches.'],['ardura-3','Concept poster, integrated pot.'],['ardura-5','CMF moodboard.']]],
-  ['Development',['Three stacked modules: the living core with the organic photovoltaic film, a sealed tech module with PCB, 5000 mAh battery, micro-pump and mode slider, and a detachable rPET tank inside an rPP shell with a level window.','A positive-displacement pump delivers exact 250 ml doses whatever the water level. A "drop and lift" conical coupling, based on the medical Luer taper, seals by gravity so the tank comes out with one hand. A haptic slider picks Tropical, Standard or Desert watering.'],[['ardura-2','Product panel with the module architecture.']]],
-  ['Specification',[],[],['Body in recycled PP with mineral filler: matte stone texture, 1.8 mm walls, no paint','Clear rPET tank that nests in the shell by draft angle, no adhesives','Snap-fit electronics and threaded joints for disassembly','Bill of materials ≈ €13.13 per unit']],
-  ['Life-cycle assessment',['Manufacturing causes about 99 % of the climate impact. An impermeable rPP body saves around 140 litres of water over ten years compared with ceramic. The OPV film pays back its carbon in 0.2 years against more than two for silicon, and repair matters more than recycling: material separation changes the total impact by only 0.23 %.']],
-  ['Result',[],[['ardura-7','Project panel.'],['ardura-4','Alternative concept poster: universal add-on.']]],
-  ['Reflection',['For a device that uses so little energy, full self-sufficiency is not automatically greener; the solar film is justified by having no cables and by the value users see in it. A desktop version under one litre is the next step.']]
- ]},
-{id:'cycle-dry',title:'Cycle Dry · Orbea',sub:'Rear rack redesign for bikepacking',terr:['product'],year:'2025',m3d:2,sk:2,cover:'orbea-1',
- ctx:'Academic · PBL 3, 2nd year · reference product by Orbea',
- team:'Ekain Ardanza, Mikel Arnao, Leire Arias, Laura Cuesta, Naroa Galdos',
- tools:'SolidWorks, KeyShot, CES EduPack, Vickers and EDX testing',
- role:'Led the market and usage analysis, the ideation phase (sketches developed with a teammate, except the preliminary designs), the specification document and the manufacturing process for the proposal. Led the final renders.',
- deck:'A simpler, cheaper bikepacking rack with a <em>hanger to dry clothes</em> on the move.',
- stats:[['€125 → €50–60','target price against the original rack'],['90° / 180°','the hanger lifts, then turns out of the wind'],['Al 6061','main alloy, identified by density, Vickers and EDX']],
- hero:['orbea-1','Final render of Cycle Dry on a hardtail MTB.'],
- sec:[
-  ['Context and brief',['Orbea\'s MTB hardtail rack costs €124.99 and has many parts. The brief: make it simpler and cheaper for bikepacking. The user is a young cyclist on long routes who needs to wash and hang her sweaty clothes without losing them.']],
-  ['Research',['The rack was cut into nine samples and tested for density, Vickers hardness and EDX composition: mostly Al 6061, an Al 3003 mudguard, an AISI 1030 steel rod, a PET bag panel and a DLC coating. Six competitors were mapped by price and added value to find the gap.'],[['orbea-6','Moodboard.'],['orbea-7','CMF moodboard.']]],
-  ['Concepts',['Rotating sketches produced many redesigns. The chosen one adds a rectangular hanger on the rear bar that lifts 90° to hang clothes and turns 180° to avoid drag, or to dry them when parked.'],[['orbea-4','Concept sketch of the hanger.'],['orbea-8','Ideation sketches.']]],
-  ['Development',['The side bar between the stays was removed, since panniers now hang from the top bars, and the frame became a single bent tube plus the front and rear bars.'],[['orbea-3','CAD detail of the hinge mechanism.']]],
-  ['Specification',['Specification sheet for the 50 cm strut to the rear axle:'],[],['20 kg without plastic deformation','190 MPa tensile strength, 69 GPa Young\'s modulus','−10 °C to 50 °C operating range','Al 6061, 2720 kg/m³, measured hardness 93.3 HV']],
-  ['Manufacturing',['Extruded aluminium tubes, CNC bending, MIG welding and anodising for the frame. The hinge is made from extruded profiles with CNC turning and milling, drilling and tapping.']],
-  ['Result',[],[['orbea-2','Render of the rack.'],['orbea-5','Final poster.']]]
- ]},
-{id:'gudamendi-house',title:'Self-sufficient house',sub:'Ecological home in Gudamendi, Donostia',terr:['sust'],year:'2021',m3d:3,sk:4,cover:'casa-2',award:'UPV contest winner',
- ctx:'Contest project',
- team:'Bixen, Hugo, Mikel Arnao',
- role:'Designed the renewable energy systems: hybrid solar panels, wind turbine, battery storage and heat pump.',
- deck:'A home on a windy hill above Donostia that <em>makes its own energy</em> and reuses its rain.',
- stats:[['13 m/s','average wind speed in Igeldo; the turbine works from 10 m/s'],['180 m','altitude of the plot: more sun, more wind, mild sea climate'],['3 : 1','energy delivered by the heat pump per unit consumed']],
- hero:['casa-2','The house on its plot in Gudamendi.'],
- sec:[
-  ['Context',['The plot sits on Gudamendi, in Igeldo, 180 m above the sea. The sea keeps temperatures regular, there is little shade and a steady wind, and sewage, water, power, phone and a bus stop are close. The main façade faces south to limit winter heat loss.']],
-  ['Envelope',['Stone on the ground floor resists rain splash; vertical timber cladding above. An asymmetric pitched roof in ventilated zinc, which is abundant, lasts a century and is endlessly recyclable. Triple glazing with two chambers, low-emissivity glass and micro-slat blinds; cellulose insulation made from recycled paper, recovering the old paper mills of the river Oria.'],[['casa-5','Façade section, joinery and insulation.']]],
-  ['Energy systems',['My part. Hybrid PV-thermal panels on the steep south slope preheat domestic hot water and make electricity for lighting, devices and the heat pump. A small wind turbine works from 10 m/s. Surplus energy is stored in batteries in the attic and the rest goes to the grid. The heat pump heats through the floor, finishes the hot water and reverses for cooling in summer.'],[['casa-3','Renewable energy and systems.']]],
-  ['Water',['The shallow roof slope collects rainwater into an underground tank used for the washing machine, toilets and garden irrigation.'],[['casa-4','Water management and extensive green roof.']]],
-  ['Result',[],[['casa-1','Full contest poster.']]]
- ]},
-{id:'mercedes-vent',title:'Mercedes V-Class air vent',sub:'Eco-design and life-cycle assessment',terr:['auto','sust'],year:'2025',m3d:4,sk:3,cover:'merc-1',
- ctx:'Academic · Environmental Aspects course',
- team:'Aimar Arauzo, Mikel Arnao, Ander Martín',
- tools:'IHOBE Climate & Circularity Calculator, MET matrix, weighted decision matrix',
- role:'Worked with the team on the whole project and led the life-cycle assessment (LCA), the improvement goals and idea generation, and the evaluation of the environmental improvements. The brief covered analysis only, with no development phase.',
- deck:'Taking a premium air vent apart to find <em>where its footprint hides</em>, then cutting it.',
- stats:[['−85 %','carbon footprint with a mono-material PP body'],['−65 %','ReCiPe endpoint with an efficient LED and road logistics'],['84 %','of the plastic recyclable in a single stream']],
- hero:['merc-1','Interior of the 2025 V-Class with the round vents and ambient light.'],
- sec:[
-  ['Context and brief',['The round vent of the 2025 V-Class weighs 127 g and mixes PC+ABS, chrome-plated rings, brass-plated steel rods, TPE seals and an LED ambient-light board, for a 15-year, 250,000 km life. Chrome on ABS cannot be recycled and the parts cannot be separated at end of life.','Goal: quantify the impact and propose redesigns without losing the premium feel.']],
-  ['Teardown',['Every part was taken apart, weighed and identified to build the inventory.'],[['merc-2','Main body on the scale.'],['merc-3','Body and louvre assembly.'],['merc-4','Chrome trim ring.']]],
-  ['Life-cycle assessment',['Cradle-to-grave with the IHOBE calculator. Functional unit: directable airflow and ambient light for one occupant over 250,000 km. Four hotspots appeared:'],[],['Electronics (17 g) and PC+ABS (92 g) as raw materials','Air freight of the electronics from Taiwan','Chrome plating of the rings','LED energy in use: 3.75 kWh, about 1.5 L of diesel']],
-  ['Improvement goals and ideas',['Ideas from eight eco-design strategies were scored on technical and financial viability, environmental benefit and brand motivation. Three action families went forward: A, a more efficient LED (0.6 W to 0.1 W) built in Europe; B, colour-in-mould instead of chrome; C, recycled r-PC+ABS or mono-material PP.']],
-  ['Evaluation',['Nine concepts were assessed. Mono-material PP cut the carbon footprint by about 85 %; the wireless, efficient LED with road logistics cut the ReCiPe endpoint by about 65 %. Recycled PC+ABS came out worse than expected, probably because of dataset limits.'],[['merc-5','Reduction of total impact (ReCiPe endpoint) per concept.']]],
-  ['Result',['The final concept combines C2 + A2 + B2: mono-material, ultra-efficient and free of toxic plating. 84 % of the plastic becomes recyclable in a single stream.']],
-  ['Reflection',['Next steps: a heat-release joint so treatment plants can split rings from the body in one step, an LCA with the electric EQV\'s energy mix, and certified suppliers instead of generic proxies.']]
- ]},
-{id:'bira',title:'BIRA',sub:'Energy bar made from surplus cherries',terr:['pack','sust'],year:'2026',sk:-1,cover:'bira-1',
- ctx:'Academic · for the Ereindajan cooperative',client:'Ereindajan cooperative',
- team:'Aimar Arauzo, Mikel Arnao, Jon Azpitarte, Ibai Esquivel, Manex Gonzalez',
- tools:'KeyShot, Adobe Illustrator, Adobe Photoshop',
- role:'Packaging structure, dielines and 3D visualisation of the bar, wrapper and display box.',
- deck:'Turning the surplus of the Basque cherry harvest into <em>a natural energy bar</em> for amateur cyclists.',
- stats:[['20–30 %','of the cherry harvest is discarded before reaching the market'],['n = 90','real survey, plus a synthetic AI sample of 300'],['EUIPO','trademark and Community design protection']],
- hero:['bira-1','BIRA, cover of the project dossier.'],
- sec:[
-  ['Context and brief',['The Ereindajan cooperative needed an outlet for the summer surplus of Basque cherries. BIRA turns it into a functional bar of cherry, legumes, oats and nuts, aimed at amateur cycling.']],
-  ['Research',['Trends, a benchmark of energy bars, three interviews and a 90-person survey showed distrust of additives and ultra-processed food, a need for steady energy and interest in real fruit flavours. A positioning map placed BIRA between sports nutrition and real food.'],[['bira-6','User persona.']]],
-  ['Concepts',['Product, packaging and brand concepts were developed in parallel, following the DBZ methodology.'],[['bira-7','Brand and product concept.']]],
-  ['Result',['Brand, wrapper, display box and 5Ps, with the trademark and design protected through EUIPO. The work closed with a technical report, two A1 panels and a promotional video.'],[['bira-2','Wrapper.'],['bira-3','Display box.'],['bira-4','Box render.'],['bira-8','Product spread.'],['bira-5','Panel.']]]
- ]},
-{id:'olea',title:'OLEA × Alpesa',sub:'Premium olive-oil packaging in a cardboard tube',terr:['pack'],year:'2025',sk:-1,cover:'olea-1',
- ctx:'Packaging Innovation Cluster · company brief',client:'Alpesa',
- team:'Leire Arias, Mikel Arnao, Manex Gonzalez, Maria Martinez',
- tools:'Adobe Illustrator, Adobe InDesign, KeyShot',
- role:'Structural design of the tube and closures, technical drawings and renders.',
- deck:'Proving that a cardboard tube can carry <em>a premium extra-virgin olive oil</em> brand.',
- hero:['olea-1','OLEA tube in an Andalusian olive grove.'],
- sec:[
-  ['Context and brief',['Alpesa makes cardboard tubes. The challenge was to show they can work in high-value segments. Premium extra-virgin olive oil grows around 12 % a year in the specialised European channel, yet most of its packaging does not live up to the product.']],
-  ['Research',['A benchmark of Castillo de Canena, Almazaras de la Subbética, Oro Bailén and Finca de la Torre found shared values: materiality over visual impact, origin as the main argument, typographic restraint and full coherence. None of them had explored the tube.'],[['olea-6','Inspiration: cortijo floors and olive-grove geometry.']]],
-  ['Concept',['From territory to object: unvarnished kraft recalls the walls and floors of the cortijo, a classical serif recalls oil-mill labels and the olive grove seen from the air becomes pattern.'],[['olea-4','Process: from line to form.'],['olea-5','Form and dimensions.']]],
-  ['Result',[],[['olea-2','The OLEA tube.'],['olea-7','Experience: from the shop shelf to the table.']]]
- ]},
-{id:'senda-norte',title:'Senda Norte × Vidrala',sub:'Low-alcohol vermouth bottle and brand',terr:['pack','product'],year:'2026',sk:-1,cover:'senda-1',
- ctx:'Company brief',client:'Vidrala',
- team:'Mikel Arnao, Aimar Arauzo',
- tools:'SolidWorks, KeyShot, Adobe Illustrator',
- role:'Bottle design and engineering, closure system and secondary packaging.',
- deck:'An 8 % vol. vermouth <em>designed for a lighter, everyday</em> aperitif.',
- stats:[['303 mm','height of the 75 cl hybrid Rhine bottle'],['Ø 68 mm','grip waist for hands with less strength'],['8 % vol.','low-alcohol positioning']],
- hero:['senda-1','Senda Norte, bottle and brand.'],
- sec:[
-  ['Context and brief',['Senda Norte is a craft vermouth at 8 % vol. that keeps the ritual of the aperitif without the heaviness of high-strength vermouth. It sits between classic vermouth and light Atlantic wines.']],
-  ['Brand',['The naming evokes origin and path. A reinterpreted classical serif, deep green, warm cream and soft red, and a close, calm tone of voice.'],[['senda-6','Brand system.']]],
-  ['Development',[],[['senda-3','Bottle: hybrid Rhine silhouette.'],['senda-7','Closure and multilayer liner.']],['Hybrid Rhine bottle: 303 mm tall, Ø 80 mm base, Ø 68 mm grip, Ø 30 mm mouth, 75 cl','Stelvin Lux soft-touch cap, easy to open at home','Multilayer liner: EVOH barrier, oxygen scavenger, antimicrobial layer and food-grade PET contact layer','Kraft E-flute box, 93 × 93 × 316 mm, tuck top and auto-lock base, no lamination; 6-unit shipping cases']],
-  ['Result',[],[['senda-2','Label design.'],['senda-4','Secondary packaging.'],['senda-5','In use.']]]
- ]},
-{id:'jario-09',title:'Jario 09 · Ibili',sub:'Graphic for the Hydrate & Reuse bottle line',terr:['product'],year:'2026',sk:-1,cover:'ibili-1',
- ctx:'Individual project · design brief',client:'Ibili',
- team:'Individual',
- tools:'Adobe Illustrator, Adobe Photoshop',
- role:'Individual project: concept, surface pattern and visualisation.',
- deck:'Topographic contour lines that <em>turn into a river</em> around a reusable bottle.',
- hero:['ibili-1','Jario 09 on the Ibili bottle.'],
- sec:[
-  ['Concept',['Aimed at young adults, the pattern abstracts the contour lines of a mountain map. A blue-green palette brings the relief to life and the flowing lines read as a river running down the slopes: a metaphor for freshness, movement and hydration.']],
-  ['Specification',['A continuous pattern wraps the cylinder through 360°, designed for digital 3D printing with a textured powder-coat finish. The Ibili logo sits at the base. Print area 213.5 × 170 mm.'],[['ibili-2','Design template with cap and body colours.']]]
- ]},
-{id:'hospital-robot',title:'Hospital sample robot',sub:'Autonomous transport of clinical samples',terr:['product'],year:'',sk:3,
- ctx:'Academic project',team:'Team project',tools:'SolidWorks, KeyShot',
- role:'Vehicle architecture, CAD of the chassis and lockable compartments, and final renders.',
- deck:'Moving samples between hospital departments <em>without breaking the chain of custody</em>.',
- sec:[
-  ['Context and brief',['Clinical samples travel many times a day between wards and laboratories, and every handover is a risk for traceability.']],
-  ['Approach',['Vehicle architecture, lockable compartments for samples and navigation through hospital corridors, with LiDAR and differential drive.']],
-  ['Status',['<span class="soon">Full case study coming soon.</span>']]
- ]},
-{id:'donostia-mobility',title:'Donostia urban mobility',sub:'Multimodal journey app',terr:['digital'],year:'',sk:5,
- ctx:'Academic project',team:'Team project',tools:'Figma',
- role:'User research, information architecture and interface design.',
- deck:'Bus, bike and walking <em>in a single journey</em> across the city.',
- sec:[
-  ['Context and brief',['Getting around Donostia often means mixing bus, bike and walking, each with its own app.']],
-  ['Approach',['User research, information architecture and an interactive prototype that plans and guides a combined journey.']],
-  ['Status',['<span class="soon">Full case study coming soon.</span>']]
- ]},
-{id:'pocketwise',title:'PocketWise',sub:'Personal finance app for young people',terr:['digital'],year:'',sk:6,
- ctx:'Academic project · UX, usability and interface design',team:'Team project',tools:'Figma',
- role:'User research, personas and interface design.',
- deck:'Helping young people <em>see where their money goes</em> each month.',
- sec:[
-  ['Context and brief',['Young people often lose track of small daily expenses and struggle to save.']],
-  ['Approach',['Personas, saving flows and an interface that explains without lecturing.']],
-  ['Status',['<span class="soon">Full case study coming soon.</span>']]
- ]}
-];
-PROJ.forEach((p,i)=>{p.n=i+1;p.page=String(9+i).padStart(2,'0')});
-const HOME_IDS=['seat-ateca','ardura','cycle-dry','gudamendi-house','mercedes-vent'];
-const DRAW=[
- '<path d="M72 72 L168 72 L158 144 L82 144 Z"/><path class="dash" d="M78 118 H162"/><path class="acc" d="M120 72 C112 46 94 34 78 30 C98 28 116 44 120 72 C124 48 142 34 166 36 C150 44 130 54 120 72"/><rect x="140" y="98" width="10" height="34"/>',
- '<path class="dash" d="M20 78 H222"/><path d="M44 52 C44 32 72 24 122 26 L188 32 C204 34 210 48 208 72 L204 108 C202 122 190 128 170 128 L72 126 C52 126 44 114 44 98 Z"/><path class="acc" d="M58 58 C58 44 80 38 122 40 L182 45 C192 46 196 56 195 72 L192 102 C191 111 184 115 170 115 L76 113 C64 113 58 106 58 96 Z"/><path d="M70 126 L60 148 L104 148 L98 126"/>',
- '<path d="M28 58 H204"/><path d="M28 70 H204"/><path d="M28 58 V70 M204 58 V70 M70 58 V70 M116 58 V70 M162 58 V70"/><path class="acc" d="M60 70 L36 132 M176 70 L200 132"/><path d="M150 154 A64 64 0 0 1 238 112"/>',
- '<rect x="72" y="58" width="96" height="72" rx="10"/><rect class="acc" x="86" y="72" width="68" height="26" rx="3"/><circle cx="92" cy="136" r="10"/><circle cx="148" cy="136" r="10"/><circle class="acc" cx="120" cy="48" r="8"/><path class="dash" d="M20 146 H220"/>',
- '<path d="M56 142 V84 L122 40 L188 84 V142 Z"/><path class="acc" d="M128 44 L182 80 M136 50 L130 58 M150 59 L144 67 M164 68 L158 76"/><rect x="108" y="108" width="24" height="34"/><circle class="acc" cx="52" cy="40" r="12"/><path d="M196 102 h22 v40 h-22 z"/>',
- '<rect x="88" y="14" width="64" height="132" rx="10"/><path class="dash" d="M96 40 C110 60 104 80 120 92 C136 104 130 120 144 132"/><path class="acc" d="M96 40 C110 60 104 80 120 92"/><circle class="acc" cx="96" cy="40" r="4"/><circle cx="144" cy="132" r="4"/>',
- '<rect x="88" y="14" width="64" height="132" rx="10"/><circle cx="120" cy="54" r="20"/><path class="acc" d="M120 34 A20 20 0 0 1 139 60"/><path d="M100 128 V112 M112 128 V100 M124 128 V106 M136 128 V92"/>'];
-
-/* ---- routes, page metadata and the views that are pre-rendered per URL.
-   Pure functions: tools/build-pages.mjs runs everything from IMG= up to here to build dist/ ---- */
-const ROUTE={home:'/',works:'/works/',about:'/about/',project:id=>`/works/${id}/`};
-const plain=s=>String(s||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
-function pageMeta(r){
-  if(r.v==='project'){const p=r.p;return{title:`${p.title} · Mikel Arnao`,image:p.cover,
-    description:`${plain(p.deck)} ${p.terr.map(t=>TERR[t]).join(', ')} case study by Mikel Arnao, Product Design Engineer.`}}
-  return {
-    home:{title:'Mikel Arnao · Product Design Engineer',description:'Portfolio of Mikel Arnao, Product Design Engineer in Donostia: industrial design, product development, CAD, UX/UI, web and robotics, from idea to part.'},
-    works:{title:'Works · Mikel Arnao',description:`All ${PROJ.length} works by Mikel Arnao, Product Design Engineer: ${Object.values(TERR).join(', ')}.`},
-    about:{title:'About · Mikel Arnao',description:'Mikel Arnao: Industrial Design and Product Development Engineering at Mondragon Unibertsitatea, dual training at ULMA Handling Systems. Contact for internships and graduate programmes.'},
-    404:{title:'Page not found · Mikel Arnao',description:'This page is not in the issue.'}}[r.v]}
-function img(id,cap,lazy=true){const d=IMG[id]||[1600,1000];return `<img src="img/${id}.jpg" width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
-function tocHTML(){return PROJ.map(p=>`<li data-terr="${p.terr.join(' ')}"><a href="${ROUTE.project(p.id)}" data-pid="${p.id}" data-cursor="Open"><span class="pg">${String(p.n).padStart(2,'0')}</span><span class="t">${p.title}<small>${p.sub}</small></span><span class="lead"></span><span class="ct">${p.terr.map(t=>TERR[t]).join(' · ')}</span><span class="yr">${p.year||'—'}</span><span class="go">↗</span></a></li>`).join('')}
-function filtersHTML(){return ['all',...Object.keys(TERR)].map(k=>`<button data-f="${k}" aria-pressed="${k==='all'}">${k==='all'?'All':TERR[k]} <sup>${k==='all'?PROJ.length:PROJ.filter(p=>p.terr.includes(k)).length}</sup></button>`).join('')+`<span class="wcount mono" id="wcount">${PROJ.length} works</span>`}
-function projectHTML(p){
-  let fig=1;const F=()=>`Fig. ${String(fig++).padStart(2,'0')}`;
-  const idx=PROJ.indexOf(p),next=PROJ[(idx+1)%PROJ.length];
-  const spec=[['My role',p.role,'role'],['Year',p.year],['Client',p.client],['Context',p.ctx],['Team',p.team],['Tools',p.tools],['Distinction',p.award?`<span class="stamp">${p.award}</span>`:'']].filter(r=>r[1]);
-  let h=`<div class="inner"><a class="pback" href="${ROUTE.works}">← All works</a>
-  <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>Work ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${p.title}</span></span></h1></div>
-  <div class="pintro"><p class="deck">${p.deck}</p><dl class="spec2">${spec.map(r=>`<dt>${r[0]}</dt><dd${r[2]?` class="${r[2]}"`:''}>${r[1]}</dd>`).join('')}</dl></div>`;
-  if(p.m3d!==undefined){h+=`<figure class="plate pplate" id="pplate"><span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span><canvas aria-label="Interactive exploded 3D model of ${p.title}. Drag to rotate."></canvas>
-    <div class="ptop"><span class="figno">${F().replace('Fig. ','')}<small>3D · drag to rotate</small></span><div class="modes" role="group" aria-label="3D model view"><button data-mode="solid" aria-pressed="true">Solid</button><button data-mode="wire" aria-pressed="false">Wireframe</button><button data-mode="xray" aria-pressed="false">X-ray</button></div></div>
-    <ol class="legend" id="legend"></ol>
-    <figcaption class="pcap"><p><b>Exploded view</b> Simplified model of ${p.title}, generated in code.</p><div class="xbar mono"><label for="xr">Explode</label><input type="range" id="xr" min="0" max="100" value="0"><output>0%</output></div></figcaption></figure>`}
-  if(p.stats)h+=`<div class="pstats">${p.stats.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`;
-  if(p.hero)h+=`<figure class="pherofig">${img(p.hero[0],p.hero[1],false)}<figcaption><b>${F()}</b>${p.hero[1]}</figcaption></figure>`;
-  p.sec.forEach((s,i)=>{const [title,paras,figs,list]=s;
-    h+=`<section class="psec"><div class="ph2"><span class="mono">§ ${String(i+1).padStart(2,'0')}</span><h2>${title}</h2></div><div class="pb">${(paras||[]).map(t=>t.startsWith('<span')?t:`<p>${t}</p>`).join('')}${list?`<ul>${list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${figs&&figs.length?`<div class="figs">${figs.map(f=>`<figure>${img(f[0],f[1])}<figcaption><b>${F()}</b>${f[1]}</figcaption></figure>`).join('')}</div>`:''}</div></section>`});
-  h+=`<a class="pnext" href="${ROUTE.project(next.id)}" data-cursor="Next"><span class="mono">Next work</span><span class="t">${next.title} →</span></a></div><div style="height:40px"></div>`;
-  return h}
+</main>`}
 
 /* the app: runs once the deferred libraries (three, GSAP, Lenis) have executed */
 addEventListener('DOMContentLoaded',function(){
@@ -965,7 +762,7 @@ let forceMotion=location.pathname.includes('@motion')||/(^|[?&])motion(=|&|$)/.t
 try{if(forceMotion)sessionStorage.setItem('motion','1');else forceMotion=sessionStorage.getItem('motion')==='1'}catch(e){}
 const reduce=!forceMotion&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(pointer:fine)').matches;
-const root=document.documentElement;root.lang='en';root.classList.toggle('force-motion',forceMotion);
+const root=document.documentElement;root.lang=D.lang;root.classList.toggle('force-motion',forceMotion);
 /* the head timer already revealed the page (slow load): don't hide and replay what is on screen */
 const late=!root.classList.contains('boot');let skipIntro=late;
 const hasGSAP=typeof gsap!=='undefined';
@@ -990,7 +787,7 @@ const themeBtn=$('themeBtn'),themes=['auto','light','dark'];let ti=0;
 try{const s=localStorage.getItem('ma-theme');if(themes.includes(s))ti=themes.indexOf(s)}catch(e){}
 const themeHooks=[];
 function setTheme(){const t=themes[ti];if(t==='auto')root.removeAttribute('data-theme');else root.setAttribute('data-theme',t);
-  themeBtn.textContent='Theme · '+{auto:'Auto',light:'Light',dark:'Dark'}[t];try{localStorage.setItem('ma-theme',t)}catch(e){}
+  themeBtn.textContent=UI.theme+' · '+{auto:UI.themeAuto,light:UI.themeLight,dark:UI.themeDark}[t];try{localStorage.setItem('ma-theme',t)}catch(e){}
   requestAnimationFrame(()=>themeHooks.forEach(f=>f()))}
 setTheme();themeBtn.addEventListener('click',()=>{ti=(ti+1)%3;setTheme()});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>themeHooks.forEach(f=>f()));
@@ -1002,8 +799,8 @@ document.querySelectorAll('.prox').forEach(el=>{const t=el.textContent;el.textCo
 function tick(){try{$('clock').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date())}catch(e){}}
 tick();setInterval(tick,1000);
 $('copyBtn').addEventListener('click',()=>{const b=$('copyBtn');
-  const done=()=>{b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy email',1800)};
-  const fb=()=>{const r=document.createRange();r.selectNodeContents($('addr'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected · copy it';setTimeout(()=>b.textContent='Copy email',2200)};
+  const done=()=>{b.textContent=UI.copied;setTimeout(()=>b.textContent=UI.copyEmail,1800)};
+  const fb=()=>{const r=document.createRange();r.selectNodeContents($('addr'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent=UI.selectedCopy;setTimeout(()=>b.textContent=UI.copyEmail,2200)};
   try{navigator.clipboard.writeText($('addr').textContent).then(done,fb)}catch(e){fb()}});
 
 /* ===================== 3D KIT ===================== */
@@ -1032,7 +829,7 @@ const K3=(function(){
     if(o.rot)inner.rotation.set(...o.rot);if(o.scale)inner.scale.set(...o.scale);if(o.shift)inner.position.set(...o.shift);
     if(!o.noEdge){const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,o.th||28),M.mats.edge);inner.add(e)}
     holder.position.copy(pos);M.g.add(holder);
-    const p={h:holder,inner,base:pos.clone(),off:off||V(0,0,0),rotOff:o.rotOff||null,label:o.label,mesh,mk};M.parts.push(p);
+    const p={h:holder,inner,base:pos.clone(),off:off||V(0,0,0),rotOff:o.rotOff||null,label:LBL(o.label),mesh,mk};M.parts.push(p);
     if(o.spin)M.spinners.push([inner,o.spin]);return p}
   const B=[];
   /* 0 · SEAT mirror */
@@ -1266,7 +1063,7 @@ const K3=(function(){
       let a=o.parent,dup=false;while(a){if(nodes.find(n=>n.o===a))dup=true;a=a.parent}if(!dup)nodes.push({o,sp})});
     const usedL=new Set();
     nodes.forEach(({o,sp})=>{
-      const lab=sp[3]&&!usedL.has(sp[3])?sp[3]:null;if(lab)usedL.add(lab);
+      const lab=sp[3]&&!usedL.has(sp[3])?LBL(sp[3]):null;if(lab)usedL.add(sp[3]);
       const holder=new THREE.Group(),wrap=new THREE.Group();
       wrap.scale.setScalar(k);wrap.position.copy(ctr).multiplyScalar(-k);
       const c=o.clone(true);o.updateWorldMatrix(true,false);
@@ -1287,7 +1084,7 @@ const K3=(function(){
     /* web: Draco GLBs with baked edges (tools/build-models.mjs), decoded in a worker.
        file://: fetch is blocked, so fall back to the JS-wrapped exports (window.__GLTF[name]) */
     const local=location.protocol==='file:';
-    if(!local&&THREE.DRACOLoader){const D=new THREE.DRACOLoader();D.setDecoderPath('vendor/three-0.128.0/draco/');L.setDRACOLoader(D)}
+    if(!local&&THREE.DRACOLoader){const DL=new THREE.DRACOLoader();DL.setDecoderPath('vendor/three-0.128.0/draco/');L.setDRACOLoader(DL)}
     /* one model at a time, in index order (the cover model first), each after the page goes idle */
     const queue=Object.entries(GLB),idle=f=>window.requestIdleCallback?requestIdleCallback(f,{timeout:1500}):setTimeout(f,200);
     const next=()=>{const e=queue.shift();if(!e)return;const [i,spec]=e;
@@ -1493,11 +1290,11 @@ function createViewer(box,idx){
 
 /* ===================== HOME SPREADS STATE ===================== */
 const arts=[...document.querySelectorAll('.art')],stripB=[...document.querySelectorAll('#strip button')];
-const NAMES=['SEAT Ateca side mirror','Ardura self-sufficient smart pot','Cycle Dry, Orbea rear rack','Self-sufficient house in Gudamendi','Mercedes V-Class air vent'];
+const NAMES=FEAT.map(f=>f.figure);
 let cur=0;const folio=$('folio');
 function setActive(i){if(i===cur)return;arts[cur].classList.remove('on');stripB[cur].classList.remove('on');cur=i;
   const a=arts[i];a.classList.add('on');stripB[i].classList.add('on');
-  $('figno').innerHTML=String(i+1).padStart(2,'0')+'<small>/ 05</small>';$('capT').textContent='Fig. '+String(i+1).padStart(2,'0');$('capName').textContent=NAMES[i];
+  $('figno').innerHTML=String(i+1).padStart(2,'0')+'<small>/ '+pad(FEAT.length)+'</small>';$('capT').textContent=UI.fig+' '+String(i+1).padStart(2,'0');$('capName').textContent=NAMES[i];
   folio.textContent=a.dataset.p;
   if(hasGSAP&&!reduce){gsap.fromTo(a.querySelectorAll('.ln > span'),{yPercent:110},{yPercent:0,duration:.9,ease:'expo.out',stagger:.07,overwrite:true});
     gsap.fromTo(a.querySelectorAll('.kick,.deck,.body,.spec,.more'),{y:14,opacity:0},{y:0,opacity:1,duration:.7,ease:'power3.out',stagger:.06,delay:.1,overwrite:true});
@@ -1513,7 +1310,7 @@ filters.addEventListener('click',ev=>{const b=ev.target.closest('[data-f]');if(!
   filters.querySelectorAll('[data-f]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
   const lis=[...toc.children];let n=0;
   lis.forEach(li=>{const on=f==='all'||li.dataset.terr.split(' ').includes(f);li.classList.toggle('off',!on);if(on)n++});
-  $('wcount').textContent=n+(n===1?' work':' works');
+  $('wcount').textContent=n+' '+(n===1?UI.workSingular:UI.workPlural);
   if(hasGSAP&&!reduce)gsap.fromTo(lis.filter(li=>!li.classList.contains('off')),{y:18,opacity:0},{y:0,opacity:1,duration:.6,stagger:.04,ease:'power3.out',overwrite:true});
   if(hasGSAP)ScrollTrigger.refresh()});
 
@@ -1537,7 +1334,8 @@ const views={home:$('v-home'),works:$('v-works'),project:vProject,about:$('v-abo
 let ctx=null,pendingScroll=null,first=true;
 /* clean URLs (/works/seat-ateca/) on a server; #/works/seat-ateca/ when index.html is opened from disk */
 const PATHS=location.protocol!=='file:';
-function parse(){const seg=(PATHS?location.pathname:location.hash.slice(1)).replace(/^\/@motion/,'').split('/').filter(Boolean);
+function parse(){let path=(PATHS?location.pathname:location.hash.slice(1)).replace(/^\/@motion/,'');if(LP&&(path===LP||path.startsWith(LP+'/')))path=path.slice(LP.length);
+  const seg=path.split('/').filter(Boolean);
   if(!seg.length||seg[0]==='home')return{v:'home'};
   if(seg[0]==='about'&&seg.length===1)return{v:'about'};
   if(seg[0]==='works'){if(seg.length===1)return{v:'works'};if(seg.length===2&&byId[seg[1]])return{v:'project',p:byId[seg[1]]}}
@@ -1551,6 +1349,9 @@ function legacy(){if(!PATHS||location.hash.length<2)return false;const h=locatio
   const r=h==='home'?{v:'home'}:h==='works'||h==='about'?{v:h}:byId[h]?{v:'project',p:byId[h]}:null;
   if(r)history.replaceState(null,'',hrefOf(r)+location.search);return !!r}
 legacy();
+/* language links point at the current page in each locale (full page load: every locale has its own content) */
+addEventListener('route',()=>{const base=(hrefOf(parse())||ROUTE.home).slice(LP.length)||'/';
+  document.querySelectorAll('[data-lang]').forEach(a=>{const l=a.dataset.lang;a.href=(l===D.defaultLang?'':'/'+l)+base})});
 function navState(r){document.querySelectorAll('[data-nav]').forEach(a=>{const on=(r.v==='works'&&a.dataset.nav==='works')||(r.v==='about'&&a.dataset.nav==='about')||(r.v==='project'&&a.dataset.nav==='works');a.toggleAttribute('aria-current',on);if(on)a.setAttribute('aria-current','page')})}
 function show(r){
   if(viewer){viewer.destroy();viewer=null}
@@ -1565,20 +1366,20 @@ function show(r){
   if(pendingScroll){const t=pendingScroll;pendingScroll=null;setTimeout(()=>scrollToSection(t),60)}
 }
 const QUIET_TX=true; /* false = black wipe */
-function wipeLabel(r){return r.v==='project'?r.p.title:{home:'Home',works:'Works',about:'About',404:'Not found'}[r.v]}
+function wipeLabel(r){return r.v==='project'?r.p.title:{home:UI.home,works:UI.works,about:UI.about,404:UI.notFound}[r.v]}
 function go(){const r=parse();
   if(first||reduce||!hasGSAP){first=false;show(r);return}
   if(QUIET_TX){const pg=views.home.parentNode;
     gsap.timeline().to(pg,{opacity:0,y:-14,duration:.32,ease:'power2.in'})
       .add(()=>{try{show(r)}catch(e){console.error(e)}}).set(pg,{y:18})
       .to(pg,{opacity:1,y:0,duration:.6,ease:'power3.out',clearProps:'transform,opacity'});return}
-  $('wipeT').innerHTML=wipeLabel(r);$('wipeK').textContent=r.v==='project'?'Work '+String(r.p.n).padStart(2,'0'):'Turning page';
+  $('wipeT').innerHTML=wipeLabel(r);$('wipeK').textContent=r.v==='project'?UI.work+' '+String(r.p.n).padStart(2,'0'):UI.turningPage;
   gsap.timeline().set('#wipe',{visibility:'visible',y:0,yPercent:100}).to('#wipe',{yPercent:0,duration:.55,ease:'expo.inOut'})
     .add(()=>{try{show(r)}catch(e){console.error(e)}}).to('#wipe',{yPercent:-100,duration:.7,ease:'expo.inOut',delay:.12}).set('#wipe',{visibility:'hidden',yPercent:100})}
 addEventListener('popstate',go);
 addEventListener('hashchange',()=>{if(!PATHS||legacy())go()});
 /* internal links change the view without a reload; new-tab clicks and external links are left alone */
-document.addEventListener('click',ev=>{const a=ev.target.closest('a[href^="/"]');
+document.addEventListener('click',ev=>{const a=ev.target.closest('a[href^="/"]:not([data-lang])');
   if(!a||a.target||ev.defaultPrevented||ev.button||ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.altKey)return;
   ev.preventDefault();nav(a.getAttribute('href'))});
 function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollTo(el,{duration:1.6,offset:-40});else el.scrollIntoView({behavior:reduce?'auto':'smooth'})}
@@ -1690,8 +1491,8 @@ const peek=$('peek');
 if(fine){const qx=gsap.quickTo(peek,'x',{duration:.5,ease:'power3'}),qy=gsap.quickTo(peek,'y',{duration:.5,ease:'power3'});
   toc.addEventListener('pointerover',ev=>{const a=ev.target.closest('[data-pid]');if(!a||a.dataset.on)return;toc.querySelectorAll('[data-on]').forEach(x=>delete x.dataset.on);a.dataset.on=1;
     const p=byId[a.dataset.pid];
-    if(p.cover){peek.innerHTML=`<img src="img/${p.cover}.jpg" alt=""><span class="cap">${p.title}</span>`}
-    else{peek.innerHTML='<svg viewBox="0 0 240 160">'+DRAW[p.sk]+'</svg><span class="cap">'+p.title+' · sketch</span>';
+    if(p.cover){peek.innerHTML=`<img src="${p.cover}" alt=""><span class="cap">${p.title}</span>`}
+    else{peek.innerHTML='<svg viewBox="0 0 240 160">'+DRAW[p.sk]+'</svg><span class="cap">'+p.title+' · '+UI.sketch+'</span>';
       if(!reduce){const els=peek.querySelectorAll('path,rect,circle');els.forEach(el=>el.setAttribute('pathLength','1'));gsap.fromTo(els,{strokeDasharray:1,strokeDashoffset:1},{strokeDashoffset:0,duration:.9,stagger:.05,ease:'power2.out'})}}
     peek.classList.add('on')});
   toc.addEventListener('pointerleave',()=>{peek.classList.remove('on');toc.querySelectorAll('[data-on]').forEach(x=>delete x.dataset.on)});
@@ -1759,7 +1560,7 @@ if(fine&&!reduce){const xh=document.querySelector('.xh'),xr=$('xhr');
   let label=null;
   addEventListener('pointermove',e=>{qx(e.clientX);qy(e.clientY);xr.textContent=label||`X ${String(Math.round(e.clientX)).padStart(4,'0')} · Y ${String(Math.round(e.clientY)).padStart(4,'0')}`});
   document.addEventListener('pointerover',e=>{const t=e.target.closest('a,button,[data-cursor],[data-zoom],input,.pplate canvas');xh.classList.toggle('big',!!t);
-    label=t?(t.dataset.cursor||(t.matches('[data-zoom]')?'Enlarge':t.matches('canvas')?'Drag':null)):null});
+    label=t?(t.dataset.cursor||(t.matches('[data-zoom]')?UI.cursorEnlarge:t.matches('canvas')?UI.cursorDrag:null)):null});
   document.addEventListener('pointerover',e=>{const b=e.target.closest('.btn');if(!b||b.dataset.mag)return;b.dataset.mag=1;
     b.addEventListener('pointermove',ev=>{const r=b.getBoundingClientRect();gsap.to(b,{x:(ev.clientX-r.left-r.width/2)*.25,y:(ev.clientY-r.top-r.height/2)*.3,duration:.4,ease:'power3.out'})});
     b.addEventListener('pointerleave',()=>gsap.to(b,{x:0,y:0,duration:.7,ease:'elastic.out(1,.4)'}))})}
@@ -1772,7 +1573,7 @@ addEventListener('load',()=>ScrollTrigger.refresh());
     const th=$('theatre').getBoundingClientRect();
     const on=S.view==='home'&&!end&&!(innerWidth<900&&th.top<=innerHeight*.5);cue.classList.toggle('off',!on);
     if(!on)return;
-    const s=th.top>innerHeight*.5?'Scroll to open the projects':(th.bottom>innerHeight?'Scroll · next project':'Scroll');if(txt.textContent!==s)txt.textContent=s}
+    const s=th.top>innerHeight*.5?UI.scrollOpen:(th.bottom>innerHeight?UI.scrollNext:UI.scroll);if(txt.textContent!==s)txt.textContent=s}
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);addEventListener('route',()=>setTimeout(upd,1400));setInterval(upd,800);upd()})();
 });
 </script>

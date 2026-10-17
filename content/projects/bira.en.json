@@ -1,0 +1,103 @@
+{
+  "order": 6,
+  "title": "BIRA",
+  "subtitle": "Energy bar made from surplus cherries",
+  "categories": [
+    "pack",
+    "sust"
+  ],
+  "year": "2026",
+  "model": "none",
+  "sketch": "none",
+  "cover": "/img/bira-1.jpg",
+  "deck": "Turning the surplus of the Basque cherry harvest into <em>a natural energy bar</em> for amateur cyclists.",
+  "role": "Packaging structure, dielines and 3D visualisation of the bar, wrapper and display box.",
+  "client": "Ereindajan cooperative",
+  "context": "Academic · for the Ereindajan cooperative",
+  "team": "Aimar Arauzo, Mikel Arnao, Jon Azpitarte, Ibai Esquivel, Manex Gonzalez",
+  "tools": "KeyShot, Adobe Illustrator, Adobe Photoshop",
+  "award": "",
+  "stats": [
+    {
+      "value": "20–30 %",
+      "label": "of the cherry harvest is discarded before reaching the market"
+    },
+    {
+      "value": "n = 90",
+      "label": "real survey, plus a synthetic AI sample of 300"
+    },
+    {
+      "value": "EUIPO",
+      "label": "trademark and Community design protection"
+    }
+  ],
+  "hero": {
+    "image": "/img/bira-1.jpg",
+    "caption": "BIRA, cover of the project dossier."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "The Ereindajan cooperative needed an outlet for the summer surplus of Basque cherries. BIRA turns it into a functional bar of cherry, legumes, oats and nuts, aimed at amateur cycling."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Research",
+      "paragraphs": [
+        "Trends, a benchmark of energy bars, three interviews and a 90-person survey showed distrust of additives and ultra-processed food, a need for steady energy and interest in real fruit flavours. A positioning map placed BIRA between sports nutrition and real food."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-6.jpg",
+          "caption": "User persona."
+        }
+      ]
+    },
+    {
+      "title": "Concepts",
+      "paragraphs": [
+        "Product, packaging and brand concepts were developed in parallel, following the DBZ methodology."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-7.jpg",
+          "caption": "Brand and product concept."
+        }
+      ]
+    },
+    {
+      "title": "Result",
+      "paragraphs": [
+        "Brand, wrapper, display box and 5Ps, with the trademark and design protected through EUIPO. The work closed with a technical report, two A1 panels and a promotional video."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-2.jpg",
+          "caption": "Wrapper."
+        },
+        {
+          "image": "/img/bira-3.jpg",
+          "caption": "Display box."
+        },
+        {
+          "image": "/img/bira-4.jpg",
+          "caption": "Box render."
+        },
+        {
+          "image": "/img/bira-8.jpg",
+          "caption": "Product spread."
+        },
+        {
+          "image": "/img/bira-5.jpg",
+          "caption": "Panel."
+        }
+      ]
+    }
+  ]
+}

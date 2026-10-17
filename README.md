@@ -2,26 +2,37 @@
 
 Product Design Engineer portfolio. Static site.
 
-- `index.html`: the whole site (HTML, CSS and JS). Routes: `/`, `/works/`, `/about/`, `/works/<project-id>/`. Old `#<route>` links redirect to these. Opened from disk it falls back to `#/works/…` URLs.
-- `tools/build-pages.mjs`: builds `dist/`, one static page per route with its view pre-rendered and its own title, description, canonical, Open Graph/Twitter tags and JSON-LD, plus `404.html`, `sitemap.xml` and `robots.txt`. No dependencies. `SITE_URL` sets the absolute URL (default: the Vercel production domain).
+- `content/`: all the text and image references on the site, one JSON file per page and locale (`site`, `home`, `works`, `about`, `models` and `projects/<project-id>`, each as `<name>.<locale>.json`). Edit it in the CMS at `/admin/` or by hand.
+  - `i18n.json`: the default locale and the list of locales. A missing translation falls back to the default locale field by field; lists are replaced whole.
+- `index.html`: the site's template, CSS and JS. The build fills in the content. Routes: `/`, `/works/`, `/about/` and `/works/<project-id>/`, plus `/<locale>/…` for each extra locale. Old `#<route>` links redirect to these. Opening it directly from disk no longer works: use the build.
+- `tools/build-pages.mjs`: builds `dist/` from `content/` and `index.html`. It writes one static page per route and locale, each with its view pre-rendered and its own title, description, canonical, hreflang, Open Graph/Twitter tags and JSON-LD. It also writes `404.html`, `sitemap.xml`, `robots.txt` and the CMS (`admin/`). No dependencies. `SITE_URL` sets the absolute URL (default: the Vercel production domain).
+- `tools/content.mjs`: reads `content/` for the build scripts. `tools/cms-config.mjs`: writes the CMS page and its `config.json`, generated from the content.
 - `favicon.svg`, `img/og.jpg`: favicon and default share image (1200×630).
-- `tools/build-og.mjs`: renders `img/og/<project-id>.jpg` (1200×630 share card per project), `apple-touch-icon.png` and `favicon-32.png` with the installed Chrome. Run it after changing a project's title, subtitle or cover, or the favicon (`cd tools && npm install && npm run og`), and commit the images.
-- `img/`: project photos.
+- `tools/build-og.mjs`: uses the installed Chrome to render `img/og/<project-id>.jpg` (a 1200×630 share card per project), `apple-touch-icon.png` and `favicon-32.png`. Run it after changing a project's title, subtitle or cover, or the favicon (`cd tools && npm install && npm run og`), then commit the images.
+- `img/`: project photos (CMS uploads land here too).
 - `models/`: CAD models (SEAT mirror, Ardura, Orbea rack).
-  - `*.glb`: what the site loads. Draco-compressed, with the feature edges baked in, loaded one at a time.
-  - `*.gltf.js`: the SolidWorks exports wrapped in JS. Source for the GLBs, and the fallback when opening `index.html` directly (`file://`).
-- `tools/build-models.mjs`: rebuilds the GLBs after changing a `*.gltf.js` (`cd tools && npm install && npm run models`).
-- `vendor/<library>-<version>/`: self-hosted libraries, loaded with `defer`: three.js r128 + GLTFLoader + DRACOLoader (and the Draco decoder), GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13. The loaders ship minified (`*.min.js`, from the `.js` next to them: `cd tools && npm run vendor`).
+  - `*.glb`: what the site loads. They are Draco-compressed, have the feature edges baked in and load one at a time.
+  - `*.gltf.js`: the SolidWorks exports wrapped in JS, the source for the GLBs.
+- `tools/build-models.mjs`: rebuilds the GLBs after a `*.gltf.js` changes (`cd tools && npm install && npm run models`).
+- `vendor/<library>-<version>/`: self-hosted libraries, loaded with `defer`: three.js r128 + GLTFLoader + DRACOLoader (and the Draco decoder), GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13. The loaders ship minified as `*.min.js`, built from the `.js` next to them (`cd tools && npm run vendor`).
 - `fonts/`: self-hosted Inter Tight, Inter and IBM Plex Mono (latin + latin-ext).
 
 ## Run locally
 
 ```
 node tools/build-pages.mjs
-python3 -m http.server 8000 --directory dist
+npx http-server@14.1.1 dist -p 8000
 ```
-then open http://localhost:8000. Opening `index.html` directly also works (hash URLs).
+then open http://localhost:8000.
+
+## Editing content (CMS)
+
+[Sveltia CMS](https://github.com/sveltia/sveltia-cms) runs at `/admin/`; the pinned version is in `tools/cms-config.mjs`. Sign in with **Sign In Using Access Token**, using a GitHub fine-grained personal access token for this repository with *Contents: Read and write*. Each save is a commit to `main`, and Vercel rebuilds the site in about a minute.
+
+The 3D models and sketch drawings are code: each project picks one by name. After changing a project's title, subtitle or cover, run `npm run og` again so its share card matches.
+
+To add a language, add it to `locales` in `content/i18n.json`. The CMS then shows it next to English, untranslated fields use the English text, and a language switcher appears in the header.
 
 ## Deploy
 
-Vercel: import the repo, framework preset **Other**. `vercel.json` sets the build command (`node tools/build-pages.mjs`), the output directory (`dist`) and trailing slashes.
+Vercel: import the repo with the framework preset **Other**. `vercel.json` sets the build command (`node tools/build-pages.mjs`), the output directory (`dist`) and trailing slashes.

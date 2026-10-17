@@ -1,0 +1,11 @@
+{
+  "kicker": "Works · complete index",
+  "title": "Every work, <em>every terrain.</em>",
+  "categories": [
+    { "key": "product", "label": "Product" },
+    { "key": "auto", "label": "Automotive" },
+    { "key": "sust", "label": "Sustainability" },
+    { "key": "pack", "label": "Packaging & Brand" },
+    { "key": "digital", "label": "Digital" }
+  ]
+}

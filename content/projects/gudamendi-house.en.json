@@ -1,0 +1,97 @@
+{
+  "order": 4,
+  "title": "Self-sufficient house",
+  "subtitle": "Ecological home in Gudamendi, Donostia",
+  "categories": [
+    "sust"
+  ],
+  "year": "2021",
+  "model": "house",
+  "sketch": "house",
+  "cover": "/img/casa-2.jpg",
+  "deck": "A home on a windy hill above Donostia that <em>makes its own energy</em> and reuses its rain.",
+  "role": "Designed the renewable energy systems: hybrid solar panels, wind turbine, battery storage and heat pump.",
+  "client": "",
+  "context": "Contest project",
+  "team": "Bixen, Hugo, Mikel Arnao",
+  "tools": "",
+  "award": "UPV contest winner",
+  "stats": [
+    {
+      "value": "13 m/s",
+      "label": "average wind speed in Igeldo; the turbine works from 10 m/s"
+    },
+    {
+      "value": "180 m",
+      "label": "altitude of the plot: more sun, more wind, mild sea climate"
+    },
+    {
+      "value": "3 : 1",
+      "label": "energy delivered by the heat pump per unit consumed"
+    }
+  ],
+  "hero": {
+    "image": "/img/casa-2.jpg",
+    "caption": "The house on its plot in Gudamendi."
+  },
+  "sections": [
+    {
+      "title": "Context",
+      "paragraphs": [
+        "The plot sits on Gudamendi, in Igeldo, 180 m above the sea. The sea keeps temperatures regular, there is little shade and a steady wind, and sewage, water, power, phone and a bus stop are close. The main façade faces south to limit winter heat loss."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Envelope",
+      "paragraphs": [
+        "Stone on the ground floor resists rain splash; vertical timber cladding above. An asymmetric pitched roof in ventilated zinc, which is abundant, lasts a century and is endlessly recyclable. Triple glazing with two chambers, low-emissivity glass and micro-slat blinds; cellulose insulation made from recycled paper, recovering the old paper mills of the river Oria."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-5.jpg",
+          "caption": "Façade section, joinery and insulation."
+        }
+      ]
+    },
+    {
+      "title": "Energy systems",
+      "paragraphs": [
+        "My part. Hybrid PV-thermal panels on the steep south slope preheat domestic hot water and make electricity for lighting, devices and the heat pump. A small wind turbine works from 10 m/s. Surplus energy is stored in batteries in the attic and the rest goes to the grid. The heat pump heats through the floor, finishes the hot water and reverses for cooling in summer."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-3.jpg",
+          "caption": "Renewable energy and systems."
+        }
+      ]
+    },
+    {
+      "title": "Water",
+      "paragraphs": [
+        "The shallow roof slope collects rainwater into an underground tank used for the washing machine, toilets and garden irrigation."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-4.jpg",
+          "caption": "Water management and extensive green roof."
+        }
+      ]
+    },
+    {
+      "title": "Result",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-1.jpg",
+          "caption": "Full contest poster."
+        }
+      ]
+    }
+  ]
+}

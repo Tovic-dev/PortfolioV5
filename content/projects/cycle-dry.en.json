@@ -1,0 +1,130 @@
+{
+  "order": 3,
+  "title": "Cycle Dry · Orbea",
+  "subtitle": "Rear rack redesign for bikepacking",
+  "categories": [
+    "product"
+  ],
+  "year": "2025",
+  "model": "orbea",
+  "sketch": "rack",
+  "cover": "/img/orbea-1.jpg",
+  "deck": "A simpler, cheaper bikepacking rack with a <em>hanger to dry clothes</em> on the move.",
+  "role": "Led the market and usage analysis, the ideation phase (sketches developed with a teammate, except the preliminary designs), the specification document and the manufacturing process for the proposal. Led the final renders.",
+  "client": "",
+  "context": "Academic · PBL 3, 2nd year · reference product by Orbea",
+  "team": "Ekain Ardanza, Mikel Arnao, Leire Arias, Laura Cuesta, Naroa Galdos",
+  "tools": "SolidWorks, KeyShot, CES EduPack, Vickers and EDX testing",
+  "award": "",
+  "stats": [
+    {
+      "value": "€125 → €50–60",
+      "label": "target price against the original rack"
+    },
+    {
+      "value": "90° / 180°",
+      "label": "the hanger lifts, then turns out of the wind"
+    },
+    {
+      "value": "Al 6061",
+      "label": "main alloy, identified by density, Vickers and EDX"
+    }
+  ],
+  "hero": {
+    "image": "/img/orbea-1.jpg",
+    "caption": "Final render of Cycle Dry on a hardtail MTB."
+  },
+  "sections": [
+    {
+      "title": "Context and brief",
+      "paragraphs": [
+        "Orbea's MTB hardtail rack costs €124.99 and has many parts. The brief: make it simpler and cheaper for bikepacking. The user is a young cyclist on long routes who needs to wash and hang her sweaty clothes without losing them."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Research",
+      "paragraphs": [
+        "The rack was cut into nine samples and tested for density, Vickers hardness and EDX composition: mostly Al 6061, an Al 3003 mudguard, an AISI 1030 steel rod, a PET bag panel and a DLC coating. Six competitors were mapped by price and added value to find the gap."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-6.jpg",
+          "caption": "Moodboard."
+        },
+        {
+          "image": "/img/orbea-7.jpg",
+          "caption": "CMF moodboard."
+        }
+      ]
+    },
+    {
+      "title": "Concepts",
+      "paragraphs": [
+        "Rotating sketches produced many redesigns. The chosen one adds a rectangular hanger on the rear bar that lifts 90° to hang clothes and turns 180° to avoid drag, or to dry them when parked."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-4.jpg",
+          "caption": "Concept sketch of the hanger."
+        },
+        {
+          "image": "/img/orbea-8.jpg",
+          "caption": "Ideation sketches."
+        }
+      ]
+    },
+    {
+      "title": "Development",
+      "paragraphs": [
+        "The side bar between the stays was removed, since panniers now hang from the top bars, and the frame became a single bent tube plus the front and rear bars."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-3.jpg",
+          "caption": "CAD detail of the hinge mechanism."
+        }
+      ]
+    },
+    {
+      "title": "Specification",
+      "paragraphs": [
+        "Specification sheet for the 50 cm strut to the rear axle:"
+      ],
+      "list": [
+        "20 kg without plastic deformation",
+        "190 MPa tensile strength, 69 GPa Young's modulus",
+        "−10 °C to 50 °C operating range",
+        "Al 6061, 2720 kg/m³, measured hardness 93.3 HV"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Manufacturing",
+      "paragraphs": [
+        "Extruded aluminium tubes, CNC bending, MIG welding and anodising for the frame. The hinge is made from extruded profiles with CNC turning and milling, drilling and tapping."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Result",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-2.jpg",
+          "caption": "Render of the rack."
+        },
+        {
+          "image": "/img/orbea-5.jpg",
+          "caption": "Final poster."
+        }
+      ]
+    }
+  ]
+}
