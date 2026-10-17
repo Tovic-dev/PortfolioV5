@@ -458,7 +458,7 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 .scue .mono{color:var(--ink-2);white-space:nowrap}
 .scue i{position:relative;display:block;width:1px;height:22px;background:var(--rule);overflow:hidden}
 .scue b{position:absolute;left:-1px;top:-8px;width:3px;height:8px;background:var(--spot);animation:scue 1.6s var(--ease) infinite}
-@keyframes scue{to{top:22px}}
+@keyframes scue{to{transform:translateY(30px)}} /* top -8px -> 22px, composited */
 .scue.off{opacity:0;transform:translate(-50%,10px)}
 .spread{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))!important}
 @media (prefers-reduced-motion: reduce){:root:not(.force-motion) .scue b{animation:none;top:7px}}
