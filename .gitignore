@@ -2,3 +2,4 @@
 *.glb
 node_modules/
 .vercel
+!models/*.glb

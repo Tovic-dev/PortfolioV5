@@ -715,6 +715,7 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
 <script>
 /* =====================================================================
    CONTENT (English). A second language can be added as another object.
@@ -1213,15 +1214,29 @@ const K3=(function(){
     M.scale=spec.scale||1;M.ver++;M.real=true}
   function loadReal(onDone){
     if(!THREE.GLTFLoader)return;const L=new THREE.GLTFLoader();
-    /* models ship as small JS wrappers (window.__GLTF[name]) so they also load from file:// */
-    Object.entries(GLB).forEach(([i,spec])=>{
+    /* web: Draco GLBs with baked edges (tools/build-models.mjs), decoded in a worker.
+       file://: fetch is blocked, so fall back to the JS-wrapped exports (window.__GLTF[name]) */
+    const local=location.protocol==='file:';
+    if(!local&&THREE.DRACOLoader){const D=new THREE.DRACOLoader();D.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');L.setDRACOLoader(D)}
+    /* one model at a time, in index order (the cover model first), each after the page goes idle */
+    const queue=Object.entries(GLB),idle=f=>window.requestIdleCallback?requestIdleCallback(f,{timeout:1500}):setTimeout(f,200);
+    const next=()=>{const e=queue.shift();if(!e)return;const [i,spec]=e;
       const name=spec.url.replace(/^.*\//,'').replace(/\.gltf.*$/,'');
-      const done=g=>{const sc=g.scene;if(spec.rotX)sc.rotation.x=spec.rotX;sc.updateMatrixWorld(true);cache[i]=sc;
-        (inst[i]||[]).forEach(M=>fromGLB(M,+i));onDone&&onDone(+i)};
-      const fail=err=>console.warn('GLB not loaded',spec.url,err);
+      const done=g=>{const sc=g.scene;
+        /* Draco decodes parts out of order, so put children back in file order (it sets the legend order) */
+        const ord=new Map(g.parser.json.nodes.map((n,k)=>[THREE.PropertyBinding.sanitizeNodeName(n.name||''),k]));
+        sc.traverse(o=>o.children.sort((a,b)=>(ord.get(a.name)??1e9)-(ord.get(b.name)??1e9)));
+        /* baked edges: the LINES primitives sit next to their triangle meshes, in the same order */
+        sc.traverse(o=>{const ls=o.children.filter(c=>c.isLineSegments);if(!ls.length)return;const ms=o.children.filter(c=>c.isMesh);
+          ls.forEach((l,k)=>{if(ms[k])edgeCache.set(ms[k].geometry.uuid,l.geometry);o.remove(l)})});
+        if(spec.rotX)sc.rotation.x=spec.rotX;sc.updateMatrixWorld(true);cache[i]=sc;
+        (inst[i]||[]).forEach(M=>fromGLB(M,+i));onDone&&onDone(+i);idle(next)};
+      const fail=err=>{console.warn('GLB not loaded',spec.url,err);idle(next)};
+      if(!local)return L.load('models/'+name+'.glb',done,undefined,fail);
       const parse=()=>{try{L.parse(JSON.stringify(window.__GLTF[name]),'',done,fail);delete window.__GLTF[name]}catch(e){fail(e)}};
       if(window.__GLTF&&window.__GLTF[name])return parse();
-      const s=document.createElement('script');s.src='models/'+name+'.gltf.js';s.async=true;s.onload=parse;s.onerror=fail;document.head.appendChild(s)})}
+      const s=document.createElement('script');s.src='models/'+name+'.gltf.js';s.async=true;s.onload=parse;s.onerror=fail;document.head.appendChild(s)};
+    next()}
 
   function makeStage(renderer){
     const scene=new THREE.Scene();
@@ -1477,7 +1492,10 @@ function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollT
 
 if(!hasGSAP){go();return}
 gsap.registerPlugin(ScrollTrigger);
-if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+  /* keep Lenis' scroll limit in step with the page height, or the wheel stops short of the end */
+  ScrollTrigger.addEventListener('refresh',()=>lenis.resize())}
+document.fonts&&document.fonts.ready.then(()=>ScrollTrigger.refresh());
 
 gsap.to('.progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3,invalidateOnRefresh:true}});
 const thST=ScrollTrigger.create({trigger:'#theatre',start:'top top',end:'bottom bottom',onUpdate:s=>{if(S.view!=='home')return;S.cf=s.progress*N;setActive(clamp(Math.floor(S.cf),0,N-1))},
