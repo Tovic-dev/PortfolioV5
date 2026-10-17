@@ -21,8 +21,8 @@ const PERSON = {
 };
 
 const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-// the content block of index.html: data + pure render functions, from IMG= up to the main IIFE
-const a = src.indexOf('const IMG='), b = src.indexOf('\n(function(){');
+// the content block of index.html: data + pure render functions, from IMG= up to the app code
+const a = src.indexOf('const IMG='), b = src.indexOf('\n/* the app: ');
 if (a < 0 || b < 0) throw new Error('content block not found in index.html');
 const C = vm.runInContext(src.slice(a, b) + ';({PROJ,IMG,ROUTE,pageMeta,tocHTML,filtersHTML,projectHTML})', vm.createContext({}));
 

@@ -11,7 +11,7 @@ import { chromium } from 'playwright-core';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-const C = vm.runInContext(src.slice(src.indexOf('const IMG='), src.indexOf('\n(function(){')) + ';({PROJ,TERR,DRAW})', vm.createContext({}));
+const C = vm.runInContext(src.slice(src.indexOf('const IMG='), src.indexOf('\n/* the app: ')) + ';({PROJ,TERR,DRAW})', vm.createContext({}));
 const dataUrl = (file, type) => `data:${type};base64,${fs.readFileSync(file).toString('base64')}`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 

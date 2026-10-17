@@ -6,10 +6,13 @@
 <title>Portfolio Mikel Arnao</title>
 <meta name="description" content="Mikel Arnao, Product Design Engineer. Industrial design, product development, UX/UI, web and robotics.">
 <!-- libraries and fonts are self-hosted (vendor/, fonts/): no extra origins on the critical path.
-     The big scripts are preloaded so they download while the HTML is still arriving. -->
-<link rel="preload" href="vendor/three-0.128.0/three.min.js" as="script">
-<link rel="preload" href="vendor/gsap-3.12.5/gsap.min.js" as="script">
-<link rel="preload" href="vendor/gsap-3.12.5/ScrollTrigger.min.js" as="script">
+     The scripts are deferred, so the page can paint before they arrive. Until the first view has set up its
+     entrance animation, keep the elements it animates hidden; after 1.2 s show them anyway (slow connection, or
+     no script) and that first entrance is skipped. Scroll animations are unaffected. -->
+<script>document.documentElement.classList.add('boot');setTimeout(function(){document.documentElement.classList.remove('boot')},1200)</script>
+<style>
+.boot .mast,.boot .cover-deck,.boot .lines li,.boot .cover-fig>*,.boot .vpage .shead h1,.boot #filters,.boot #toc,.boot .pintro,.boot .pback,.boot .prof .cols p,.boot .prof aside{opacity:0}
+</style>
 <style>
 /* Inter Tight, Inter, IBM Plex Mono (SIL OFL), latin + latin-ext subsets */
 @font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-ext-400.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
@@ -735,12 +738,12 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 </div></footer>
 </main>
 
-<script src="vendor/three-0.128.0/three.min.js"></script>
-<script src="vendor/gsap-3.12.5/gsap.min.js"></script>
-<script src="vendor/gsap-3.12.5/ScrollTrigger.min.js"></script>
-<script src="vendor/lenis-1.1.13/lenis.min.js"></script>
-<script src="vendor/three-0.128.0/GLTFLoader.js"></script>
-<script src="vendor/three-0.128.0/DRACOLoader.js"></script>
+<script src="vendor/three-0.128.0/three.min.js" defer></script>
+<script src="vendor/gsap-3.12.5/gsap.min.js" defer></script>
+<script src="vendor/gsap-3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="vendor/lenis-1.1.13/lenis.min.js" defer></script>
+<script src="vendor/three-0.128.0/GLTFLoader.js" defer></script>
+<script src="vendor/three-0.128.0/DRACOLoader.js" defer></script>
 <script>
 /* =====================================================================
    CONTENT (English). A second language can be added as another object.
@@ -955,13 +958,16 @@ function projectHTML(p){
   h+=`<a class="pnext" href="${ROUTE.project(next.id)}" data-cursor="Next"><span class="mono">Next work</span><span class="t">${next.title} →</span></a></div><div style="height:40px"></div>`;
   return h}
 
-(function(){
+/* the app: runs once the deferred libraries (three, GSAP, Lenis) have executed */
+addEventListener('DOMContentLoaded',function(){
 /* /@motion or ?motion in the URL forces full motion even with reduced motion turned on; it lasts the browser session */
 let forceMotion=location.pathname.includes('@motion')||/(^|[?&])motion(=|&|$)/.test(location.search.slice(1));
 try{if(forceMotion)sessionStorage.setItem('motion','1');else forceMotion=sessionStorage.getItem('motion')==='1'}catch(e){}
 const reduce=!forceMotion&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(pointer:fine)').matches;
 const root=document.documentElement;root.lang='en';root.classList.toggle('force-motion',forceMotion);
+/* the head timer already revealed the page (slow load): don't hide and replay what is on screen */
+const late=!root.classList.contains('boot');let skipIntro=late;
 const hasGSAP=typeof gsap!=='undefined';
 const css=n=>getComputedStyle(root).getPropertyValue(n).trim();
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
@@ -1551,7 +1557,7 @@ document.addEventListener('click',ev=>{const a=ev.target.closest('a[href^="/"]')
   ev.preventDefault();nav(a.getAttribute('href'))});
 function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollTo(el,{duration:1.6,offset:-40});else el.scrollIntoView({behavior:reduce?'auto':'smooth'})}
 
-if(!hasGSAP){go();return}
+if(!hasGSAP){go();root.classList.remove('boot');return}
 gsap.registerPlugin(ScrollTrigger);
 if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
   /* keep Lenis' scroll limit in step with the page height, or the wheel stops short of the end */
@@ -1580,7 +1586,7 @@ document.querySelectorAll('#v-home [data-folio]').forEach(sec=>ScrollTrigger.cre
 
 /* intro */
 const intro=$('intro');
-function coverIn(){if(reduce||S.view!=='home')return;
+function coverIn(){if(reduce||late||S.view!=='home')return;
   gsap.from('.mast .ch',{yPercent:105,duration:1.3,ease:'expo.out',stagger:.035,delay:.05});
   
   gsap.from('.cover-deck, .lines li, .cover-fig > *',{y:18,opacity:0,duration:.9,stagger:.05,ease:'power3.out',delay:.35})}
@@ -1588,7 +1594,7 @@ function coverIn(){if(reduce||S.view!=='home')return;
 const lede=$('lede');
 lede.innerHTML=lede.innerHTML.replace(/(<em>.*?<\/em>)|([^\s<]+)/g,(m,em,w)=>`<span class="w">${em||w}</span>`);
 go();
-intro.style.display='none';coverIn();
+intro.style.display='none';coverIn();root.classList.remove('boot');
 if(false){const o={v:0};gsap.from('.reg',{rotate:-90,scale:.6,duration:1.4,ease:'expo.out'});
   gsap.to(o,{v:100,duration:1.4,ease:'power2.inOut',onUpdate:()=>$('count').textContent=String(Math.round(o.v)).padStart(3,'0'),
     onComplete:()=>{gsap.to(intro,{clipPath:'inset(0 0 100% 0)',duration:.9,ease:'expo.inOut',onComplete:()=>intro.style.display='none'});coverIn()}})}
@@ -1596,30 +1602,32 @@ if(false){const o={v:0};gsap.from('.reg',{rotate:-90,scale:.6,duration:1.4,ease:
 /* page-level entrance animations (scoped, reverted on leave) */
 function enter(r){
   if(reduce)return;
+  /* entrance tweens (no scrollTrigger) are skipped on a late first load; scroll reveals always run */
+  const intro=(t,v)=>skipIntro?null:gsap.from(t,v);
   ctx=gsap.context(()=>{
     if(r.v==='works'){
-      gsap.from('#v-works .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
-      gsap.from('#filters > *',{y:10,opacity:0,duration:.6,stagger:.04,ease:'power3.out',delay:.35});
-      gsap.from('#toc li:not(.off)',{y:30,opacity:0,duration:.8,stagger:.05,ease:'power3.out',delay:.4});
+      intro('#v-works .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
+      intro('#filters > *',{y:10,opacity:0,duration:.6,stagger:.04,ease:'power3.out',delay:.35});
+      intro('#toc li:not(.off)',{y:30,opacity:0,duration:.8,stagger:.05,ease:'power3.out',delay:.4});
     }
     if(r.v==='project'){
-      gsap.from('#v-project .shead .ln > span',{yPercent:110,duration:1.2,ease:'expo.out',delay:.25});
-      gsap.from('#v-project .pintro > *, #v-project .pback',{y:24,opacity:0,duration:.9,stagger:.08,ease:'power3.out',delay:.4});
+      intro('#v-project .shead .ln > span',{yPercent:110,duration:1.2,ease:'expo.out',delay:.25});
+      intro('#v-project .pintro > *, #v-project .pback',{y:24,opacity:0,duration:.9,stagger:.08,ease:'power3.out',delay:.4});
       gsap.utils.toArray('#v-project .pstats > div').forEach((d,i)=>gsap.from(d,{y:30,opacity:0,duration:.8,delay:i*.08,ease:'power3.out',scrollTrigger:{trigger:d,start:'top 90%'}}));
       gsap.utils.toArray('#v-project .psec').forEach(s=>{gsap.from(s.querySelector('.ph2'),{x:-20,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:s,start:'top 82%'}});
         gsap.from(s.querySelectorAll('.pb > *'),{y:26,opacity:0,duration:.9,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:s,start:'top 80%'}})});
       gsap.utils.toArray('#v-project .figs img, #v-project .pherofig img').forEach(im=>gsap.from(im,{clipPath:'inset(0 0 100% 0)',duration:1.2,ease:'expo.inOut',scrollTrigger:{trigger:im,start:'top 88%'}}));
     }
     if(r.v==='about'){
-      gsap.from('#v-about .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
+      intro('#v-about .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
       gsap.fromTo('#lede .w',{opacity:.15},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:'#lede',start:'top 85%',end:'bottom 45%',scrub:true}});
       gsap.from('.lang i',{scaleX:0,duration:1.2,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.lang',start:'top 92%'}});
-      gsap.from('.prof .cols p, .prof aside',{y:24,opacity:0,duration:.9,stagger:.1,ease:'power3.out',delay:.3});
+      intro('.prof .cols p, .prof aside',{y:24,opacity:0,duration:.9,stagger:.1,ease:'power3.out',delay:.3});
       gsap.from('.big .ch, .big em',{yPercent:105,duration:1.1,stagger:.04,ease:'expo.out',scrollTrigger:{trigger:'.big',start:'top 88%'}});
       gsap.from('#contact .shead h2',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:'#contact',start:'top 85%'}});
     }
   });
-}
+  skipIntro=false}
 
 /* cover parallax */
 if(!reduce){
@@ -1733,7 +1741,7 @@ addEventListener('load',()=>ScrollTrigger.refresh());
     if(!on)return;
     txt.textContent=th.top>innerHeight*.5?'Scroll to open the projects':(th.bottom>innerHeight?'Scroll · next project':'Scroll')}
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);addEventListener('route',()=>setTimeout(upd,1400));setInterval(upd,800);upd()})();
-})();
+});
 </script>
 </body>
 </html>
