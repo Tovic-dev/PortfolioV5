@@ -1350,13 +1350,14 @@ const K3=(function(){
 
 /* ===================== HOME THEATRE ===================== */
 /* WebGL without a GPU (SwiftShader, llvmpipe…: GPU-less machines, blocklisted GPUs, lab tools) draws on the CPU,
-   where 1.75x pixels with antialiasing cost every frame its full length. There, render at 1x without antialiasing;
-   with a GPU nothing changes. */
+   where 1.75x pixels with antialiasing cost every frame its full length. There, render without antialiasing and at
+   most ~360k pixels (a phone screen at 1x; a desktop canvas is upscaled); with a GPU nothing changes. */
 const SOFT_GL=(()=>{try{const g=document.createElement('canvas').getContext('webgl');if(!g)return false;
   const d=g.getExtension('WEBGL_debug_renderer_info'),r=d?String(g.getParameter(d.UNMASKED_RENDERER_WEBGL)):'';
   const x=g.getExtension('WEBGL_lose_context');x&&x.loseContext();return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r)}catch(e){return false}})();
 function makeRenderer(canvas){const r=new THREE.WebGLRenderer({canvas,antialias:!SOFT_GL,alpha:true});
   r.setPixelRatio(SOFT_GL?1:Math.min(devicePixelRatio,1.75));r.outputEncoding=THREE.sRGBEncoding;return r}
+function fitPixels(r,w,h){if(SOFT_GL)r.setPixelRatio(Math.min(1,Math.sqrt(360000/Math.max(1,w*h))))}
 /* started on the frame after the first paint, so building the scene and compiling its shaders
    doesn't hold back the text */
 function startHome3D(){
@@ -1380,7 +1381,7 @@ function startHome3D(){
   for(let i=0;i<12;i++){const ln=document.createElementNS(NS,'line'),c=document.createElementNS(NS,'circle');c.setAttribute('r','3');lsvg.append(ln,c);
     const d=document.createElement('div');d.className='lbl';d.innerHTML='<b></b><span></span>';lwrap.appendChild(d);pool.push({ln,c,d,w:0})}
   let mobile=false;
-  function size(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();mobile=w<900;lsvg.setAttribute('viewBox',`0 0 ${w} ${h}`)}
+  function size(){const w=innerWidth,h=innerHeight;fitPixels(renderer,w,h);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();mobile=w<900;lsvg.setAttribute('viewBox',`0 0 ${w} ${h}`)}
   size();addEventListener('resize',size);
   const tmp=new THREE.Vector3();
   function toWorld(sx,sy){tmp.set(sx/innerWidth*2-1,-(sy/innerHeight)*2+1,.5).unproject(camera).sub(camera.position).normalize();const d=-camera.position.z/tmp.z;return camera.position.clone().add(tmp.multiplyScalar(d))}
@@ -1441,7 +1442,9 @@ function startHome3D(){
   requestAnimationFrame(frame);
   return {};
 }
-requestAnimationFrame(()=>setTimeout(startHome3D,0));
+/* once only: normally when the cover entrance has played (see coverIn below), sooner if the reader scrolls first */
+let started3D=false;const start3D=()=>{if(started3D)return;started3D=true;startHome3D()};
+const start3DSoon=()=>requestAnimationFrame(()=>setTimeout(start3D,0));
 
 /* ===================== PROJECT VIEWER ===================== */
 function createViewer(box,idx){
@@ -1460,7 +1463,7 @@ function createViewer(box,idx){
   canvas.addEventListener('pointermove',ev=>{if(!drag)return;yaw=drag.yaw+(ev.clientX-drag.x)*.01;pitch=clamp(drag.pitch+(ev.clientY-drag.y)*.006,-.6,.9)});
   const end=()=>{drag=null};canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);
   let visible=true,alive=true;const io=new IntersectionObserver(es=>visible=es[0].isIntersecting);io.observe(box);
-  function size(){const r=box.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/Math.max(1,r.height);camera.updateProjectionMatrix();
+  function size(){const r=box.getBoundingClientRect();fitPixels(renderer,r.width,r.height);renderer.setSize(r.width,r.height,false);camera.aspect=r.width/Math.max(1,r.height);camera.updateProjectionMatrix();
     const vh=2*Math.tan(15*Math.PI/180)*12;const fit=Math.min(vh,vh*camera.aspect);M.g.scale.setScalar(fit*.17*M.scale*(r.width<700?(idx===3?.78:.88):1))}
   size();const ro=new ResizeObserver(size);ro.observe(box);
   themeHooks.push(st.theme);
@@ -1573,7 +1576,7 @@ document.addEventListener('click',ev=>{const a=ev.target.closest('a[href^="/"]')
   ev.preventDefault();nav(a.getAttribute('href'))});
 function scrollToSection(id){const el=$(id);if(!el)return;if(lenis)lenis.scrollTo(el,{duration:1.6,offset:-40});else el.scrollIntoView({behavior:reduce?'auto':'smooth'})}
 
-if(!hasGSAP){go();root.classList.remove('boot');return}
+if(!hasGSAP){go();root.classList.remove('boot');start3DSoon();return}
 gsap.registerPlugin(ScrollTrigger);
 if(!reduce&&typeof Lenis!=='undefined'){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
   /* keep Lenis' scroll limit in step with the page height, or the wheel stops short of the end */
@@ -1602,15 +1605,18 @@ document.querySelectorAll('#v-home [data-folio]').forEach(sec=>ScrollTrigger.cre
 
 /* intro */
 const intro=$('intro');
-function coverIn(){if(reduce||late||S.view!=='home')return;
-  gsap.from('.mast .ch',{yPercent:105,duration:1.3,ease:'expo.out',stagger:.035,delay:.05});
-  
-  gsap.from('.cover-deck, .lines li, .cover-fig > *',{y:18,opacity:0,duration:.9,stagger:.05,ease:'power3.out',delay:.35})}
+/* returns when the entrance ends (s), 0 if there is none */
+function coverIn(){if(reduce||late||S.view!=='home')return 0;
+  const a=gsap.from('.mast .ch',{yPercent:105,duration:1.3,ease:'expo.out',stagger:.035,delay:.05});
+  const b=gsap.from('.cover-deck, .lines li, .cover-fig > *',{y:18,opacity:0,duration:.9,stagger:.05,ease:'power3.out',delay:.35});
+  return Math.max(a.delay()+a.totalDuration(),b.delay()+b.totalDuration())}
 /* about lede words (split before the first go(), so a direct /about/ load can animate them) */
 const lede=$('lede');
 lede.innerHTML=lede.innerHTML.replace(/(<em>.*?<\/em>)|([^\s<]+)/g,(m,em,w)=>`<span class="w">${em||w}</span>`);
 go();
-intro.style.display='none';coverIn();root.classList.remove('boot');
+intro.style.display='none';const introEnd=coverIn();root.classList.remove('boot');
+/* build the 3D scene after the cover entrance, so it doesn't stall it (and the text paints first) */
+if(introEnd){gsap.delayedCall(introEnd,start3D);addEventListener('scroll',start3D,{once:true,passive:true})}else start3DSoon();
 if(false){const o={v:0};gsap.from('.reg',{rotate:-90,scale:.6,duration:1.4,ease:'expo.out'});
   gsap.to(o,{v:100,duration:1.4,ease:'power2.inOut',onUpdate:()=>$('count').textContent=String(Math.round(o.v)).padStart(3,'0'),
     onComplete:()=>{gsap.to(intro,{clipPath:'inset(0 0 100% 0)',duration:.9,ease:'expo.inOut',onComplete:()=>intro.style.display='none'});coverIn()}})}
