@@ -7,9 +7,9 @@
 <meta name="description" content="Mikel Arnao, Product Design Engineer. Industrial design, product development, UX/UI, web and robotics.">
 <!-- libraries and fonts are self-hosted (vendor/, fonts/): no extra origins on the critical path.
      The scripts are deferred, so the page can paint before they arrive. Until the first view has set up its
-     entrance animation, keep the elements it animates hidden; after 1.2 s show them anyway (slow connection, or
+     entrance animation, keep the elements it animates hidden; 1.2 s after navigation start show them anyway (slow connection, or
      no script) and that first entrance is skipped. Scroll animations are unaffected. -->
-<script>document.documentElement.classList.add('boot');setTimeout(function(){document.documentElement.classList.remove('boot')},1200)</script>
+<script>document.documentElement.classList.add('boot');setTimeout(function(){document.documentElement.classList.remove('boot')},Math.max(0,1200-performance.now()))</script>
 <style>
 .boot .mast,.boot .cover-deck,.boot .lines li,.boot .cover-fig>*,.boot .vpage .shead h1,.boot #filters,.boot #toc,.boot .pintro,.boot .pback,.boot .prof .cols p,.boot .prof aside{opacity:0}
 </style>
