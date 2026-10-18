@@ -1,0 +1,52 @@
+{
+  "hidden": true,
+  "order": 10,
+  "title": "Robot hospitalario de muestras",
+  "subtitle": "Transporte autónomo de muestras clínicas",
+  "categories": [
+    "product"
+  ],
+  "year": "",
+  "cover": "",
+  "deck": "Traslado de muestras entre servicios hospitalarios <em>sin romper la cadena de custodia</em>.",
+  "role": "Arquitectura del vehículo, diseño CAD del chasis y de los compartimentos bloqueables, y renders finales.",
+  "client": "",
+  "context": "Proyecto académico",
+  "team": "Proyecto en equipo",
+  "tools": "SolidWorks, KeyShot",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Contexto y propuesta",
+      "paragraphs": [
+        "Las muestras clínicas viajan muchas veces al día entre planta y laboratorios, y cada traspaso supone un riesgo para la trazabilidad."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Enfoque",
+      "paragraphs": [
+        "Arquitectura del vehículo, compartimentos bloqueables para las muestras y navegación por los pasillos del hospital, con LiDAR y tracción diferencial."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Estado",
+      "paragraphs": [
+        "<span class=\"soon\">Estudio de caso completo próximamente.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "none",
+  "sketch": "robot"
+}

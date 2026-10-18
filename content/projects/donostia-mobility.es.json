@@ -1,0 +1,52 @@
+{
+  "hidden": true,
+  "order": 11,
+  "title": "Movilidad urbana en Donostia",
+  "subtitle": "App de trayectos multimodales",
+  "categories": [
+    "digital"
+  ],
+  "year": "",
+  "cover": "",
+  "deck": "Autobús, bici y a pie <em>en un solo trayecto</em> por la ciudad.",
+  "role": "Investigación de usuarios, arquitectura de la información y diseño de interfaz.",
+  "client": "",
+  "context": "Proyecto académico",
+  "team": "Proyecto en equipo",
+  "tools": "Figma",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Contexto y encargo",
+      "paragraphs": [
+        "Desplazarse por Donostia suele implicar combinar autobús, bici y a pie, cada uno con su propia app."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Enfoque",
+      "paragraphs": [
+        "Investigación de usuarios, arquitectura de la información y un prototipo interactivo que planifica y guía un trayecto combinado."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Estado",
+      "paragraphs": [
+        "<span class=\"soon\">Estudio de caso completo, próximamente.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "none",
+  "sketch": "route-app"
+}

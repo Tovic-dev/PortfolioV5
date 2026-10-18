@@ -1,0 +1,139 @@
+{
+  "order": 2,
+  "title": "Ardura",
+  "subtitle": "Maceta inteligente autosuficiente",
+  "categories": [
+    "product",
+    "sust"
+  ],
+  "year": "2026",
+  "cover": "/img/ardura-1.jpg",
+  "deck": "Una maceta que <em>se riega sola con la luz interior</em>, para que la planta sobreviva a las vacaciones.",
+  "role": "Trabajé con el equipo en todo el proyecto y lideré toda la fase de desarrollo, incluido el CAD: arquitectura, sistema hidráulico, balance energético, materiales y fabricación, ergonomía y costes. Solo los paneles de producto y de proyecto los realizaron otros. Dirigí los renders finales.",
+  "client": "",
+  "context": "Académico · PBL 5, 3.º curso · Mondragon Unibertsitatea · Candidatura al iF Design Student Award",
+  "team": "Mikel Arnao, Danel Iturbe, Egoitz Fernandez, Mikel Martin, Maria Martinez",
+  "tools": "SolidWorks, KeyShot, IHOBE Climate & Circularity Calculator, Adobe CC",
+  "award": "",
+  "stats": [
+    {
+      "value": "15,09 Wh",
+      "label": "generados al día por la película OPV, frente a 0,87 Wh consumidos"
+    },
+    {
+      "value": "3,5 L",
+      "label": "depósito de rPET retráctil con asa integrada"
+    },
+    {
+      "value": "≈ 13 €",
+      "label": "coste unitario estimado en fábrica, para un PVP de 79 €"
+    }
+  ],
+  "hero": {
+    "image": "/img/ardura-1.jpg",
+    "caption": "Render final de Ardura en un salón."
+  },
+  "sections": [
+    {
+      "title": "Contexto y brief",
+      "paragraphs": [
+        "El proyecto aborda la «paradoja biofílica»: la gente quiere plantas en casa, pero no tiene tiempo para cuidarlas. Las entrevistas revelaron que el verdadero estrés no es el cuidado en sí, sino las ausencias y regar «a ojo».",
+        "La persona elegida, Rosa, de 52 años, vive entre dos casas. El brief de CUT pide tranquilidad, riego automático por presión hidráulica y materiales reciclables."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Investigación",
+      "paragraphs": [
+        "Un mapa de inteligencia frente a sostenibilidad mostró la brecha: los gadgets inteligentes son derrochadores y las macetas sostenibles son pasivas. La oportunidad era una maceta regenerativa, sin batería y reparable que usa la física, no la electrónica, para ser inteligente."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-8.jpg",
+          "caption": "Mapa de oportunidades de mercado."
+        }
+      ]
+    },
+    {
+      "title": "Conceptos",
+      "paragraphs": [
+        "Cinco paneles de producto exploraron un complemento universal y una maceta integrada. Ganó la maceta integrada: controla el material, de modo que no se pierde agua a través de la cerámica porosa, y su superficie puede albergar la película solar sin parecer un gadget."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-6.jpg",
+          "caption": "Bocetos de ideación."
+        },
+        {
+          "image": "/img/ardura-3.jpg",
+          "caption": "Póster conceptual, maceta integrada."
+        },
+        {
+          "image": "/img/ardura-5.jpg",
+          "caption": "Moodboard de CMF."
+        }
+      ]
+    },
+    {
+      "title": "Desarrollo",
+      "paragraphs": [
+        "Tres módulos apilados: el núcleo vivo con la película fotovoltaica orgánica, un módulo técnico sellado con PCB, batería de 5.000 mAh, micro-bomba y selector de modo, y un depósito desmontable de rPET dentro de una carcasa de rPP con ventana de nivel.",
+        "Una bomba de desplazamiento positivo suministra dosis exactas de 250 ml independientemente del nivel de agua. Un acoplamiento cónico de «soltar y elevar», basado en la conicidad Luer médica, sella por gravedad para que el depósito salga con una mano. Un selector háptico elige el riego Tropical, Estándar o Desértico."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-2.jpg",
+          "caption": "Panel de producto con la arquitectura de módulos."
+        }
+      ]
+    },
+    {
+      "title": "Especificación",
+      "paragraphs": [],
+      "list": [
+        "Cuerpo en PP reciclado con carga mineral: textura mate tipo piedra, paredes de 1,8 mm, sin pintura",
+        "Depósito de rPET transparente que encaja en la carcasa gracias al ángulo de desmoldeo, sin adhesivos",
+        "Electrónica con encastres a presión y uniones roscadas para el desmontaje",
+        "Lista de materiales ≈ 13,13 € por unidad"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Análisis de ciclo de vida",
+      "paragraphs": [
+        "La fabricación supone alrededor del 99 % del impacto climático. Un cuerpo de rPP impermeable ahorra unos 140 litros de agua en diez años frente a la cerámica. La película OPV recupera su carbono en 0,2 años, frente a más de dos del silicio, y la reparación importa más que el reciclaje: la separación de materiales cambia el impacto total solo un 0,23 %."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-7.jpg",
+          "caption": "Panel de proyecto."
+        },
+        {
+          "image": "/img/ardura-4.jpg",
+          "caption": "Póster de concepto alternativo: complemento universal."
+        }
+      ]
+    },
+    {
+      "title": "Reflexión",
+      "paragraphs": [
+        "Para un dispositivo que consume tan poca energía, la autosuficiencia total no es automáticamente más ecológica; la película solar se justifica por no necesitar cables y por el valor que los usuarios le encuentran. Una versión de sobremesa de menos de un litro es el siguiente paso."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "ardura",
+  "sketch": "plant-pot"
+}

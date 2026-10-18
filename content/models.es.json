@@ -1,0 +1,228 @@
+{
+  "labels": [
+    {
+      "part": "Housing · PCTFE",
+      "label": "Carcasa · PCTFE"
+    },
+    {
+      "part": "Mirror carrier",
+      "label": "Soporte del espejo"
+    },
+    {
+      "part": "Heated mirror glass",
+      "label": "Cristal calefactado del espejo"
+    },
+    {
+      "part": "Folding motor",
+      "label": "Motor de plegado"
+    },
+    {
+      "part": "Dynamic LED indicator",
+      "label": "Piloto LED dinámico"
+    },
+    {
+      "part": "Camera",
+      "label": "Cámara"
+    },
+    {
+      "part": "Ultrasonic sensor",
+      "label": "Sensor ultrasónico"
+    },
+    {
+      "part": "Base arm",
+      "label": "Brazo de base"
+    },
+    {
+      "part": "Base shell · rPP + talc",
+      "label": "Carcasa de la base · rPP + talco"
+    },
+    {
+      "part": "Level window",
+      "label": "Visor de nivel"
+    },
+    {
+      "part": "Retractable tank · rPET",
+      "label": "Depósito retráctil · rPET"
+    },
+    {
+      "part": "Tech module · PCB, battery",
+      "label": "Módulo técnico · PCB, batería"
+    },
+    {
+      "part": "Micro-pump",
+      "label": "Microbomba"
+    },
+    {
+      "part": "Mode slider",
+      "label": "Selector de modo"
+    },
+    {
+      "part": "Pot · rPP",
+      "label": "Maceta · rPP"
+    },
+    {
+      "part": "OPV solar film",
+      "label": "Película solar OPV"
+    },
+    {
+      "part": "Irrigation ring",
+      "label": "Anillo de riego"
+    },
+    {
+      "part": "Load platform",
+      "label": "Plataforma de carga"
+    },
+    {
+      "part": "Drying hanger",
+      "label": "Perchero de secado"
+    },
+    {
+      "part": "Hinge · lifts 90°, turns 180°",
+      "label": "Bisagra · eleva 90°, gira 180°"
+    },
+    {
+      "part": "Foundation slab · terrace",
+      "label": "Losa de cimentación · terraza"
+    },
+    {
+      "part": "Heat pump",
+      "label": "Bomba de calor"
+    },
+    {
+      "part": "Hot water tank · boiler",
+      "label": "Depósito de agua caliente · caldera"
+    },
+    {
+      "part": "Cold water tank",
+      "label": "Depósito de agua fría"
+    },
+    {
+      "part": "Water network",
+      "label": "Red de agua"
+    },
+    {
+      "part": "Rainwater tank",
+      "label": "Depósito de agua de lluvia"
+    },
+    {
+      "part": "Stone ground floor",
+      "label": "Planta baja de piedra"
+    },
+    {
+      "part": "Triple-glazed windows",
+      "label": "Ventanas de triple acristalamiento"
+    },
+    {
+      "part": "Timber upper floor",
+      "label": "Planta alta de madera"
+    },
+    {
+      "part": "Cellulose insulation",
+      "label": "Aislamiento de celulosa"
+    },
+    {
+      "part": "Zinc roof",
+      "label": "Cubierta de zinc"
+    },
+    {
+      "part": "Hybrid PV-T panels",
+      "label": "Paneles híbridos PV-T"
+    },
+    {
+      "part": "Main body · PC+ABS",
+      "label": "Cuerpo principal · PC+ABS"
+    },
+    {
+      "part": "Spring clips · steel",
+      "label": "Clips de muelle · acero"
+    },
+    {
+      "part": "Housing seal · TPE-SEBS",
+      "label": "Junta de la carcasa · TPE-SEBS"
+    },
+    {
+      "part": "LED wiring · PBT + Cu",
+      "label": "Cableado LED · PBT + Cu"
+    },
+    {
+      "part": "Flow gate · PP + TPV",
+      "label": "Compuerta de flujo · PP + TPV"
+    },
+    {
+      "part": "Regulator gear",
+      "label": "Engranaje regulador"
+    },
+    {
+      "part": "Rods + plates · brass-plated steel",
+      "label": "Varillas + placas · acero latonado"
+    },
+    {
+      "part": "LED light guide · PMMA",
+      "label": "Guía de luz LED · PMMA"
+    },
+    {
+      "part": "Turbine louvres",
+      "label": "Rejillas de turbina"
+    },
+    {
+      "part": "Chrome bezel ring",
+      "label": "Aro de bisel cromado"
+    },
+    {
+      "part": "Flow regulator knob",
+      "label": "Mando regulador de caudal"
+    },
+    {
+      "part": "Mirror adjustment motor",
+      "label": "Motor de ajuste del espejo"
+    },
+    {
+      "part": "Injection-moulded housing",
+      "label": "Carcasa inyectada"
+    },
+    {
+      "part": "Lower housing base",
+      "label": "Base de la carcasa inferior"
+    },
+    {
+      "part": "Lower housing",
+      "label": "Carcasa inferior"
+    },
+    {
+      "part": "Mirror arm",
+      "label": "Brazo del espejo"
+    },
+    {
+      "part": "Folding mechanism",
+      "label": "Mecanismo plegable"
+    },
+    {
+      "part": "Bent frame · Al 6061",
+      "label": "Cuadro doblado · Al 6061"
+    },
+    {
+      "part": "Rear strut",
+      "label": "Montante trasero"
+    },
+    {
+      "part": "Cross support",
+      "label": "Soporte transversal"
+    },
+    {
+      "part": "Front support · seat-post mount",
+      "label": "Soporte delantero · anclaje del tubo de sillín"
+    },
+    {
+      "part": "Axle mount",
+      "label": "Soporte del eje"
+    },
+    {
+      "part": "Rear support",
+      "label": "Soporte trasero"
+    },
+    {
+      "part": "Hanger support",
+      "label": "Soporte del colgador de cambio"
+    }
+  ]
+}

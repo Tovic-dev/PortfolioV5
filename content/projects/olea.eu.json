@@ -1,0 +1,79 @@
+{
+  "order": 7,
+  "title": "OLEA × Alpesa",
+  "subtitle": "Oliba-olio premiumaren ontzia kartoizko hodi batean",
+  "categories": [
+    "pack"
+  ],
+  "year": "2025",
+  "cover": "/img/olea-1.jpg",
+  "deck": "Kartoizko hodi batek <em>oliba-olio birjin estra premium</em> baten marka eraman dezakeela frogatzen.",
+  "role": "Hodiaren eta itxierren egitura-diseinua, plano teknikoak eta errenderrak.",
+  "client": "Alpesa",
+  "context": "Packaging Innovation Cluster · enpresaren eskaera",
+  "team": "Leire Arias, Mikel Arnao, Manex Gonzalez, Maria Martinez",
+  "tools": "Adobe Illustrator, Adobe InDesign, KeyShot",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "/img/olea-1.jpg",
+    "caption": "OLEA hodia andaluziar oliba-soro batean."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Alpesak kartoizko hodiak egiten ditu. Erronka zera zen: balio handiko segmentuetan ere funtzionatzen dutela erakustea. Oliba-olio birjin estra premiumak urtean %12 inguru hazten du Europako kanal espezializatuan, baina bere ontziratze gehienek ez diote produktuari behar bezain ondo heltzen."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Ikerketa",
+      "paragraphs": [
+        "Castillo de Canena, Almazaras de la Subbética, Oro Bailén eta Finca de la Torre markei egindako alderaketa-azterketak balio partekatuak aurkitu zituen: itxura bisualaren gainetik materialtasuna, jatorria argudio nagusi gisa, tipografia-neurritasuna eta koherentzia osoa. Haietako inork ere ez zuen hodia aztertu."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-6.jpg",
+          "caption": "Inspirazioa: kortijoen zoruak eta oliba-soroaren geometria."
+        }
+      ]
+    },
+    {
+      "title": "Kontzeptua",
+      "paragraphs": [
+        "Lurraldetik objektura: kraft natural garbiak kortijoaren horma eta zoruak gogorarazten ditu, serif klasiko batek olio-errotetako etiketak gogorarazten ditu eta airetik ikusitako oliba-soroa patroi bihurtzen da."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-4.jpg",
+          "caption": "Prozesua: lerrotik formara."
+        },
+        {
+          "image": "/img/olea-5.jpg",
+          "caption": "Forma eta neurriak."
+        }
+      ]
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-2.jpg",
+          "caption": "OLEA hodia."
+        },
+        {
+          "image": "/img/olea-7.jpg",
+          "caption": "Esperientzia: denda-apaletik mahaira."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

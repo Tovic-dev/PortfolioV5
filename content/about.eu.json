@@ -1,0 +1,112 @@
+{
+  "kicker": "Honi buruz · Profila",
+  "title": "Forma, ingeniaritza <em>eta kodea.</em>",
+  "lede": "Diseinu industriala, ingeniaritza, teknologia eta esperientzia digitalak profil bakarrean: <em>Product Design Engineering.</em>",
+  "paragraphs": [
+    "Industria Diseinuko eta Produktuen Garapeneko Ingeniaritzako graduko laugarren mailan nago Mondragon Unibertsitatean, 2027ko ekainean amaituko dut. 2025eko irailetik ULMA Handling Systems enpresan ari naiz dual prestakuntzan, Oñatin, Azterketak eta Proposamenak sailean: Revit-en modelatzen dut eta aurre-salmentarako KeyShot errenderrak eta 3ds Max animazioak egiten ditut.",
+    "Freelance gisa webguneak eta aplikazioak diseinatu eta garatzen ditut React, Next.js eta Tailwind CSS-rekin. Adimen artifiziala, robotika, automatizazioa, IoT, mugikortasuna, jasangarritasuna eta konektatutako produktuak interesatzen zaizkit.",
+    "Produktu Diseinuan, Diseinu Ingeniaritzan eta Produktu Diseinu Integratuan espezializatutako praktikaldiak, graduondoko programak eta master-ak bilatzen ari naiz."
+  ],
+  "facts": [
+    {
+      "label": "Titulazioa",
+      "text": "Industria Diseinuko eta Produktuen Garapeneko Ingeniaritzako graduan · 4. maila, 2027ko ekainera arte",
+      "type": "text"
+    },
+    {
+      "label": "Unibertsitatea",
+      "text": "Mondragon Unibertsitatea · Ingeniaritza Fakultatea",
+      "type": "text"
+    },
+    {
+      "label": "Esperientzia",
+      "text": "ULMA Handling Systems · Azterketak eta Proposamenak · dual prestakuntza 2025etik",
+      "type": "text"
+    },
+    {
+      "label": "Tresnak",
+      "items": [
+        "SolidWorks",
+        "Siemens NX",
+        "Revit",
+        "Blender",
+        "KeyShot",
+        "3ds Max",
+        "Adobe CC",
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Tailwind"
+      ],
+      "type": "chips"
+    },
+    {
+      "label": "Interesak",
+      "items": [
+        "AI",
+        "Robotika",
+        "Automatizazioa",
+        "IoT",
+        "Mugikortasuna",
+        "Jasangarritasuna",
+        "Konektatutako produktuak"
+      ],
+      "type": "chips"
+    },
+    {
+      "label": "Hizkuntzak",
+      "languages": [
+        {
+          "name": "Gaztelania",
+          "level": "Hizkuntza ama",
+          "full": true
+        },
+        {
+          "name": "Euskara",
+          "level": "Hizkuntza ama",
+          "full": true
+        },
+        {
+          "name": "Ingelesa",
+          "level": "C1 · Cambridge CAE",
+          "full": false
+        }
+      ],
+      "type": "languages"
+    },
+    {
+      "label": "Sariak",
+      "text": "1. postua, <a href=\"https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021\">Building Engineering Olympiad</a> (UPV/EHU, 2021, Bigarren Hezkuntza) · Sari nagusiko 2. saria, <a href=\"https://www.axular.net/es/noticias/premios/2-premio-absoluto-para-overclock\">FIRST LEGO League Euskadi</a> (2022, Bigarren Hezkuntza)",
+      "type": "text"
+    },
+    {
+      "label": "Egoitza",
+      "text": "Donostia · Euskal Herria",
+      "type": "text"
+    }
+  ],
+  "contact": {
+    "kicker": "Kolofoia · Kontaktua",
+    "subtitle": "Praktikak, graduondoko programak eta web- edo produktu-enkarguak.",
+    "title": "Hitz egin dezagun",
+    "text": "Diseinua, ingeniaritza eta kodea proiektu berean uztartzen dituen norbait bilatzen baduzu, idatzi niri."
+  },
+  "colophon": [
+    {
+      "label": "Tipografiak",
+      "text": "SF Pro / Inter Tight, Inter eta IBM Plex Mono"
+    },
+    {
+      "label": "Tinta berezia",
+      "text": "Segurtasun-laranja"
+    },
+    {
+      "label": "Honekin egina",
+      "text": "Three.js, GSAP eta Lenis"
+    },
+    {
+      "label": "Modeloak",
+      "text": "SolidWorks CAD (SEAT Ateca, Ardura) eta kodean sortutako geometria"
+    }
+  ]
+}

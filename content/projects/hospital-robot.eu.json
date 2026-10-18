@@ -1,0 +1,52 @@
+{
+  "hidden": true,
+  "order": 10,
+  "title": "Ospitaleko lagin-robota",
+  "subtitle": "Lagin klinikoen garraio autonomoa",
+  "categories": [
+    "product"
+  ],
+  "year": "",
+  "cover": "",
+  "deck": "Laginak ospitaleko sailen artean mugitzea <em>kustodia-katea hautsi gabe</em>.",
+  "role": "Ibilgailuaren arkitektura, txasisaren eta giltzaz itxi daitezkeen konpartimentuen CAD diseinua eta azken errendatzeak.",
+  "client": "",
+  "context": "Proiektu akademikoa",
+  "team": "Talde-proiektua",
+  "tools": "SolidWorks, KeyShot",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Lagin klinikoak egunean hainbat aldiz bidaiatzen dira sala eta laborategien artean, eta entrega bakoitza arriskua da jarraigarritasunerako."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Planteamendua",
+      "paragraphs": [
+        "Ibilgailuaren arkitektura, laginentzako giltzaz itxi daitezkeen konpartimentuak eta ospitaleko pasabideetan nabigazioa, LiDARrarekin eta gurpil bereizgarriko gidaketarekin."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Egoera",
+      "paragraphs": [
+        "<span class=\"soon\">Azterlan osoa laster.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "none",
+  "sketch": "robot"
+}

@@ -1,0 +1,49 @@
+{
+  "hidden": true,
+  "order": 9,
+  "title": "Jario 09 · Ibili",
+  "subtitle": "Gráfica para la línea de botellas Hydrate & Reuse",
+  "categories": [
+    "product"
+  ],
+  "year": "2026",
+  "cover": "/img/ibili-1.jpg",
+  "deck": "Líneas de contorno topográficas que <em>se convierten en un río</em> alrededor de una botella reutilizable.",
+  "role": "Proyecto individual: concepto, patrón de superficie y visualización.",
+  "client": "Ibili",
+  "context": "Proyecto individual · brief de diseño",
+  "team": "Individual",
+  "tools": "Adobe Illustrator, Adobe Photoshop",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "/img/ibili-1.jpg",
+    "caption": "Jario 09 en la botella de Ibili."
+  },
+  "sections": [
+    {
+      "title": "Concepto",
+      "paragraphs": [
+        "Dirigido a jóvenes adultos, el patrón abstrae las líneas de contorno de un mapa de montaña. Una paleta azul verdosa da vida al relieve y las líneas fluidas se leen como un río que desciende por las laderas: una metáfora de frescura, movimiento e hidratación."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Especificaciones",
+      "paragraphs": [
+        "Un patrón continuo envuelve el cilindro a lo largo de 360°, diseñado para impresión digital 3D con acabado de pintura en polvo texturizada. El logotipo de Ibili se sitúa en la base. Área de impresión 213.5 × 170 mm."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ibili-2.jpg",
+          "caption": "Plantilla de diseño con colores de tapa y cuerpo."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

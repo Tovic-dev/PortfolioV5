@@ -1,0 +1,103 @@
+{
+  "order": 6,
+  "title": "BIRA",
+  "subtitle": "Barrita energética elaborada con excedentes de cereza",
+  "categories": [
+    "pack",
+    "sust"
+  ],
+  "year": "2026",
+  "cover": "/img/bira-1.jpg",
+  "deck": "Aprovechamos el excedente de la cosecha de cereza vasca para crear <em>una barrita energética natural</em> para ciclistas aficionados.",
+  "role": "Estructura de envase, troqueles (dielines) y visualización 3D de la barrita, el envoltorio y el expositor.",
+  "client": "Cooperativa Ereindajan",
+  "context": "Académico · proyecto de un semestre con la cooperativa Ereindajan",
+  "team": "Aimar Arauzo, Mikel Arnao, Jon Azpitarte, Ibai Esquivel, Manex Gonzalez",
+  "tools": "KeyShot, Adobe Illustrator, Adobe Photoshop",
+  "award": "",
+  "stats": [
+    {
+      "value": "20–30 %",
+      "label": "de la cosecha de cereza se desecha antes de llegar al mercado"
+    },
+    {
+      "value": "n = 90",
+      "label": "encuesta real, más una muestra sintética de IA de 300"
+    },
+    {
+      "value": "Lista",
+      "label": "para fabricarse tal como está especificada: diseño listo para producción, sin lanzar"
+    }
+  ],
+  "hero": {
+    "image": "/img/bira-1.jpg",
+    "caption": "BIRA, portada del dossier del proyecto."
+  },
+  "sections": [
+    {
+      "title": "Contexto y briefing",
+      "paragraphs": [
+        "La cooperativa Ereindajan necesitaba una salida para el excedente de cerezas vascas del verano. BIRA lo convierte en una barrita funcional de cereza, legumbres, avena y frutos secos, dirigida al ciclismo amateur."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Investigación",
+      "paragraphs": [
+        "Tendencias, un benchmark de barritas energéticas, tres entrevistas y una encuesta a 90 personas revelaron desconfianza hacia los aditivos y los alimentos ultraprocesados, necesidad de energía constante e interés por sabores de fruta real. Un mapa de posicionamiento situó a BIRA entre la nutrición deportiva y la comida real."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-6.jpg",
+          "caption": "Persona de usuario."
+        }
+      ]
+    },
+    {
+      "title": "Conceptos",
+      "paragraphs": [
+        "Los conceptos de producto, envase y marca se desarrollaron en paralelo, siguiendo la metodología DBZ."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-7.jpg",
+          "caption": "Concepto de marca y producto."
+        }
+      ]
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [
+        "Marca, envoltorio, expositor y 5Ps, llevados a un diseño listo para producción: puede fabricarse tal como está especificado, sin desarrollo adicional, aunque el producto no ha salido al mercado. La estrategia incluye un plan de protección de marca y diseño ante la EUIPO, y el trabajo se cerró con un informe técnico, dos paneles A1 y un vídeo promocional."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-2.jpg",
+          "caption": "Envoltorio."
+        },
+        {
+          "image": "/img/bira-3.jpg",
+          "caption": "Expositor."
+        },
+        {
+          "image": "/img/bira-4.jpg",
+          "caption": "Render de la caja."
+        },
+        {
+          "image": "/img/bira-8.jpg",
+          "caption": "Despliegue del producto."
+        },
+        {
+          "image": "/img/bira-5.jpg",
+          "caption": "Panel."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

@@ -1,0 +1,56 @@
+{
+  "givenName": "Mikel",
+  "familyName": "Arnao",
+  "alternateName": "Mikel Arnao Azpiazu",
+  "jobTitle": "Produktu Diseinu Ingeniaria",
+  "description": "Donostiako Produktu Diseinu Ingeniaria. Diseinu industriala, ingeniaritza eta kodea proiektu berean biltzen ditu: CAD, produktu garapena, eko-diseinua, UX/UI eta web.",
+  "image": "/img/mikel-arnao.jpg",
+  "locality": "Donostia",
+  "region": "Euskadi",
+  "country": "ES",
+  "alumniOf": "Mondragon Unibertsitatea",
+  "alumniOfUrl": "https://www.mondragon.edu",
+  "worksFor": "ULMA Handling Systems",
+  "worksForUrl": "https://www.ulmahandling.com",
+  "knowsAbout": [
+    "Diseinu industriala",
+    "Produktu garapena",
+    "Diseinu mekanikoa",
+    "Fabrikaziorako diseinua",
+    "CAD",
+    "SolidWorks",
+    "Siemens NX",
+    "Revit",
+    "KeyShot",
+    "Blender",
+    "3ds Max",
+    "Produktuen errenderizazioa",
+    "Eko-diseinua",
+    "Bizi-zikloaren ebaluazioa",
+    "UX/UI diseinua",
+    "Web garapena",
+    "React",
+    "Next.js",
+    "IoT",
+    "Robotika"
+  ],
+  "knowsLanguage": [
+    "es",
+    "eu",
+    "en"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/mikelarnao",
+    "https://github.com/Tovic-dev"
+  ],
+  "recognitions": [
+    {
+      "text": "1. postua, DBH kategoria, I. Eraikuntza Ingeniaritzako Olinpiada (UPV/EHU, 2021), Bixen Gómez eta Hugo Hernándezekin",
+      "url": "https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021"
+    },
+    {
+      "text": "Guztirako 2. saria (Innobasque) eta Tecnunen robotaren errendimendu saria, FIRST LEGO League Euskadi 2022 (bigarren hezkuntza), Overclock Axular taldea",
+      "url": "https://www.axular.net/es/noticias/premios/2-premio-absoluto-para-overclock"
+    }
+  ]
+}

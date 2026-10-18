@@ -1,0 +1,130 @@
+{
+  "order": 3,
+  "title": "Cycle Dry · Orbea",
+  "subtitle": "Bikepacking-erako atzeko balda berdiseinua",
+  "categories": [
+    "product"
+  ],
+  "year": "2025",
+  "cover": "/img/orbea-1.jpg",
+  "deck": "Bidaiatzeko balda sinpleagoa eta merkeagoa, <em>arropa lehortzeko zintzilikagarri</em> batekin, ibilian.",
+  "role": "Merkatu- eta erabilera-azterketa, ideia sortzeko fasea (talde-lagun batekin garatutako krokisak, aurreko diseinuak izan ezik), proposamenaren zehaztapen-dokumentua eta fabrikazio-prozesua zuzendu nituen. Azken errendatzeak ere zuzendu nituen.",
+  "client": "",
+  "context": "Ikasketa-proiektua · PBL 3, 2. urtea · Orbearen erreferentziazko produktua",
+  "team": "Ekain Ardanza, Mikel Arnao, Leire Arias, Laura Cuesta, Naroa Galdos",
+  "tools": "SolidWorks, KeyShot, CES EduPack, Vickers eta EDX probak",
+  "award": "",
+  "stats": [
+    {
+      "value": "€125 → €50–60",
+      "label": "jatorrizko baldarekiko helburu-prezioa"
+    },
+    {
+      "value": "90° / 180°",
+      "label": "zintzilikagarria altxatzen da, gero haizetik kanpo biratzen da"
+    },
+    {
+      "value": "Al 6061",
+      "label": "aleazio nagusia; dentsitatearen, Vickers-en eta EDX-en bidez identifikatua"
+    }
+  ],
+  "hero": {
+    "image": "/img/orbea-1.jpg",
+    "caption": "Cycle Dry-ren azken errendatzea hardtail MTB batean."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Orbearen MTB hardtail baldak 124,99 € balio du eta pieza asko ditu. Eskaera: bidaiatzeko sinpleagoa eta merkeagoa egitea. Erabiltzailea bide luzeetan ibiltzen den gazte cyclist bat da, eta izerdiz blai dagoen arropa galdu gabe garbitu eta zintzilikatu behar du."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Ikerketa",
+      "paragraphs": [
+        "Balda bederatzi laginetan moztu eta dentsitatea, Vickers gogortasuna eta EDX konposizioa neurtu ziren: gehienbat Al 6061, Al 3003 gurpil-babesle bat, AISI 1030 altzairuzko barra bat, PET poltsa-panel bat eta DLC geruza bat. Sei lehiakide mapatu ziren prezioaren eta balio erantsiaren arabera, hutsunea aurkitzeko."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-6.jpg",
+          "caption": "Moodboard."
+        },
+        {
+          "image": "/img/orbea-7.jpg",
+          "caption": "CMF moodboard."
+        }
+      ]
+    },
+    {
+      "title": "Kontzeptuak",
+      "paragraphs": [
+        "Krokis birakariek hainbat berdiseinu sortu zituzten. Aukeratutakoak atzeko barran balda laukizuzen bat gehitzen du: 90°-tan altxatzen da arropa zintzilikatzeko, eta 180°-tan biratzen da arrastoa saihesteko edo aparkatuta dagoenean lehortzeko."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-4.jpg",
+          "caption": "Baldaren kontzeptu-krokisa."
+        },
+        {
+          "image": "/img/orbea-8.jpg",
+          "caption": "Ideia sortzeko krokisak."
+        }
+      ]
+    },
+    {
+      "title": "Garapena",
+      "paragraphs": [
+        "Zangen arteko alboko barra kendu zen, poltsa lateralak orain goiko barretatik zintzilikatzen baitira, eta markoa tutu okertu bakar batean eta aurreko eta atzeko barretan geratu zen."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-3.jpg",
+          "caption": "Biraketa-mekanismoaren CAD xehetasuna."
+        }
+      ]
+    },
+    {
+      "title": "Zehaztapena",
+      "paragraphs": [
+        "50 cm-ko hankaren zehaztapen-fitxa, atzeko ardatzera doana:"
+      ],
+      "list": [
+        "20 kg deformaziorik gabe",
+        "190 MPa trakzio-erresistentzia, 69 GPa Young-en modulua",
+        "−10 °C-tik 50 °C-ra funtzionamendu-tartea",
+        "Al 6061, 2720 kg/m³, neurtutako gogortasuna 93,3 HV"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Fabrikazioa",
+      "paragraphs": [
+        "Aluminio-tutu estrusionatuak, CNC bihurketa, MIG soldadura eta anodizatzea markorako. Biraketa-mekanismoa profil estrusionatuetatik egin da, CNC bira-tornuan eta fresatuan, zulatu eta hariztatuz."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-2.jpg",
+          "caption": "Baldaren errendatzea."
+        },
+        {
+          "image": "/img/orbea-5.jpg",
+          "caption": "Azken kartela."
+        }
+      ]
+    }
+  ],
+  "model": "orbea",
+  "sketch": "rack"
+}

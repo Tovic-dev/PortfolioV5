@@ -1,0 +1,228 @@
+{
+  "labels": [
+    {
+      "part": "Housing · PCTFE",
+      "label": "Karkasa · PCTFE"
+    },
+    {
+      "part": "Mirror carrier",
+      "label": "Ispiluaren euskarria"
+    },
+    {
+      "part": "Heated mirror glass",
+      "label": "Berogarritako ispilu-beira"
+    },
+    {
+      "part": "Folding motor",
+      "label": "Plegatzeko motorra"
+    },
+    {
+      "part": "Dynamic LED indicator",
+      "label": "LED norabide-adierazle dinamikoa"
+    },
+    {
+      "part": "Camera",
+      "label": "Kamera"
+    },
+    {
+      "part": "Ultrasonic sensor",
+      "label": "Ultrasoinu-sentsorea"
+    },
+    {
+      "part": "Base arm",
+      "label": "Oinarriko besoa"
+    },
+    {
+      "part": "Base shell · rPP + talc",
+      "label": "Oinarriko karkasa · rPP + talkoa"
+    },
+    {
+      "part": "Level window",
+      "label": "Maila-leihoa"
+    },
+    {
+      "part": "Retractable tank · rPET",
+      "label": "Erretilagarria den depositua · rPET"
+    },
+    {
+      "part": "Tech module · PCB, battery",
+      "label": "Modulu teknikoa · PCB, bateria"
+    },
+    {
+      "part": "Micro-pump",
+      "label": "Mikrobonba"
+    },
+    {
+      "part": "Mode slider",
+      "label": "Modu-graduatzailea"
+    },
+    {
+      "part": "Pot · rPP",
+      "label": "Potea · rPP"
+    },
+    {
+      "part": "OPV solar film",
+      "label": "OPV eguzki-filma"
+    },
+    {
+      "part": "Irrigation ring",
+      "label": "Ureztatze-eraztuna"
+    },
+    {
+      "part": "Load platform",
+      "label": "Karga-plataforma"
+    },
+    {
+      "part": "Drying hanger",
+      "label": "Lehortzeko perxa"
+    },
+    {
+      "part": "Hinge · lifts 90°, turns 180°",
+      "label": "Bisagra · 90° altxatzen da, 180° biratzen da"
+    },
+    {
+      "part": "Foundation slab · terrace",
+      "label": "Oinarrizko losa · terraza"
+    },
+    {
+      "part": "Heat pump",
+      "label": "Bero-bomba"
+    },
+    {
+      "part": "Hot water tank · boiler",
+      "label": "Ur beroaren depositua · berogailua"
+    },
+    {
+      "part": "Cold water tank",
+      "label": "Ur hotzaren depositua"
+    },
+    {
+      "part": "Water network",
+      "label": "Ur-sarea"
+    },
+    {
+      "part": "Rainwater tank",
+      "label": "Euri-ur depositua"
+    },
+    {
+      "part": "Stone ground floor",
+      "label": "Harrizko planta baxua"
+    },
+    {
+      "part": "Triple-glazed windows",
+      "label": "Hirukoitz beiratuko leihoak"
+    },
+    {
+      "part": "Timber upper floor",
+      "label": "Egurrezko goiko solairua"
+    },
+    {
+      "part": "Cellulose insulation",
+      "label": "Zelulosazko isolamendua"
+    },
+    {
+      "part": "Zinc roof",
+      "label": "Zinczko teilatua"
+    },
+    {
+      "part": "Hybrid PV-T panels",
+      "label": "PV-T panel hibridoak"
+    },
+    {
+      "part": "Main body · PC+ABS",
+      "label": "Gorputz nagusia · PC+ABS"
+    },
+    {
+      "part": "Spring clips · steel",
+      "label": "Malguzko klipak · altzairua"
+    },
+    {
+      "part": "Housing seal · TPE-SEBS",
+      "label": "Karkasaren junta · TPE-SEBS"
+    },
+    {
+      "part": "LED wiring · PBT + Cu",
+      "label": "LED kableatua · PBT + Cu"
+    },
+    {
+      "part": "Flow gate · PP + TPV",
+      "label": "Fluxu-ateak · PP + TPV"
+    },
+    {
+      "part": "Regulator gear",
+      "label": "Erregulatzaile-engranajea"
+    },
+    {
+      "part": "Rods + plates · brass-plated steel",
+      "label": "Barrak + plakak · latoiz estalitako altzairua"
+    },
+    {
+      "part": "LED light guide · PMMA",
+      "label": "LED argi-gida · PMMA"
+    },
+    {
+      "part": "Turbine louvres",
+      "label": "Turbina-persianak"
+    },
+    {
+      "part": "Chrome bezel ring",
+      "label": "Kromozko biselaren eraztuna"
+    },
+    {
+      "part": "Flow regulator knob",
+      "label": "Fluxu-erregulatzailearen heldulekua"
+    },
+    {
+      "part": "Mirror adjustment motor",
+      "label": "Ispiluaren doikuntza-motorra"
+    },
+    {
+      "part": "Injection-moulded housing",
+      "label": "Injekzio bidez moldatutako karkasa"
+    },
+    {
+      "part": "Lower housing base",
+      "label": "Beheko karkasaren oinarria"
+    },
+    {
+      "part": "Lower housing",
+      "label": "Beheko karkasa"
+    },
+    {
+      "part": "Mirror arm",
+      "label": "Ispiluaren besoa"
+    },
+    {
+      "part": "Folding mechanism",
+      "label": "Plegatze-mekanismoa"
+    },
+    {
+      "part": "Bent frame · Al 6061",
+      "label": "Kurbatutako markoa · Al 6061"
+    },
+    {
+      "part": "Rear strut",
+      "label": "Atzeko puntala"
+    },
+    {
+      "part": "Cross support",
+      "label": "Zeharkako euskarria"
+    },
+    {
+      "part": "Front support · seat-post mount",
+      "label": "Aurreko euskarria · eserleku-tutuaren muntaia"
+    },
+    {
+      "part": "Axle mount",
+      "label": "Ardatzaren muntaia"
+    },
+    {
+      "part": "Rear support",
+      "label": "Atzeko euskarria"
+    },
+    {
+      "part": "Hanger support",
+      "label": "Hanger euskarria"
+    }
+  ]
+}

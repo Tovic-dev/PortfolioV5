@@ -1,0 +1,100 @@
+{
+  "order": 8,
+  "title": "Senda Norte × Vidrala",
+  "subtitle": "Botella y marca de vermut bajo en alcohol",
+  "categories": [
+    "pack",
+    "product"
+  ],
+  "year": "2026",
+  "cover": "/img/senda-1.jpg",
+  "deck": "Un vermut de 8 % vol. <em>diseñado para un aperitivo más ligero y cotidiano</em>.",
+  "role": "Diseño e ingeniería de la botella, sistema de cierre y embalaje secundario.",
+  "client": "Vidrala",
+  "context": "Encargo de empresa",
+  "team": "Mikel Arnao, Aimar Arauzo",
+  "tools": "SolidWorks, KeyShot, Adobe Illustrator",
+  "award": "",
+  "stats": [
+    {
+      "value": "303 mm",
+      "label": "altura de la botella híbrida Rhine de 75 cl"
+    },
+    {
+      "value": "Ø 68 mm",
+      "label": "cintura de agarre para manos con menos fuerza"
+    },
+    {
+      "value": "8 % vol.",
+      "label": "posicionamiento bajo en alcohol"
+    }
+  ],
+  "hero": {
+    "image": "/img/senda-1.jpg",
+    "caption": "Senda Norte, botella y marca."
+  },
+  "sections": [
+    {
+      "title": "Contexto y encargo",
+      "paragraphs": [
+        "Senda Norte es un vermut artesanal de 8 % vol. que mantiene el ritual del aperitivo sin la pesadez de los vermuts de alta graduación. Se sitúa entre el vermut clásico y los vinos atlánticos ligeros."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Marca",
+      "paragraphs": [
+        "El nombre evoca origen y camino. Una serif clásica reinterpretada, verde profundo, crema cálido y rojo suave, y un tono de voz cercano y sereno."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/senda-6.jpg",
+          "caption": "Sistema de marca."
+        }
+      ]
+    },
+    {
+      "title": "Desarrollo",
+      "paragraphs": [],
+      "list": [
+        "Botella híbrida Rhine: 303 mm de altura, base Ø 80 mm, agarre Ø 68 mm, boca Ø 30 mm, 75 cl",
+        "Tapón soft-touch Stelvin Lux, fácil de abrir en casa",
+        "Forro multicapa: barrera de EVOH, captador de oxígeno, capa antimicrobiana y capa de contacto de PET apto para alimentos",
+        "Caja de cartón kraft de onda E, 93 × 93 × 316 mm, tapa tuck y base de autoblocaje, sin laminar; cajas de envío de 6 unidades"
+      ],
+      "figures": [
+        {
+          "image": "/img/senda-3.jpg",
+          "caption": "Botella: silueta Rhine híbrida."
+        },
+        {
+          "image": "/img/senda-7.jpg",
+          "caption": "Cierre y forro multicapa."
+        }
+      ]
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/senda-2.jpg",
+          "caption": "Diseño de etiqueta."
+        },
+        {
+          "image": "/img/senda-4.jpg",
+          "caption": "Embalaje secundario."
+        },
+        {
+          "image": "/img/senda-5.jpg",
+          "caption": "En uso."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

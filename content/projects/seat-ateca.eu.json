@@ -1,0 +1,147 @@
+{
+  "order": 1,
+  "title": "SEAT Ateca alboko ispilua",
+  "subtitle": "Familia-SUV baten kanpoko ispiluaren birdiseinua",
+  "categories": [
+    "auto",
+    "product"
+  ],
+  "year": "2025",
+  "cover": "/img/seat-1.jpg",
+  "deck": "Zerbaitekin talka egin baino lehen <em>bere kabuz plegatzen</em> den ispilua, eta talka gertatzen denean gidariak ikusten jarraitzen duena.",
+  "role": "Proiektu osoan lan egin nuen. Produktuaren analisiaren fasean eta garapen fasearen gehienean araudiaren azterketa (ECE R46) zuzendu nuen: zirkuitu berriaren analisia eta birdiseinua, materialen zehaztapen-eskuliburua, moldeak mekanizatzeko plana eta hautatutako materialaren justifikazioa. Azken errendatzeak zuzendu nituen.",
+  "client": "",
+  "context": "Akademikoa · PBL 4, 2. maila · Mondragon Unibertsitatea",
+  "team": "Ainhoa Alonso, Mikel Arnao, Maren Leston, Ane Pelayo, Garazi Portillo",
+  "tools": "SolidWorks, SolidWorks Simulation, CES EduPack, KeyShot, erretxina bidezko 3D inprimaketa",
+  "award": "",
+  "stats": [
+    {
+      "value": "7,0 Wh",
+      "label": "50 minutuko, 25 km-ko bidaiarako energia, 4–8 Wh-ko helburuaren barruan"
+    },
+    {
+      "value": "0,016 mm",
+      "label": "180 km/h-tan karga aerodinamikoaren pean izandako okerdura"
+    },
+    {
+      "value": "5",
+      "label": "osagai berri: plegatzeko motorra, kamera, radarra, ultrasoinu-sentsorea, angelu itsuko LEDa"
+    }
+  ],
+  "hero": {
+    "image": "/img/seat-1.jpg",
+    "caption": "Birdiseinatutako ispiluaren azken errendatzea, LED adierazle dinamikoarekin."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Ateca familia-SUV konpaktua da. Hiru arketipoen artetik, taldeak Maite aukeratu zuen: ama bat, bere seme-alabak eskolatik jasotzen dituena kale estu eta kaotiko batean, eta maniobran ispiluarekin talka egiteaz beldurra duena.",
+        "Eskaera: Ateca familiaren itxura mantendu, estres hori laguntza-sistemekin kendu eta ECE 46 Araudia guztiz betetzea."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-12.jpg",
+          "caption": "Eskolako jasotze-egunaren storyboard-a, arazo puntua identifikatzeko erabilia."
+        }
+      ]
+    },
+    {
+      "title": "Ikerketa",
+      "paragraphs": [
+        "Lehiakide sei SUV ispiluren benchmark-ak, prezioaren eta teknologiaren arabera mapatuak, ez zuen prezio eskuragarriko aukera teknologiko aurreraturik erakutsi. Araudi-azterketak muga zorrotzak ezarri zituen:"
+      ],
+      "list": [
+        "Gehienezko ertz-erradioa 2,5 mm, karkasa eta beirarentzat",
+        "III. klaseko ikusmen-eremua: 20 m luze eta 4 m zabal",
+        "Ez da 2 m-tik gorako piezarik egongo lurretik; ispiluekin ibilgailuaren zabalera 2,55 m baino txikiagoa",
+        "Berogailudun beira eta LED adierazlea, EBko instalazio elektriko eta argiztapen arauekin bat"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Kontzeptuak",
+      "paragraphs": [
+        "Ideia-jasa eta lau urratseko zirriborroek hiru aurrerapen-diseinu sortu zituzten: euri-deflektore bat duena, angelu itsuko adierazlea duen aerodinamiko bat, eta laguntzaile ezkutuko ispilu bat duen sendo bat. Pugh matrizeak 2. kontzeptua aukeratu zuen, bideragarritasunean, estetikan, funtzioan eta araudian positiboa."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-7.jpg",
+          "caption": "Aukeratutako norabidearen zirriborroa."
+        },
+        {
+          "image": "/img/seat-8.jpg",
+          "caption": "Plegatze-geometriaren azterketa."
+        }
+      ]
+    },
+    {
+      "title": "Garapena",
+      "paragraphs": [
+        "Ultrasoinu-sentsore batek ispiluari plegatzeko agintzen dio oztopo bat hurbiltzen denean; kamera pantaila zentralera transmititzen da plegatuta dagoen bitartean; radarrak angelu itsuko LEDa aktibatzen du. Zirkuitua 12 V-rean birdiseinatu zen, sentsoreak EFB bateriarekin paraleloan konektatuta.",
+        "SolidWorks Simulation-ekin karga aerodinamikoa, 33 J-ko oinezko talka, milioi bat zikloko nekea, 500 N-ko bertikal eta 300 N-ko alboko kargak, portaera modala eta termikoa egiaztatu ziren."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-6.jpg",
+          "caption": "Muntaiaren CAD esplodatua."
+        },
+        {
+          "image": "/img/seat-9.jpg",
+          "caption": "Zirkuitu elektriko berria."
+        },
+        {
+          "image": "/img/seat-11.jpg",
+          "caption": "Karkasaren molde positiboa."
+        }
+      ]
+    },
+    {
+      "title": "Zehaztapena",
+      "paragraphs": [
+        "Materialen zehaztapen-eskuliburuak eskakizun funtzionalak, mekanikoak, termikoak eta kimikoak CES EduPack murrizketa eta errendimendu-indize bihurtu zituen. Hautagai nagusienetako bost pisatu ziren min–max normalizazioaren ondoren; PCTFE aukeratu zen UV, hezetasun eta erresistentzia kimikoagatik. Molde-erdi bientzat mekanizazio-planak idatzi ziren."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [
+        "1:1 eskalako prototipo estetikoa, erretxinaz inprimatua, betetzea, imprimazioa eta pintura jasoa, anbar koloreko adierazlearekin eta laser bidez moztutako ispiluarekin eskuz formatutako oinarri kurbatu batean."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-4.jpg",
+          "caption": "Prototipo estetikoa, karkasa."
+        },
+        {
+          "image": "/img/seat-5.jpg",
+          "caption": "Prototipo estetikoa, ispiluaren aldea."
+        },
+        {
+          "image": "/img/seat-10.jpg",
+          "caption": "Ispiluaren eta kameraren errendatzea."
+        },
+        {
+          "image": "/img/seat-3.jpg",
+          "caption": "Errendatzea ibilgailuan."
+        }
+      ]
+    },
+    {
+      "title": "Hausnarketa",
+      "paragraphs": [
+        "SolidWorks-en simulazioa ikasplanetik haratago joan zen. Hurrengo urratsa prototipo funtzional bat izango litzateke, ergonomia, toleranziak eta muntaia egiaztatzeko, tresna birtualek erakusten ez dituztenak."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "seat",
+  "sketch": "mirror"
+}

@@ -1,0 +1,52 @@
+{
+  "hidden": true,
+  "order": 12,
+  "title": "PocketWise",
+  "subtitle": "App de finanzas personales para jóvenes",
+  "categories": [
+    "digital"
+  ],
+  "year": "",
+  "cover": "",
+  "deck": "Ayuda a los jóvenes a <em>ver en qué se va su dinero</em> cada mes.",
+  "role": "Investigación de usuarios, personas y diseño de interfaz.",
+  "client": "",
+  "context": "Proyecto académico · UX, usabilidad y diseño de interfaz",
+  "team": "Proyecto en equipo",
+  "tools": "Figma",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Contexto y briefing",
+      "paragraphs": [
+        "Los jóvenes suelen perder el control de los gastos diarios pequeños y les cuesta ahorrar."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Enfoque",
+      "paragraphs": [
+        "Personas, flujos de ahorro y una interfaz que explica sin sermonear."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Estado",
+      "paragraphs": [
+        "<span class=\"soon\">Caso de estudio completo próximamente.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "none",
+  "sketch": "finance-app"
+}

@@ -1,0 +1,147 @@
+{
+  "order": 1,
+  "title": "Retrovisor exterior del SEAT Ateca",
+  "subtitle": "Rediseño del retrovisor exterior de un SUV familiar",
+  "categories": [
+    "auto",
+    "product"
+  ],
+  "year": "2025",
+  "cover": "/img/seat-1.jpg",
+  "deck": "Un retrovisor que <em>se pliega solo</em> antes de golpear algo, y que mantiene la visibilidad del conductor cuando lo hace.",
+  "role": "Trabajé en todo el proyecto. Lideré el análisis normativo (ECE R46) en la fase de análisis de producto y gran parte de la fase de desarrollo: análisis y rediseño del nuevo circuito, el manual de especificación de materiales, la hoja de ruta de mecanizado de los moldes y la justificación del material seleccionado. Lideré también los renders finales.",
+  "client": "",
+  "context": "Académico · PBL 4, 2.º curso · Mondragon Unibertsitatea",
+  "team": "Ainhoa Alonso, Mikel Arnao, Maren Leston, Ane Pelayo, Garazi Portillo",
+  "tools": "SolidWorks, SolidWorks Simulation, CES EduPack, KeyShot, impresión 3D en resina",
+  "award": "",
+  "stats": [
+    {
+      "value": "7,0 Wh",
+      "label": "energía para un trayecto de 50 minutos y 25 km, dentro del objetivo de 4–8 Wh"
+    },
+    {
+      "value": "0,016 mm",
+      "label": "deflexión bajo carga aerodinámica a 180 km/h"
+    },
+    {
+      "value": "5",
+      "label": "componentes nuevos: motor de plegado, cámara, radar, sensor ultrasónico, LED de ángulo muerto"
+    }
+  ],
+  "hero": {
+    "image": "/img/seat-1.jpg",
+    "caption": "Render final del retrovisor rediseñado con indicador LED dinámico."
+  },
+  "sections": [
+    {
+      "title": "Contexto y propuesta",
+      "paragraphs": [
+        "El Ateca es un SUV familiar compacto. De tres arquetipos, el equipo eligió a Maite, una madre que recoge a sus hijos en el colegio por una calle estrecha y caótica, y teme rozar el retrovisor al maniobrar.",
+        "Propuesta: mantener el aire familiar del Ateca, eliminar esa tensión con sistemas de asistencia y cumplir íntegramente el Reglamento ECE 46."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-12.jpg",
+          "caption": "Storyboard de la recogida escolar utilizado para identificar el punto de dolor."
+        }
+      ]
+    },
+    {
+      "title": "Investigación",
+      "paragraphs": [
+        "Un análisis comparativo de seis retrovisores de SUV rivales, clasificados por precio y tecnología, mostró que no existía ninguna opción asequible de alta tecnología. El estudio normativo fijó los límites estrictos:"
+      ],
+      "list": [
+        "Radio mínimo de borde de 2,5 mm en carcasa y cristal",
+        "Campo de visión de clase III: 20 m de largo y 4 m de ancho",
+        "Ninguna pieza por encima de 2 m del suelo; anchura del vehículo con retrovisores inferior a 2,55 m",
+        "Cristal calefactado y LED indicador conformes con la normativa europea eléctrica y de iluminación"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Conceptos",
+      "paragraphs": [
+        "La lluvia de ideas y el boceto en cuatro pasos dieron lugar a tres diseños preliminares: uno con deflector de lluvia, uno aerodinámico con indicador de ángulo muerto y uno robusto con un espejo auxiliar oculto. Una matriz de Pugh eligió el concepto 2, con valoración positiva en viabilidad, estética, función y normativa."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-7.jpg",
+          "caption": "Boceto de la dirección elegida."
+        },
+        {
+          "image": "/img/seat-8.jpg",
+          "caption": "Exploración de la geometría de plegado."
+        }
+      ]
+    },
+    {
+      "title": "Desarrollo",
+      "paragraphs": [
+        "Un sensor ultrasónico pliega el retrovisor cuando un obstáculo se acerca; una cámara transmite a la pantalla central mientras está plegado; un radar activa el LED de ángulo muerto. El circuito se rediseñó a 12 V, con los sensores en paralelo a la batería EFB.",
+        "SolidWorks Simulation comprobó la carga aerodinámica, un impacto contra peatón de 33 J, la fatiga a un millón de ciclos, cargas verticales de 500 N y laterales de 300 N, y el comportamiento modal y térmico."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-6.jpg",
+          "caption": "CAD explosionado del conjunto."
+        },
+        {
+          "image": "/img/seat-9.jpg",
+          "caption": "Nuevo circuito eléctrico."
+        },
+        {
+          "image": "/img/seat-11.jpg",
+          "caption": "Molde positivo de la carcasa."
+        }
+      ]
+    },
+    {
+      "title": "Especificación",
+      "paragraphs": [
+        "El manual de especificación de materiales convirtió los requisitos funcionales, mecánicos, térmicos y químicos en restricciones yób índices de rendimiento de CES EduPack. Los cinco candidatos principales se ponderaron tras una normalización min–max; se eligió PCTFE por su resistencia a los UV, la humedad y los productos químicos. Se redactaron hojas de ruta de mecanizado para ambas mitades del molde."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [
+        "Un prototipo estético 1:1 impreso en resina, relleno, imprimado y pintado, con un indicador ámbar y un espejo cortado por láser sobre una base curva moldeada a mano."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/seat-4.jpg",
+          "caption": "Prototipo estético, carcasa."
+        },
+        {
+          "image": "/img/seat-5.jpg",
+          "caption": "Prototipo estético, lado del espejo."
+        },
+        {
+          "image": "/img/seat-10.jpg",
+          "caption": "Render del cristal del espejo y de la cámara."
+        },
+        {
+          "image": "/img/seat-3.jpg",
+          "caption": "Render sobre el vehículo."
+        }
+      ]
+    },
+    {
+      "title": "Reflexión",
+      "paragraphs": [
+        "La simulación en SolidWorks fue más allá del temario. El siguiente paso sería un prototipo funcional para probar la ergonomía, las tolerancias y el ensamblaje, aspectos que las herramientas virtuales no muestran."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "seat",
+  "sketch": "mirror"
+}

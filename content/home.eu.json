@@ -1,0 +1,139 @@
+{
+  "first": "Mikel",
+  "last": "Arnao",
+  "availability": "Barnetegietarako eta graduondoko programetarako eskuragarri",
+  "deck": "Diseinu industrialeko eta produktu garapeneko ingeniaria. Fabrika daitezkeen objektuak, erabiltzen diren interfazeak eta horiek lotzen dituen kodea, <em>ideiatik piezara.</em>",
+  "deckMobile": "Diseinu industriala eta produktu ingeniaritza, <em>ideiatik piezara.</em>",
+  "coverTag": "Azala",
+  "coverCaption": "SEAT Ateca alboko ispiluaren berrdiseinua, muntaketa-ikuspegia. Korritu desmuntatzeko.",
+  "featured": [
+    {
+      "project": "seat-ateca",
+      "line": "SEAT Ateca alboko ispilua",
+      "lineCategory": "Automozioa",
+      "kicker": "Automozioa",
+      "titleA": "SEAT Ateca",
+      "titleB": "alboko ispilua",
+      "deck": "Zerbaitekin talka egin baino lehen bere kabuz pleguratzen den ispilua, eta hori gertatzen denean gidariak ikusten jarraitzen duena.",
+      "approach": "Ultrasoinuzko plegamendua, erdiko pantailako kamera-ikuspegia, ibilgailu-ezkutuko radarra eta LED adierazle dinamikoa, ECE R46 araudiaren eta SolidWorks Simulation-en arabera balioztatuak.",
+      "role": "Araudi-analisia, zirkuituaren berrdiseinua, material-zehaztapenak, errendatzeak",
+      "factLabel": "Urtea",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "SEAT Ateca",
+      "figure": "SEAT Ateca alboko ispilua"
+    },
+    {
+      "project": "cycle-dry",
+      "line": "Cycle Dry, Orbea atzeko balda",
+      "lineCategory": "Txirrindularitza",
+      "kicker": "Txirrindularitza",
+      "titleA": "Cycle Dry",
+      "titleB": "Orbea atzeko balda",
+      "deck": "Bidaian arropa lehor izateko zintzilikagarri duen, sinpleagoa eta merkeagoa den bikepacking balda.",
+      "approach": "Jatorrizko baldaren materialen desmontaketa, aluminio-hodi bakar doblatu bat eta haizetik kanpo 90° altxatzen eta 180° biratzen den zintzilikagarria.",
+      "role": "Merkatu- eta erabilera-analisia, ideiak sortzea, zehaztapenak, fabrikazioa",
+      "factLabel": "Urtea",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Cycle Dry",
+      "figure": "Cycle Dry, Orbea atzeko balda"
+    },
+    {
+      "project": "ardura",
+      "line": "Ardura, autosufizientea den lore-potea",
+      "lineCategory": "Produktua",
+      "kicker": "Produktua · IoT",
+      "titleA": "Ardura",
+      "titleB": "autosufizientea den lore-potea",
+      "deck": "Barruko argiaren bidez bere kabuz ureztatzen den lore-potea, oporretan landareak bizirik irauteko.",
+      "approach": "Film fotovoltaiko organikoa, 250 ml dosifikatzen dituen desplazamendu positiboko pompa, atera daitekeen rPET depositua eta kolarik eta pinturarik gabeko PP birziklatuzko gorputza.",
+      "role": "Garapen-fasea eta CAD-a zuzendu zituen, errendatzeak",
+      "factLabel": "Urtea",
+      "factValue": "2026",
+      "factStamp": false,
+      "short": "Ardura",
+      "figure": "Ardura, ur autonomoko olla adimenduna"
+    },
+    {
+      "project": "gudamendi-house",
+      "line": "Autonomoa den etxea Gudamendin",
+      "lineCategory": "Jasangarritasuna",
+      "kicker": "Jasangarritasuna",
+      "titleA": "Autonomoa den etxea",
+      "titleB": "Gudamendin",
+      "deck": "Donostiaren gainean dagoen haizetsu batean kokatutako etxea, energia bere kabuz sortzen duena eta euria berrerabiltzen duena.",
+      "approach": "PV-termiko hibrido paneletak, haize-turbina txiki bat, bero-bonba, euri-ur bilketa eta birziklatutako zelulosazko isolamendua.",
+      "role": "Energia berriztagarrien sistemak",
+      "factLabel": "Saria",
+      "factValue": "UPV/EHUko olinpiadako irabazlea · batxilergoa",
+      "factStamp": true,
+      "short": "Gudamendi",
+      "figure": "Autonomoa den etxea Gudamendin"
+    },
+    {
+      "project": "mercedes-vent",
+      "line": "Mercedes V-Class aireztatzailearen LCA",
+      "lineCategory": "Eko-diseinua",
+      "kicker": "Eko-diseinua · LCA",
+      "titleA": "Mercedes V-Class",
+      "titleB": "aireztatzailea",
+      "deck": "Aire-aireztatzaile premium bat desmuntatzea, bere oinarri ekologikoa non ezkutatzen den aurkitzeko, eta ondoren ebakitzea.",
+      "approach": "Cradle-to-grave LCA IHOBEren kalkulagailuarekin, hotspot analisia eta birdiseinu-kontzeptu bederatzi. Azken kontzeptuak karbono-aztarna %85 inguru murrizten du.",
+      "role": "LCA, hobetze-helburuak, ingurumen-ebaluazioa",
+      "factLabel": "Urtea",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Mercedes",
+      "figure": "Mercedes V-Class aireztatzailea"
+    }
+  ],
+  "tools": [
+    "SolidWorks",
+    "Siemens NX",
+    "Revit",
+    "Blender",
+    "KeyShot",
+    "3ds Max",
+    "Adobe CC",
+    "React",
+    "Next.js"
+  ],
+  "procedure": {
+    "kicker": "Prozedura",
+    "title": "Krokisetik <em>piezara.</em>",
+    "intro": "Proiektu guztietan errepikatzen diren bost fase, injektatutako etxebizitza, robot edo aplikazio bat izan.",
+    "steps": [
+      {
+        "label": "1. fasea",
+        "title": "Ikerketa",
+        "text": "Erabiltzaileak, testuingurua, arauak eta lehiakideak. Ulertu arazoa zerbait marraztu aurretik."
+      },
+      {
+        "label": "2. fasea",
+        "title": "Kontzeptualizazioa",
+        "text": "Krokisak, maketa azkarrak eta erabilera-eszenatokiak. Ideia merke asko, onena aukeratzeko."
+      },
+      {
+        "label": "3. fasea",
+        "title": "Modelatu eta balidatu",
+        "text": "CAD, kalkulua, fabrikagarritasuna eta errendatzea, datuekin eta irudiekin erabakitzeko."
+      },
+      {
+        "label": "4. fasea",
+        "title": "Prototipoa",
+        "text": "3D inprimaketa, elektronika eta klik egin daitezkeen interfazeak. Probatu, apurtu eta konpondu."
+      },
+      {
+        "label": "5. fasea",
+        "title": "Gauzatu",
+        "text": "Ekoizpenerako marrazkiak eta dokumentazioa, automatizazioa edo kode prest bidaltzeko."
+      }
+    ]
+  },
+  "contact": {
+    "kicker": "Kontaktua",
+    "title": "Eraiki dezagun <em>hurrengoa.</em>",
+    "text": "Barne-praktikak, graduondoko programak eta produktu- edo web-enkarguak. Diseinua, ingeniaritza eta kodea proiektu berean batu behar dituen norbait behar baduzu, idatzi niri."
+  }
+}

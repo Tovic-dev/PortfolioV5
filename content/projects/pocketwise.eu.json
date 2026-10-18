@@ -1,0 +1,52 @@
+{
+  "hidden": true,
+  "order": 12,
+  "title": "PocketWise",
+  "subtitle": "Gazteentzako finantza pertsonalen aplikazioa",
+  "categories": [
+    "digital"
+  ],
+  "year": "",
+  "cover": "",
+  "deck": "Gazteei <em>hilero beren dirua non gastatzen den ikusten</em> laguntzen.",
+  "role": "Erabiltzaileen ikerketa, pertsonak eta interfaze diseinua.",
+  "client": "",
+  "context": "Proiektu akademikoa · UX, erabilgarritasuna eta interfaze diseinua",
+  "team": "Talde-proiektua",
+  "tools": "Figma",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Gazteek maiz ez dute kontrolatzen eguneroko gastu txikiak, eta zailtasunak dituzte aurrezteko."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Planteamendua",
+      "paragraphs": [
+        "Pertsonak, aurrezpen-fluxuak eta sermoirik egin gabe azaltzen den interfazea."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Egoera",
+      "paragraphs": [
+        "<span class=\"soon\">Kasu-azterketa osoa laster.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "none",
+  "sketch": "finance-app"
+}

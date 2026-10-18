@@ -1,0 +1,139 @@
+{
+  "order": 2,
+  "title": "Ardura",
+  "subtitle": "Autonomoa den landare adimenduna",
+  "categories": [
+    "product",
+    "sust"
+  ],
+  "year": "2026",
+  "cover": "/img/ardura-1.jpg",
+  "deck": "Barruko argiarekin <em>bere burua ureztatzen duen</em> landare-ontzia, oporretan landareak bizirik irauteko.",
+  "role": "Taldearekin lan egin nuen proiektu osoan eta garapen fase osoa zuzendu nuen, CAD barne: arkitektura, sistema hidraulikoa, energia-balantzea, materialak eta fabrikazioa, ergonomia eta kostuak. Produktu- eta proiektu-panelak bakarrik beste batzuek egin zituzten. Azken errendatzeak zuzendu nituen.",
+  "client": "",
+  "context": "Akademikoa · PBL 5, 3. maila · Mondragon Unibertsitatea · iF Design Student Award lehiaketara aurkezpena",
+  "team": "Mikel Arnao, Danel Iturbe, Egoitz Fernandez, Mikel Martin, Maria Martinez",
+  "tools": "SolidWorks, KeyShot, IHOBE Climate & Circularity Calculator, Adobe CC",
+  "award": "",
+  "stats": [
+    {
+      "value": "15.09 Wh",
+      "label": "egunero OPV filmak sortzen dituen energia, 0.87 Wh kontsumitutakoaren aurka"
+    },
+    {
+      "value": "3.5 L",
+      "label": "erretrakzio-sistemadun rPET deposito, heldulekua integratuta"
+    },
+    {
+      "value": "≈ €13",
+      "label": "unitateko kostu estimatua fabrikatik irtetean, €79ko salmenta-prezioarekin"
+    }
+  ],
+  "hero": {
+    "image": "/img/ardura-1.jpg",
+    "caption": "Ardura egongela batean, azken errendatzea."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Proiektuak \"paradoxa biofilikoa\" aztertzen du: jendeak etxean landareak nahi ditu, baina ez du denborarik zaintzeko. Elkarrizketek erakutsi zuten benetako estresa ez dela zaintza bera, baizik eta etxetik kanpo egotea eta \"begiz\" ureztatzea.",
+        "Aukeratutako pertsona, Rosa, 52 urte, bi etxebizitzaren artean bizi da. CUT eskaerak lasaitasuna, ur-presio hidraulikoaren bidezko ureztapen automatikoa eta material birziklagarriak eskatzen ditu."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Ikerketa",
+      "paragraphs": [
+        "Adimenaren eta jasangarritasunaren mapak hutsunea erakutsi zuen: gailu adimendunak xahutzaileak dira eta jasangarriak diren ontziak pasiboak. Aukera ontzi erregeneratzaile, bateriarik gabe eta konpontzeko modukoa zen, elektronikarik gabe, fisika erabiliz adimentsua izateko."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-8.jpg",
+          "caption": "Merkatu-aukeren mapa."
+        }
+      ]
+    },
+    {
+      "title": "Kontzeptuak",
+      "paragraphs": [
+        "Produktu-panel bost aztertu ziren, gehigarri unibertsal bat eta ontzi integratu bat. Ontzi integratuak irabazi zuen: materiala kontrolatzen du, beraz ez da ura galtzen zeramika porotsutik, eta gainazalak eguzki-filma eraman dezake gailu batek itxura izan gabe."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-6.jpg",
+          "caption": "Ideia-zirriborroak."
+        },
+        {
+          "image": "/img/ardura-3.jpg",
+          "caption": "Kontzeptu-kartela, ontzi integratua."
+        },
+        {
+          "image": "/img/ardura-5.jpg",
+          "caption": "CMF moodboard."
+        }
+      ]
+    },
+    {
+      "title": "Garapena",
+      "paragraphs": [
+        "Hiru modulu pilatuta: nukleo biziak film fotovoltaiko organikoarekin, modulu teknologiko itxia PCBarekin, 5000 mAh-ko bateriarekin, mikrobonba eta modu-graduatzailearekin, eta rPET depositu desmuntagarria rPP kanpoko oskol batean, ur-mailaren leihoarekin.",
+        "Desplazamendu positiboko bonbak 250 ml-ko dosi zehatzak ematen ditu, ur-maila edozein dela ere. \"Jaitsi eta altxatu\" konikoa, Luer medikuntzako konikoan oinarritua, grabitatearen bidez ixten da, beraz depositua esku batez atera daiteke. Graduatzaile haptikoak Tropikala, Estandarra edo Basamortua ureztatzea aukeratzen du."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-2.jpg",
+          "caption": "Moduluen arkitektura erakusten duen produktu-panela."
+        }
+      ]
+    },
+    {
+      "title": "Zehaztapenak",
+      "paragraphs": [],
+      "list": [
+        "Gorputza PP birziklatua mineral betegarriarekin: harri-itxura mate, 1,8 mm-ko hormak, pintura gabe",
+        "rPET depositu garden bat, askapen-angeluaren bidez oskolean sartzen dena, itsasgarririk gabe",
+        "Elektronika klik-egiteko eta hari-junturak desmuntatzeko",
+        "Materialen zerrenda ≈ €13,13 unitateko"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Bizi-zikloaren ebaluazioa",
+      "paragraphs": [
+        "Fabrikazioak klima-inpaktuaren % 99 inguru eragiten du. PP birziklatuzko gorputz ezin-iragazkor batek ia 140 litro ur aurrezten ditu hamar urtean zeramikarekin alderatuta. OPV filmak karbonoa 0,2 urtetan berreskuratzen du, silizioaren bi urte baino gehiagoren aurka, eta konpontzeak birziklatzeak baino garrantzi handiagoa du: materialen banaketak inpaktu osoa % 0,23 baino ez aldatzen du."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ardura-7.jpg",
+          "caption": "Proiektu-panela."
+        },
+        {
+          "image": "/img/ardura-4.jpg",
+          "caption": "Kontzeptu-kartela alternatiboa: gehigarri unibertsala."
+        }
+      ]
+    },
+    {
+      "title": "Hausnarketa",
+      "paragraphs": [
+        "Energia hain gutxi kontsumitzen duen gailu baten kasuan, autonomia energetiko osoak ez du berez ingurumenarekiko eragin hobea ekartzen; eguzki-filma justifikatuta dago kablerik ez izateagatik eta erabiltzaileek horretan ikusten duten balioagatik. Litro bat baino gutxiagoko mahai-gaineko bertsioa da hurrengo urratsa."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "ardura",
+  "sketch": "plant-pot"
+}

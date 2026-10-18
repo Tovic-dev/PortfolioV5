@@ -1,0 +1,120 @@
+{
+  "order": 5,
+  "title": "Mercedes V-Class aireztapen-txertoa",
+  "subtitle": "Eco-diseinua eta bizi-zikloaren ebaluazioa",
+  "categories": [
+    "auto",
+    "sust"
+  ],
+  "year": "2025",
+  "cover": "/img/merc-1.jpg",
+  "deck": "Aire-txertо premium bat desmuntatu <em>oinatz ekologikoa non ezkutatzen den</em> aurkitzeko, eta gero moztu.",
+  "role": "Taldearekin lan egin nuen proiektu osoan, eta bizi-zikloaren ebaluazioa (LCA), hobekuntza-helburuak eta ideia-sorkuntza, eta ingurumen-hobekuntzen ebaluazioa zuzendu nituen. Enkargua analisira mugatzen zen, garapen-fase gabe.",
+  "client": "",
+  "context": "Akademikoa · Ingurumen-alderdiak ikastaroa",
+  "team": "Aimar Arauzo, Mikel Arnao, Ander Martín",
+  "tools": "IHOBE Klima eta Zirkulartasun Kalkulagailua, MET matrizea, pisuzko erabaki-matrizea",
+  "award": "",
+  "stats": [
+    {
+      "value": "−85 %",
+      "label": "karbono-aztarna PP monomaterialezko gorputzarekin"
+    },
+    {
+      "value": "−65 %",
+      "label": "ReCiPe amaiera-puntua LED eraginkorrarekin eta errepidezko logistikarekin"
+    },
+    {
+      "value": "84 %",
+      "label": "plastikoaren birziklagarria fluxu bakarrean"
+    }
+  ],
+  "hero": {
+    "image": "/img/merc-1.jpg",
+    "caption": "2025eko V-Class-aren barnealdea, aire-txerto biribilekin eta giro-argiarekin."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta enkargua",
+      "paragraphs": [
+        "2025eko V-Class-aren aire-txerto biribilak 127 g pisatzen ditu eta PC+ABS, kromozko eraztunak, latoizko estaldura duten altzairuzko barrak, TPE zigiluak eta LED giro-argi plaka nahasten ditu, 15 urteko, 250.000 km-ko bizitzarako. ABS gainean dagoen kromoa ezin da birziklatu, eta piezak ezin dira bereizi bizitza-amaieran.",
+        "Helburua: eragina neurtu eta birdiseinuak proposatzea, premium sentipena galdu gabe."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Desmuntaketa",
+      "paragraphs": [
+        "Pieza guztiak desmontatu, pisatu eta identifikatu ziren inbentarioa egiteko."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/merc-2.jpg",
+          "caption": "Gorputz nagusia eskalan."
+        },
+        {
+          "image": "/img/merc-3.jpg",
+          "caption": "Gorputza eta persiana-multzoa."
+        },
+        {
+          "image": "/img/merc-4.jpg",
+          "caption": "Kromozko apaingarri-eraztuna."
+        }
+      ]
+    },
+    {
+      "title": "Bizi-zikloaren ebaluazioa",
+      "paragraphs": [
+        "Jaiotzetik hilobira, IHOBE kalkulagailuarekin. Unitate funtzionala: norabidez kontrolatutako aire-fluxua eta giro-argia okupante batentzat 250.000 km-tan. Lau puntu kritiko agertu ziren:"
+      ],
+      "list": [
+        "Elektronika (17 g) eta PC+ABS (92 g) lehengai gisa",
+        "Elektronikaren aire-garraioa Taiwanetik",
+        "Eraztunen kromo-estaldura",
+        "LEDaren energia erabileran: 3,75 kWh, gutxi gorabehera 1,5 L diesel"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Hobekuntza-helburuak eta ideiak",
+      "paragraphs": [
+        "Eco-diseinuko zortzi estrategietatik sortutako ideiak balioztatu ziren, bideragarritasun teknikoa eta finantzarioa, ingurumen-onura eta markaren motibazioa kontuan hartuta. Hiru ekintza-familia aurrera atera ziren: A, LED eraginkorragoa (0,6 W-tik 0,1 W-ra) Europan egina; B, kromoaren ordez molde barruko kolorea; C, birziklatutako r-PC+ABS edo PP monomateriala."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Ebaluazioa",
+      "paragraphs": [
+        "Bederatzi kontzeptu ebaluatu ziren. PP monomaterialak karbono-aztarna gutxi gorabehera %85 murriztu zuen; LED hari gabeko eta eraginkorrak errepidezko logistikarekin ReCiPe amaiera-puntua gutxi gorabehera %65 murriztu zuen. PC+ABS birziklatuak espero baino okerrago atera zen, seguruenik datu-multzoen mugengatik."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/merc-5.jpg",
+          "caption": "Eragin osoaren murrizketa (ReCiPe amaiera-puntua) kontzeptuko."
+        }
+      ]
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [
+        "Azken kontzeptuak C2 + A2 + B2 konbinatzen ditu: monomaterialekoa, oso eraginkorra eta estaldura toxikorik gabea. Plastikoaren %84 fluxu bakarrean birziklagarria bihurtzen da."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Gogoeta",
+      "paragraphs": [
+        "Hurrengo urratsak: bero-askapeneko juntura bat, tratamendu-plantek eraztunak gorputzetik urrats bakarrean banandu ahal izateko; EQV elektrikoaren energia-nahasketarekin egindako LCA bat; eta hornitzaile ziurtatuak, ordezko orokorren ordez."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "vent",
+  "sketch": "robot"
+}

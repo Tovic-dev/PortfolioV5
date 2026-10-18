@@ -1,0 +1,79 @@
+{
+  "order": 7,
+  "title": "OLEA × Alpesa",
+  "subtitle": "Envase premium de aceite de oliva en tubo de cartón",
+  "categories": [
+    "pack"
+  ],
+  "year": "2025",
+  "cover": "/img/olea-1.jpg",
+  "deck": "Demostrar que un tubo de cartón puede acompañar a una marca de <em>aceite de oliva virgen extra premium</em>.",
+  "role": "Diseño estructural del tubo y los cierres, planos técnicos y renders.",
+  "client": "Alpesa",
+  "context": "Packaging Innovation Cluster · encargo de la empresa",
+  "team": "Leire Arias, Mikel Arnao, Manex Gonzalez, Maria Martinez",
+  "tools": "Adobe Illustrator, Adobe InDesign, KeyShot",
+  "award": "",
+  "stats": [],
+  "hero": {
+    "image": "/img/olea-1.jpg",
+    "caption": "Tubo OLEA en un olivar andaluz."
+  },
+  "sections": [
+    {
+      "title": "Contexto y encargo",
+      "paragraphs": [
+        "Alpesa fabrica tubos de cartón. El reto era demostrar que pueden funcionar en segmentos de alto valor. El aceite de oliva virgen extra premium crece alrededor de un 12 % anual en el canal especializado europeo, pero la mayoría de sus envases no están a la altura del producto."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Investigación",
+      "paragraphs": [
+        "Un análisis comparativo de Castillo de Canena, Almazaras de la Subbética, Oro Bailén y Finca de la Torre reveló valores comunes: primacía de la materialidad sobre el impacto visual, el origen como principal argumento, contención tipográfica y coherencia total. Ninguna había explorado el tubo."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-6.jpg",
+          "caption": "Inspiración: suelos de cortijo y geometría del olivar."
+        }
+      ]
+    },
+    {
+      "title": "Concepto",
+      "paragraphs": [
+        "Del territorio al objeto: el kraft sin barnizar evoca los muros y suelos del cortijo, una serif clásica recuerda las etiquetas de las almazaras y el olivar visto desde el aire se convierte en patrón."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-4.jpg",
+          "caption": "Proceso: de la línea a la forma."
+        },
+        {
+          "image": "/img/olea-5.jpg",
+          "caption": "Forma y dimensiones."
+        }
+      ]
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/olea-2.jpg",
+          "caption": "El tubo OLEA."
+        },
+        {
+          "image": "/img/olea-7.jpg",
+          "caption": "Experiencia: del estante de la tienda a la mesa."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

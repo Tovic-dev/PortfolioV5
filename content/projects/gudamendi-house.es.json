@@ -1,0 +1,98 @@
+{
+  "order": 4,
+  "title": "Casa autosuficiente",
+  "subtitle": "Vivienda ecológica en Gudamendi, Donostia",
+  "categories": [
+    "sust"
+  ],
+  "year": "2021",
+  "cover": "/img/casa-2.jpg",
+  "deck": "Una casa en una colina ventosa sobre Donostia que <em>genera su propia energía</em> y reutiliza el agua de lluvia.",
+  "role": "Diseño de los sistemas de energía renovable: paneles solares híbridos, aerogenerador, almacenamiento en baterías y bomba de calor.",
+  "client": "",
+  "context": "Concurso · I Building Engineering Olympiad, Escuela de Ingeniería de Gipuzkoa (UPV/EHU)",
+  "team": "Bixen Gómez, Hugo Hernández, Mikel Arnao",
+  "tools": "",
+  "award": "1.er premio, categoría de educación secundaria (ESO) · I Building Engineering Olympiad, UPV/EHU",
+  "awardUrl": "https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021",
+  "stats": [
+    {
+      "value": "13 m/s",
+      "label": "velocidad media del viento en Igeldo; el aerogenerador funciona a partir de 10 m/s"
+    },
+    {
+      "value": "180 m",
+      "label": "altitud de la parcela: más sol, más viento y clima marítimo suave"
+    },
+    {
+      "value": "3 : 1",
+      "label": "energía que aporta la bomba de calor por unidad consumida"
+    }
+  ],
+  "hero": {
+    "image": "/img/casa-2.jpg",
+    "caption": "La casa en su parcela de Gudamendi."
+  },
+  "sections": [
+    {
+      "title": "Contexto",
+      "paragraphs": [
+        "La parcela se encuentra en Gudamendi, en Igeldo, a 180 m sobre el mar. El mar mantiene las temperaturas estables, hay poca sombra y viento constante, y el alcantarillado, el agua, la electricidad, el teléfono y una parada de autobús están cerca. La fachada principal orienta al sur para limitar la pérdida de calor en invierno."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Envolvente",
+      "paragraphs": [
+        "La piedra de la planta baja resiste las salpicaduras de lluvia; sobre ella, un revestimiento de madera vertical. Una cubierta inclinada asimétrica de zinc ventilado, abundante, duradera durante un siglo y reciclable indefinidamente. Triple acristalamiento con dos cámaras, vidrio de baja emisividad y persianas de microlamas; aislamiento de celulosa fabricado con papel reciclado, aprovechando las antiguas papeleras del río Oria."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-5.jpg",
+          "caption": "Sección de fachada, carpintería y aislamiento."
+        }
+      ]
+    },
+    {
+      "title": "Sistemas energéticos",
+      "paragraphs": [
+        "Mi parte. Los paneles híbridos fotovoltaico-térmicos de la fuerte pendiente sur precalientan el agua caliente sanitaria y generan electricidad para la iluminación, los aparatos y la bomba de calor. Un pequeño aerogenerador funciona a partir de 10 m/s. La energía sobrante se almacena en baterías en el desván y el resto se vierte a la red. La bomba de calor calienta por suelo radiante, completa el agua caliente y se invierte para refrigerar en verano."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-3.jpg",
+          "caption": "Energía renovable y sistemas."
+        }
+      ]
+    },
+    {
+      "title": "Agua",
+      "paragraphs": [
+        "La suave pendiente de la cubierta recoge el agua de lluvia en un depósito subterráneo que se utiliza para la lavadora, los inodoros y el riego del jardín."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-4.jpg",
+          "caption": "Gestión del agua y cubierta verde extensiva."
+        }
+      ]
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-1.jpg",
+          "caption": "Cartel completo del concurso."
+        }
+      ]
+    }
+  ],
+  "model": "house",
+  "sketch": "house"
+}

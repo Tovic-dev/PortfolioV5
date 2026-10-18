@@ -1,0 +1,100 @@
+{
+  "order": 8,
+  "title": "Senda Norte × Vidrala",
+  "subtitle": "Alkohol gutxiko vermut-botila eta marka",
+  "categories": [
+    "pack",
+    "product"
+  ],
+  "year": "2026",
+  "cover": "/img/senda-1.jpg",
+  "deck": "<em>Egunerokorako, arinagoa den aperitiborako</em> diseinatutako %8 vol.-ko vermut bat.",
+  "role": "Botilaren diseinua eta ingeniaritza, itxiera-sistema eta bigarren mailako ontziratzea.",
+  "client": "Vidrala",
+  "context": "Enpresaren eskaera",
+  "team": "Mikel Arnao, Aimar Arauzo",
+  "tools": "SolidWorks, KeyShot, Adobe Illustrator",
+  "award": "",
+  "stats": [
+    {
+      "value": "303 mm",
+      "label": "75 cl-ko Rhine botila hibridoaren altuera"
+    },
+    {
+      "value": "Ø 68 mm",
+      "label": "heldulekua, indar gutxiagoko eskuentzat"
+    },
+    {
+      "value": "%8 vol.",
+      "label": "alkohol gutxiko posizionamendua"
+    }
+  ],
+  "hero": {
+    "image": "/img/senda-1.jpg",
+    "caption": "Senda Norte, botila eta marka."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Senda Norte %8 vol.-ko vermut artisau bat da, aperitiboaren errituala mantentzen duena, alkohol-graduazio handiko vermutaren astuntasunik gabe. Vermut klasikoaren eta Atlantikoko zuri arinen artean kokatzen da."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Marka",
+      "paragraphs": [
+        "Izenak jatorria eta bidea gogorarazten ditu. Serif klasiko berrinterpretatua, berde sakona, krema epela eta gorri leuna, eta hizkera hurbila eta lasaia."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/senda-6.jpg",
+          "caption": "Markaren sistema."
+        }
+      ]
+    },
+    {
+      "title": "Garapena",
+      "paragraphs": [],
+      "list": [
+        "Rhine botila hibridoa: 303 mm altu, oinarria Ø 80 mm, heldulekua Ø 68 mm, ahoa Ø 30 mm, 75 cl",
+        "Stelvin Lux soft-touch tapoia, etxean erraz irekitzeko",
+        "Geruza anitzeko barrunbea: EVOH hesia, oxigeno-atrapatzailea, geruza antimikrobianoa eta elikagaientzako PET kontaktu-geruza",
+        "Kraft E-flute kutxa, 93 × 93 × 316 mm, goiko tapa tolesgarria eta oinarri autoblokeatzailea, laminatu gabe; 6 unitateko bidalketa-kutxak"
+      ],
+      "figures": [
+        {
+          "image": "/img/senda-3.jpg",
+          "caption": "Botila: Rhine silueta hibridoa."
+        },
+        {
+          "image": "/img/senda-7.jpg",
+          "caption": "Itxiera eta geruza anitzeko barrunbea."
+        }
+      ]
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/senda-2.jpg",
+          "caption": "Etiketaren diseinua."
+        },
+        {
+          "image": "/img/senda-4.jpg",
+          "caption": "Bigarren mailako ontziratzea."
+        },
+        {
+          "image": "/img/senda-5.jpg",
+          "caption": "Erabilian."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

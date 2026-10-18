@@ -1,0 +1,49 @@
+{
+  "hidden": true,
+  "order": 9,
+  "title": "Jario 09 · Ibili",
+  "subtitle": "Hydrate & Reuse botila-lerroaren grafikoa",
+  "categories": [
+    "product"
+  ],
+  "year": "2026",
+  "cover": "/img/ibili-1.jpg",
+  "deck": "Mapa topografikoko kurba-lerroak <em>ibai bihurtzen dira</em> birziklatzeko botila baten inguruan.",
+  "role": "Proiektu indibiduala: kontzeptua, gainazaleko patroia eta bisualizazioa.",
+  "client": "Ibili",
+  "context": "Proiektu indibiduala · diseinu-eskaera",
+  "team": "Indibiduala",
+  "tools": "Adobe Illustrator, Adobe Photoshop",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "/img/ibili-1.jpg",
+    "caption": "Jario 09 Ibili botilan."
+  },
+  "sections": [
+    {
+      "title": "Kontzeptua",
+      "paragraphs": [
+        "Gazte helduei zuzendua, patroiak mendi-mapa baten kurba-lerroak abstraktutzen ditu. Urdin-berde paleta erliebea bizi-bizi jartzen du, eta lerro mugikorrek mendiko malden behera doan ibai baten itxura dute: freskotasunaren, mugimenduaren eta hidratazioaren metafora."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Zehaztapenak",
+      "paragraphs": [
+        "Etengabeko patroi batek zilindroa 360°-tan inguratzen du, digitalki 3D inprimatzeko diseinatuta, testurizatutako hauts-pintura bukaerarekin. Ibili logotipoa oinarrian dago. Inprimaketa-eremua 213,5 × 170 mm."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/ibili-2.jpg",
+          "caption": "Diseinu-txantiloia, tapoiaren eta gorputzaren koloreekin."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

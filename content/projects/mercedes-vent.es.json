@@ -1,0 +1,120 @@
+{
+  "order": 5,
+  "title": "Rejilla de ventilación del Mercedes V-Class",
+  "subtitle": "Ecodiseño y análisis de ciclo de vida",
+  "categories": [
+    "auto",
+    "sust"
+  ],
+  "year": "2025",
+  "cover": "/img/merc-1.jpg",
+  "deck": "Desmontar una rejilla de ventilación de gama alta para descubrir <em>dónde se esconde su huella</em> y, después, recortarla.",
+  "role": "Trabajé con el equipo en todo el proyecto y dirigí el análisis de ciclo de vida (ACV), los objetivos de mejora, la generación de ideas y la evaluación de las mejoras ambientales. El encargo se limitaba al análisis, sin fase de desarrollo.",
+  "client": "",
+  "context": "Académico · Asignatura de Aspectos Ambientales",
+  "team": "Aimar Arauzo, Mikel Arnao, Ander Martín",
+  "tools": "Calculadora de Clima y Circularidad de IHOBE, matriz MET, matriz de decisión ponderada",
+  "award": "",
+  "stats": [
+    {
+      "value": "−85 %",
+      "label": "huella de carbono con una carcasa de PP monomaterial"
+    },
+    {
+      "value": "−65 %",
+      "label": "endpoint de ReCiPe con un LED eficiente y logística por carretera"
+    },
+    {
+      "value": "84 %",
+      "label": "del plástico reciclable en un único flujo"
+    }
+  ],
+  "hero": {
+    "image": "/img/merc-1.jpg",
+    "caption": "Interior del V-Class 2025 con las rejillas redondas y la luz ambiental."
+  },
+  "sections": [
+    {
+      "title": "Contexto y encargo",
+      "paragraphs": [
+        "La rejilla redonda del V-Class 2025 pesa 127 g y combina PC+ABS, aros cromados, varillas de acero con recubrimiento de latón, juntas de TPE y una placa de LED para la luz ambiental, con una vida útil de 15 años y 250.000 km. El cromado sobre ABS no puede reciclarse y las piezas no se pueden separar al final de su vida útil.",
+        "Objetivo: cuantificar el impacto y proponer rediseños sin perder la sensación premium."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Desmontaje",
+      "paragraphs": [
+        "Se desmontó, pesó e identificó cada pieza para elaborar el inventario."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/merc-2.jpg",
+          "caption": "Cuerpo principal en la báscula."
+        },
+        {
+          "image": "/img/merc-3.jpg",
+          "caption": "Conjunto del cuerpo y las lamas."
+        },
+        {
+          "image": "/img/merc-4.jpg",
+          "caption": "Aro cromado decorativo."
+        }
+      ]
+    },
+    {
+      "title": "Análisis de ciclo de vida",
+      "paragraphs": [
+        "De la cuna a la tumba con la calculadora de IHOBE. Unidad funcional: flujo de aire orientable y luz ambiental para un ocupante durante 250.000 km. Aparecieron cuatro puntos críticos:"
+      ],
+      "list": [
+        "Electrónica (17 g) y PC+ABS (92 g) como materias primas",
+        "Transporte aéreo de la electrónica desde Taiwán",
+        "Cromado de los aros",
+        "Energía del LED en uso: 3,75 kWh, unos 1,5 L de gasóleo"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Objetivos de mejora e ideas",
+      "paragraphs": [
+        "Se evaluaron ideas de ocho estrategias de ecodiseño según su viabilidad técnica y financiera, su beneficio ambiental y la motivación de marca. Tres familias de acciones siguieron adelante: A, un LED más eficiente (de 0,6 W a 0,1 W) fabricado en Europa; B, color en molde en lugar de cromado; C, r-PC+ABS reciclado o PP monomaterial."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Evaluación",
+      "paragraphs": [
+        "Se evaluaron nueve conceptos. El PP monomaterial redujo la huella de carbono en torno a un 85 %; el LED eficiente sin cables con logística por carretera redujo el endpoint de ReCiPe en torno a un 65 %. El PC+ABS reciclado salió peor de lo esperado, probablemente por las limitaciones de las bases de datos."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/merc-5.jpg",
+          "caption": "Reducción del impacto total (endpoint de ReCiPe) por concepto."
+        }
+      ]
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [
+        "El concepto final combina C2 + A2 + B2: monomaterial, ultraeficiente y sin recubrimientos tóxicos. El 84 % del plástico pasa a ser reciclable en un único flujo."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Reflexión",
+      "paragraphs": [
+        "Próximos pasos: una unión por termofusión para que las plantas de tratamiento separen los aros del cuerpo en un solo paso, un ACV con el mix energético del EQV eléctrico y proveedores certificados en lugar de datos genéricos."
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "vent",
+  "sketch": "robot"
+}

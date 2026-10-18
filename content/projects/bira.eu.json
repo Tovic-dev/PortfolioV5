@@ -1,0 +1,103 @@
+{
+  "order": 6,
+  "title": "BIRA",
+  "subtitle": "Gerezi soberakinez egindako energia-barra",
+  "categories": [
+    "pack",
+    "sust"
+  ],
+  "year": "2026",
+  "cover": "/img/bira-1.jpg",
+  "deck": "Euskal gerezi uztaren soberakina <em>energia-barra natural</em> bihurtzen txirrindulari amateurrentzat.",
+  "role": "Ontziratze-egitura, mozketa-planoak eta barraren, envoltorioaren eta exhibizio-kutxaren 3D bisualizazioa.",
+  "client": "Ereindajan kooperatiba",
+  "context": "Akademikoa · Ereindajan kooperatibarekin egindako ikasmestre bakarreko proiektua",
+  "team": "Aimar Arauzo, Mikel Arnao, Jon Azpitarte, Ibai Esquivel, Manex Gonzalez",
+  "tools": "KeyShot, Adobe Illustrator, Adobe Photoshop",
+  "award": "",
+  "stats": [
+    {
+      "value": "20–30 %",
+      "label": "merkatura iritsi aurretik baztertzen den gerezi-uztaren zatia"
+    },
+    {
+      "value": "n = 90",
+      "label": "benetako inkesta, gehi 300 lagineko AI lagin sintetiko bat"
+    },
+    {
+      "value": "Prest",
+      "label": "zehaztapenen arabera fabrikatzeko prest: ekoizteko prest dagoen diseinua, ez da abian jarri"
+    }
+  ],
+  "hero": {
+    "image": "/img/bira-1.jpg",
+    "caption": "BIRA, proiektuaren dosierraren azala."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Ereindajan kooperatibak udako euskal gerezi soberakinerako irtenbide bat behar zuen. BIRAk barra funtzional bihurtzen du: gerezia, lekaleak, olagarroa eta fruitu lehorrak dituena, txirrindularitza amateurrerako pentsatua."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Ikerketa",
+      "paragraphs": [
+        "Joerek, energia-barren alderaketa-azterketak, hiru elkarrizketek eta 90 pertsonako inkesta batek additiboekiko eta elikagai ultraprozesatuekiko konfiantza falta, energia egonkorraren beharra eta fruta-zapore errealekiko interesa erakutsi zuten. Posizionamendu-mapa batek BIRA kirol-nutrizioaren eta elikagai errealen artean kokatu zuen."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-6.jpg",
+          "caption": "Erabiltzaile-pertsona."
+        }
+      ]
+    },
+    {
+      "title": "Kontzeptuak",
+      "paragraphs": [
+        "Produktu, ontziratze eta marka kontzeptuak paraleloan garatu ziren, DBZ metodologia jarraituz."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-7.jpg",
+          "caption": "Marka eta produktu kontzeptua."
+        }
+      ]
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [
+        "Marka, envoltorioa, exhibizio-kutxa eta 5Ps ekoizteko prest dagoen diseinura eraman dira: zehaztapenen arabera fabrikatu daiteke, garapen gehiagorik gabe, nahiz eta produktua oraindik abian jarri ez. Estrategiak EUIPOren bidezko marka-erregistro eta diseinu-babes plana barne hartzen du, eta lana txosten tekniko batekin, A1 formatuko bi panelekin eta bideo promozional batekin amaitu zen."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/bira-2.jpg",
+          "caption": "Envoltorioa."
+        },
+        {
+          "image": "/img/bira-3.jpg",
+          "caption": "Exhibizio-kutxa."
+        },
+        {
+          "image": "/img/bira-4.jpg",
+          "caption": "Kutxaren 3D errendatzea."
+        },
+        {
+          "image": "/img/bira-8.jpg",
+          "caption": "Produktuaren zabalkina."
+        },
+        {
+          "image": "/img/bira-5.jpg",
+          "caption": "Panela."
+        }
+      ]
+    }
+  ],
+  "model": "none",
+  "sketch": "none"
+}

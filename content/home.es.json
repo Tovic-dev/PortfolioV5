@@ -1,0 +1,139 @@
+{
+  "first": "Mikel",
+  "last": "Arnao",
+  "availability": "Abierto a prácticas y programas para recién titulados",
+  "deck": "Ingeniero de diseño industrial y desarrollo de producto. Objetos que se pueden fabricar, interfaces que se usan y el código que los une, <em>de la idea a la pieza.</em>",
+  "deckMobile": "Diseño industrial e ingeniería de producto, <em>de la idea a la pieza.</em>",
+  "coverTag": "En portada",
+  "coverCaption": "Rediseño del retrovisor lateral del SEAT Ateca, vista de montaje. Desplázate para desmontarlo.",
+  "featured": [
+    {
+      "project": "seat-ateca",
+      "line": "Retrovisor lateral del SEAT Ateca",
+      "lineCategory": "Automoción",
+      "kicker": "Automoción",
+      "titleA": "SEAT Ateca",
+      "titleB": "retrovisor lateral",
+      "deck": "Un retrovisor que se pliega solo antes de un golpe y mantiene al conductor viendo cuando ocurre.",
+      "approach": "Plegado por ultrasonidos, vista de cámara en la pantalla central, radar de ángulo muerto e indicador LED dinámico, validado según ECE R46 y en SolidWorks Simulation.",
+      "role": "Análisis normativo, rediseño del circuito, especificaciones de materiales, renders",
+      "factLabel": "Año",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "SEAT Ateca",
+      "figure": "Retrovisor lateral del SEAT Ateca"
+    },
+    {
+      "project": "cycle-dry",
+      "line": "Cycle Dry, portaequipajes trasero de Orbea",
+      "lineCategory": "Ciclismo",
+      "kicker": "Ciclismo",
+      "titleA": "Cycle Dry",
+      "titleB": "portaequipajes trasero Orbea",
+      "deck": "Un portaequipajes más sencillo y barato para bikepacking, con un colgador para secar la ropa en marcha.",
+      "approach": "Análisis de materiales del portaequipajes original, un único bastidor de aluminio doblado y un colgador que se eleva 90° y gira 180° para quedar fuera del viento.",
+      "role": "Análisis de mercado y uso, ideación, especificaciones, fabricación",
+      "factLabel": "Año",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Cycle Dry",
+      "figure": "Cycle Dry, portaequipajes trasero de Orbea"
+    },
+    {
+      "project": "ardura",
+      "line": "Ardura, maceta inteligente autosuficiente",
+      "lineCategory": "Producto",
+      "kicker": "Producto · IoT",
+      "titleA": "Ardura",
+      "titleB": "maceta autosuficiente",
+      "deck": "Una maceta que se riega sola con la luz interior, para que la planta sobreviva a las vacaciones.",
+      "approach": "Película fotovoltaica orgánica, una bomba de desplazamiento positivo que dosifica 250 ml, un depósito de rPET extraíble y un cuerpo de PP reciclado sin pegamento ni pintura.",
+      "role": "Dirigió la fase de desarrollo y CAD, renders",
+      "factLabel": "Año",
+      "factValue": "2026",
+      "factStamp": false,
+      "short": "Ardura",
+      "figure": "Maceta inteligente autosuficiente Ardura"
+    },
+    {
+      "project": "gudamendi-house",
+      "line": "Casa autosuficiente en Gudamendi",
+      "lineCategory": "Sostenibilidad",
+      "kicker": "Sostenibilidad",
+      "titleA": "Casa autosuficiente",
+      "titleB": "en Gudamendi",
+      "deck": "Una vivienda en una colina ventosa sobre Donostia que genera su propia energía y reutiliza el agua de lluvia.",
+      "approach": "Paneles híbridos fotovoltaicos-térmicos, un pequeño aerogenerador, una bomba de calor, recogida de agua de lluvia y aislamiento de celulosa reciclada.",
+      "role": "Sistemas de energías renovables",
+      "factLabel": "Distinción",
+      "factValue": "Ganador de la olimpiada UPV/EHU · secundaria",
+      "factStamp": true,
+      "short": "Gudamendi",
+      "figure": "Casa autosuficiente en Gudamendi"
+    },
+    {
+      "project": "mercedes-vent",
+      "line": "ACV de la rejilla de ventilación del Mercedes V-Class",
+      "lineCategory": "Ecodiseño",
+      "kicker": "Ecodiseño · ACV",
+      "titleA": "Mercedes V-Class",
+      "titleB": "rejilla de ventilación",
+      "deck": "Desmontar una rejilla de ventilación premium para localizar dónde se esconde su huella y reducirla.",
+      "approach": "ACV de la cuna a la tumba con la calculadora IHOBE, análisis de puntos críticos y nueve conceptos de rediseño. El concepto final reduce la huella de carbono en torno a un 85 %.",
+      "role": "ACV, objetivos de mejora, evaluación ambiental",
+      "factLabel": "Año",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Mercedes",
+      "figure": "Rejilla de ventilación del Mercedes V-Class"
+    }
+  ],
+  "tools": [
+    "SolidWorks",
+    "Siemens NX",
+    "Revit",
+    "Blender",
+    "KeyShot",
+    "3ds Max",
+    "Adobe CC",
+    "React",
+    "Next.js"
+  ],
+  "procedure": {
+    "kicker": "Procedimiento",
+    "title": "De boceto <em>a pieza.</em>",
+    "intro": "Cinco fases que se repiten en cada proyecto, ya sea una carcasa inyectada, un robot o una aplicación.",
+    "steps": [
+      {
+        "label": "Fase 1",
+        "title": "Investigación",
+        "text": "Usuarios, contexto, normativa y competidores. Entender el problema antes de dibujar nada."
+      },
+      {
+        "label": "Fase 2",
+        "title": "Conceptualización",
+        "text": "Bocetos, maquetas rápidas y escenarios de uso. Muchas ideas baratas para elegir una buena."
+      },
+      {
+        "label": "Fase 3",
+        "title": "Modelado y validación",
+        "text": "CAD, cálculo, fabricabilidad y renderizado, para decidir con datos y con imágenes."
+      },
+      {
+        "label": "Fase 4",
+        "title": "Prototipado",
+        "text": "Impresión 3D, electrónica e interfaces interactivas. Probar, romper y corregir."
+      },
+      {
+        "label": "Fase 5",
+        "title": "Implementación",
+        "text": "Planos y documentación para producción, automatización o código listo para desplegar."
+      }
+    ]
+  },
+  "contact": {
+    "kicker": "Contacto",
+    "title": "Construyamos <em>el siguiente.</em>",
+    "text": "Prácticas, programas de incorporación y encargos de producto o web. Si necesitas a alguien que aporte diseño, ingeniería y código al mismo proyecto, escríbeme."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "hidden": true,
+  "order": 11,
+  "title": "Donostiako hiri-mugikortasuna",
+  "subtitle": "Garraio anitzeko bidaia-aplikazioa",
+  "categories": [
+    "digital"
+  ],
+  "year": "",
+  "cover": "",
+  "deck": "Autobusa, bizikleta eta oinez <em>bidaia bakar batean</em> hirian zehar.",
+  "role": "Erabiltzaileen ikerketa, informazioaren arkitektura eta interfazearen diseinua.",
+  "client": "",
+  "context": "Ikasketa-proiektua",
+  "team": "Talde-proiektua",
+  "tools": "Figma",
+  "award": "",
+  "awardUrl": "",
+  "stats": [],
+  "hero": {
+    "image": "",
+    "caption": ""
+  },
+  "sections": [
+    {
+      "title": "Testuingurua eta eskaera",
+      "paragraphs": [
+        "Donostian mugitzeak maiz esan nahi du autobusa, bizikleta eta oinez konbinatzea, eta horietako bakoitzak bere aplikazioa du."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Planteamendua",
+      "paragraphs": [
+        "Erabiltzaileen ikerketa, informazioaren arkitektura eta prototipo interaktibo bat, bidaia konbinatua planifikatzen eta gidatzen duena."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Egoera",
+      "paragraphs": [
+        "<span class=\"soon\">Kasu-azterketa osoa laster.</span>"
+      ],
+      "list": [],
+      "figures": []
+    }
+  ],
+  "model": "none",
+  "sketch": "route-app"
+}

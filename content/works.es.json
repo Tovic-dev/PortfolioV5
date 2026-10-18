@@ -1,0 +1,26 @@
+{
+  "kicker": "Trabajos · índice completo",
+  "title": "Todos los trabajos, <em>todos los terrenos.</em>",
+  "categories": [
+    {
+      "key": "product",
+      "label": "Producto"
+    },
+    {
+      "key": "auto",
+      "label": "Automoción"
+    },
+    {
+      "key": "sust",
+      "label": "Sostenibilidad"
+    },
+    {
+      "key": "pack",
+      "label": "Envase y marca"
+    },
+    {
+      "key": "digital",
+      "label": "Digital"
+    }
+  ]
+}

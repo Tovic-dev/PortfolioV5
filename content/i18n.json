@@ -1,7 +1,9 @@
 {
   "default": "en",
   "locales": [
-    "en"
+    "en",
+    "es",
+    "eu"
   ],
   "translate": [
     "es",

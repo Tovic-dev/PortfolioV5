@@ -1,0 +1,98 @@
+{
+  "order": 4,
+  "title": "Autosufizientea den etxea",
+  "subtitle": "Etxe ekologikoa Gudamendin, Donostian",
+  "categories": [
+    "sust"
+  ],
+  "year": "2021",
+  "cover": "/img/casa-2.jpg",
+  "deck": "Donostiaren gainean dagoen haizetsu batean kokatutako etxea, <em>bere energia sortzen duena</em> eta euria berrerabiltzen duena.",
+  "role": "Energia berriztagarrien sistemak diseinatu zituen: eguzki-panel hibridoak, haize-turbina, bateria-biltegiratzea eta bero-bonba.",
+  "client": "",
+  "context": "Lehiaketa · I. Eraikuntza Ingeniaritza Olinpiada, Gipuzkoako Ingeniaritza Eskola (UPV/EHU)",
+  "team": "Bixen Gómez, Hugo Hernández, Mikel Arnao",
+  "tools": "",
+  "award": "1. saria, Bigarren Hezkuntzako mailan (ESO) · I. Eraikuntza Ingeniaritza Olinpiada, UPV/EHU",
+  "awardUrl": "https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021",
+  "stats": [
+    {
+      "value": "13 m/s",
+      "label": "batez besteko haize-abiadura Igeldon; turbinak 10 m/s-tik aurrera funtzionatzen du"
+    },
+    {
+      "value": "180 m",
+      "label": "lursailaren altitudea: eguzki eta haize gehiago, itsas klima epela"
+    },
+    {
+      "value": "3 : 1",
+      "label": "bero-bombak kontsumitutako unitateko emandako energia"
+    }
+  ],
+  "hero": {
+    "image": "/img/casa-2.jpg",
+    "caption": "Etxea Gudamendiko lursailean."
+  },
+  "sections": [
+    {
+      "title": "Testuingurua",
+      "paragraphs": [
+        "Lursaila Igeldoko Gudamendin dago, itsasoaz 180 m-ko altueran. Itsasoak tenperaturak egonkor mantentzen ditu, itzal gutxi dago eta haize etengabea da; alkantarilla, ura, elektrizitatea, telefonoa eta autobus-geltoki bat gertu daude. Fatxada nagusia hegoalderantz begira dago, neguko bero-galera murrizteko."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Kanpoaldea",
+      "paragraphs": [
+        "Solairu baxuko harria euriaren salpikadurak jasateko da; goialdean egurrezko estaldura bertikala. Estalki asimetrikoa, aireztatutako zinkezkoa, ugaria da, ehun urte irauten du eta birziklatu daiteke etengabe. Beira hirukoitza, bi kamerakoa, igorpen baxuko beira eta mikrolaminazko persianak; zelulosazko isolamendua, paper birziklatutik egina, Oria ibaiko paper-errota zaharrak berreskuratuz."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-5.jpg",
+          "caption": "Fatxadaren sekzioa, leihoen markoak eta isolamendua."
+        }
+      ]
+    },
+    {
+      "title": "Energia-sistemak",
+      "paragraphs": [
+        "Nire lana. Hegoaldeko malda gogorrean kokatutako eguzki-panel hibrido termikoek ur beroa aurrez berotzen dute eta argiztapenerako, gailuetarako eta bero-bonbarako elektrizitatea sortzen dute. Haize-turbina txiki batek 10 m/s-tik aurrera funtzionatzen du. Energia gehiegizkoa ganbarako bateriatan gordetzen da, eta gainerakoa sarera bidaltzen da. Bero-bonbak zorutik berotzen du, ur beroa osatzen du eta udan alderantziz funtzionatuz hozten du."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-3.jpg",
+          "caption": "Energia berriztagarria eta sistemak."
+        }
+      ]
+    },
+    {
+      "title": "Ura",
+      "paragraphs": [
+        "Estalkiaren malda txikiak euri-ura lurpeko depositu batean biltzen du, garbigailurako, komunetarako eta lorategiaren ureztatzeko erabiltzen dena."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-4.jpg",
+          "caption": "Ur-kudeaketa eta berdeko estalki zabala."
+        }
+      ]
+    },
+    {
+      "title": "Emaitza",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/casa-1.jpg",
+          "caption": "Lehiaketaren poster osoa."
+        }
+      ]
+    }
+  ],
+  "model": "house",
+  "sketch": "house"
+}

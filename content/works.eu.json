@@ -1,0 +1,26 @@
+{
+  "kicker": "Lanak · indize osoa",
+  "title": "Lan guztiak, <em>esparru guztietan.</em>",
+  "categories": [
+    {
+      "key": "product",
+      "label": "Produktua"
+    },
+    {
+      "key": "auto",
+      "label": "Automozioa"
+    },
+    {
+      "key": "sust",
+      "label": "Jasangarritasuna"
+    },
+    {
+      "key": "pack",
+      "label": "Ontzia eta marka"
+    },
+    {
+      "key": "digital",
+      "label": "Digitala"
+    }
+  ]
+}

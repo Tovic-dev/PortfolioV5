@@ -1,0 +1,130 @@
+{
+  "order": 3,
+  "title": "Cycle Dry · Orbea",
+  "subtitle": "Rediseño del portaequipajes trasero para bikepacking",
+  "categories": [
+    "product"
+  ],
+  "year": "2025",
+  "cover": "/img/orbea-1.jpg",
+  "deck": "Un portaequipajes para bikepacking más sencillo y barato, con un <em>perchero para secar la ropa</em> en marcha.",
+  "role": "Dirigí el análisis de mercado y de uso, la fase de ideación (bocetos desarrollados con una compañera, salvo los diseños preliminares), el documento de especificaciones y el proceso de fabricación de la propuesta. Dirigí los renders finales.",
+  "client": "",
+  "context": "Académico · PBL 3, 2.º curso · producto de referencia de Orbea",
+  "team": "Ekain Ardanza, Mikel Arnao, Leire Arias, Laura Cuesta, Naroa Galdos",
+  "tools": "SolidWorks, KeyShot, CES EduPack, ensayos Vickers y EDX",
+  "award": "",
+  "stats": [
+    {
+      "value": "125 € → 50–60 €",
+      "label": "precio objetivo frente al portaequipajes original"
+    },
+    {
+      "value": "90° / 180°",
+      "label": "el perchero se levanta y luego gira para quedar fuera del viento"
+    },
+    {
+      "value": "Al 6061",
+      "label": "aleación principal, identificada por densidad, Vickers y EDX"
+    }
+  ],
+  "hero": {
+    "image": "/img/orbea-1.jpg",
+    "caption": "Render final de Cycle Dry en una MTB rígida."
+  },
+  "sections": [
+    {
+      "title": "Contexto y encargo",
+      "paragraphs": [
+        "El portaequipajes para MTB rígida de Orbea cuesta 124,99 € y tiene muchas piezas. El encargo: hacerlo más sencillo y barato para bikepacking. La usuaria es una joven ciclista que hace rutas largas y necesita lavar y tender su ropa sudada sin perderla."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Investigación",
+      "paragraphs": [
+        "El portaequipajes se cortó en nueve muestras y se analizaron su densidad, dureza Vickers y composición EDX: sobre todo Al 6061, un guardabarros de Al 3003, una varilla de acero AISI 1030, un panel de bolsa de PET y un recubrimiento DLC. Se situaron seis competidores según precio y valor añadido para encontrar el hueco en el mercado."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-6.jpg",
+          "caption": "Moodboard."
+        },
+        {
+          "image": "/img/orbea-7.jpg",
+          "caption": "Moodboard CMF."
+        }
+      ]
+    },
+    {
+      "title": "Conceptos",
+      "paragraphs": [
+        "Los bocetos rotatorios generaron muchos rediseños. La propuesta elegida añade un perchero rectangular en la barra trasera que se eleva 90° para colgar la ropa y gira 180° para evitar la resistencia al avance, o para secarla cuando está aparcada."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-4.jpg",
+          "caption": "Boceto conceptual del perchero."
+        },
+        {
+          "image": "/img/orbea-8.jpg",
+          "caption": "Bocetos de ideación."
+        }
+      ]
+    },
+    {
+      "title": "Desarrollo",
+      "paragraphs": [
+        "Se eliminó la barra lateral entre las vainas, ya que las alforjas ahora cuelgan de los tubos superiores, y el cuadro pasó a ser un único tubo doblado más las barras delantera y trasera."
+      ],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-3.jpg",
+          "caption": "Detalle CAD del mecanismo de bisagra."
+        }
+      ]
+    },
+    {
+      "title": "Especificaciones",
+      "paragraphs": [
+        "Ficha técnica del puntal de 50 cm hasta el eje trasero:"
+      ],
+      "list": [
+        "20 kg sin deformación plástica",
+        "190 MPa de resistencia a la tracción, módulo de Young de 69 GPa",
+        "Rango de funcionamiento de −10 °C a 50 °C",
+        "Al 6061, 2720 kg/m³, dureza medida de 93,3 HV"
+      ],
+      "figures": []
+    },
+    {
+      "title": "Fabricación",
+      "paragraphs": [
+        "Tubos de aluminio extruido, curvado CNC, soldadura MIG y anodizado para el cuadro. La bisagra se fabrica a partir de perfiles extruidos con torneado y fresado CNC, taladrado y roscado."
+      ],
+      "list": [],
+      "figures": []
+    },
+    {
+      "title": "Resultado",
+      "paragraphs": [],
+      "list": [],
+      "figures": [
+        {
+          "image": "/img/orbea-2.jpg",
+          "caption": "Render del portaequipajes."
+        },
+        {
+          "image": "/img/orbea-5.jpg",
+          "caption": "Cartel final."
+        }
+      ]
+    }
+  ],
+  "model": "orbea",
+  "sketch": "rack"
+}
