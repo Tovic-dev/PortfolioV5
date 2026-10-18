@@ -1,4 +1,5 @@
 {
+  "hidden": true,
   "order": 11,
   "title": "Donostia urban mobility",
   "subtitle": "Multimodal journey app",
@@ -6,8 +7,7 @@
     "digital"
   ],
   "year": "",
-  "model": "none",
-  "sketch": "route-app",
+  "cover": "",
   "deck": "Bus, bike and walking <em>in a single journey</em> across the city.",
   "role": "User research, information architecture and interface design.",
   "client": "",
@@ -15,6 +15,7 @@
   "team": "Team project",
   "tools": "Figma",
   "award": "",
+  "awardUrl": "",
   "stats": [],
   "hero": {
     "image": "",
@@ -45,5 +46,7 @@
       "list": [],
       "figures": []
     }
-  ]
+  ],
+  "model": "none",
+  "sketch": "route-app"
 }
