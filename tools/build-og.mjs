@@ -58,15 +58,19 @@ const page = html => `<!doctype html><html><head><meta charset="utf-8">${FONTS}<
 // way in (button + proof: how many case studies, which brands) and the exploded SEAT as the image.
 function siteCard(D, C) {
   const S = D.site, H = D.home, UI = S.ui;
-  const brands = BRANDS.filter(b => C.PROJ.some(p => `${p.title} ${p.client || ''}`.includes(b))).slice(0, 3);
+  const brands = BRANDS.filter(b => C.PROJ.some(p => `${p.title} ${p.client || ''}`.includes(b))).slice(0, 4);
   return page(`<style>${SITE_CSS}</style><div class="rule"></div>
 <div class="top m"><span><b>${esc(S.name)}</b> · ${esc(UI.ogKicker)}</span><span>mikelarnao.com</span></div>
 <div class="l">
   <div class="av m"><i></i>${esc(H.availability)}</div>
   <h1>${esc(H.first)}<br><em>${esc(H.last)}</em></h1>
   <p class="deck">${H.deckMobile || H.deck}</p>
-  <div class="cta"><span class="btn">${esc(UI.ogCta)} →</span><span class="m">${C.PROJ.length} ${esc(UI.caseStudies)}${brands.length ? ' · ' + brands.join(' · ') : ''}</span></div>
+  <div class="cta"><span class="btn">${esc(UI.ogCta)} →</span><span class="m proof" data-base="${esc(C.PROJ.length + ' ' + UI.caseStudies)}" data-b='${JSON.stringify(brands)}'></span></div>
 </div>
+<script>/* as many brands as fit before the image (the button's length changes with the language) */
+document.fonts.ready.then(()=>{const s=document.querySelector('.proof'),b=JSON.parse(s.dataset.b);
+  const put=()=>s.textContent=s.dataset.base+(b.length?' · '+b.join(' · '):'');put();
+  while(b.length&&s.getBoundingClientRect().right>596){b.pop();put()}})</script>
 <img class="art" src="${ART}" alt="">
 <div class="fig m">${esc(UI.fig)} 01 · SEAT Ateca · ${esc(UI.explodedView)}</div>`);
 }
