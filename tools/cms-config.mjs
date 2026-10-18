@@ -160,6 +160,7 @@ export function writeAdmin(out, D) {
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Editor · ${D.site.name}</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="/admin/config.json" type="application/json" rel="cms-config-url">
 </head>
 <body>
