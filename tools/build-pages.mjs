@@ -8,7 +8,8 @@ import path from 'node:path';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { ROOT, SITE, i18n, loadContent } from './content.mjs';
+import { ROOT, SITE, i18n, loadContent, imageSizes } from './content.mjs';
+import { responsiveImages } from './images.mjs';
 import { writeAdmin } from './cms-config.mjs';
 
 const OUT = path.join(ROOT, 'dist');
@@ -56,6 +57,7 @@ function write(rel, content) {
 
 function buildLocale(lang) {
   const D = loadContent(lang);
+  D.srcset = SRCSET; // responsive WebP copies of each photo (tools/images.mjs), used by img() in index.html
   const C = vm.runInContext(withData(src.slice(a, b), D) + ';({PROJ,IMG,ROUTE,pageMeta,tocHTML,filtersHTML,projectHTML,bodyHTML})', vm.createContext({}));
   const S = D.site, P = S.person;
   const L = prefix(lang), TERR = Object.fromEntries(D.works.categories.map(c => [c.key, c.label]));
@@ -185,6 +187,7 @@ function buildLocale(lang) {
 }
 
 fs.rmSync(OUT, { recursive: true, force: true });
+const SRCSET = await responsiveImages(ROOT, OUT, imageSizes());
 const built = locales.map(buildLocale);
 const entries = built.flatMap(x => x.entries), urls = entries.map(e => e.url);
 

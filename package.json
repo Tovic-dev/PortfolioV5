@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Build dependency for the site: sharp makes the responsive images (tools/images.mjs). Vercel installs it before the build.",
+  "dependencies": {
+    "sharp": "0.35.5"
+  }
+}

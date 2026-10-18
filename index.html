@@ -89,7 +89,7 @@ img{display:block;max-width:100%;height:auto}
 #labels{position:fixed;inset:0;z-index:2;pointer-events:none}
 .lbl{position:absolute;left:0;top:0;display:flex;align-items:center;gap:7px;white-space:nowrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;opacity:0;transition:opacity .3s}
 .lbl b{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink);font-weight:500;font-size:9.5px;background:var(--paper)}
-.lbl span{background:color-mix(in srgb,var(--paper) 80%,transparent);padding:1px 3px}
+.lbl span{background:color-mix(in srgb,var(--paper) 94%,transparent);padding:2px 4px}
 .lbl.r{flex-direction:row-reverse}
 
 /* print intro + page wipe */
@@ -152,6 +152,7 @@ img{display:block;max-width:100%;height:auto}
 .cover-meta{margin:0;font-size:10.5px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 .cover-meta::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--spot);margin-right:8px;vertical-align:1px}
 .m-only{display:none}
+.nw{white-space:nowrap}
 @media (max-width:900px){.m-only{display:inline}.d-only{display:none}}
 .lines{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
 .lines li{border-bottom:1px solid var(--rule)}
@@ -590,6 +591,8 @@ const plain=s=>String(s||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const attr=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
 const fill=(t,v)=>String(t||'').replace(/\{(\w+)\}/g,(m,k)=>k in v?v[k]:m);
 const pad=n=>String(n).padStart(2,'0');
+/* a hyphenated word never breaks at its hyphen in a title ("Mercedes V-Class") */
+const nw=s=>String(s||'').replace(/(\S+-\S+)/g,'<span class="nw">$1</span>');
 /* the first template that fits what search results show (titles ~70, descriptions ~160 characters) */
 const fit=(max,v,...ts)=>{const out=ts.filter(Boolean).map(t=>fill(t,v));return out.find(s=>s.length<=max)||out[out.length-1]};
 function pageMeta(r){const S=D.site.seo;
@@ -601,32 +604,35 @@ function pageMeta(r){const S=D.site.seo;
     works:{title:S.worksTitle,description:fill(S.worksDescription,{count:PROJ.length,categories:Object.values(TERR).join(', ')})},
     about:{title:S.aboutTitle,description:S.aboutDescription},
     404:{title:S.notFoundTitle,description:S.notFoundDescription}}[r.v]}
-function img(src,cap,lazy=true){const d=IMG[src]||[1600,1000];return `<img src="${src}" width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" tabindex="0" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
-function tocHTML(){return PROJ.map(p=>`<li data-terr="${p.terr.join(' ')}"><a href="${ROUTE.project(p.id)}" data-pid="${p.id}" data-cursor="${attr(UI.cursorOpen)}"><span class="pg">${String(p.n).padStart(2,'0')}</span><span class="t">${p.title}<small>${p.sub}</small></span><span class="lead"></span><span class="ct">${p.terr.map(t=>TERR[t]).join(' · ')}</span><span class="yr">${p.year||'—'}</span><span class="go">↗</span></a></li>`).join('')}
+/* srcset: the responsive WebP copies made by the build (tools/images.mjs); src stays the original, which the
+   image viewer opens at full size */
+const srcset=(src,sizes)=>{const r=(D.srcset||{})[src];return r?` srcset="${r.map(x=>x[1]+' '+x[0]+'w').join(', ')}" sizes="${sizes}"`:''};
+function img(src,cap,lazy=true,sizes='(max-width: 860px) 100vw, 50vw'){const d=IMG[src]||[1600,1000];return `<img src="${src}"${srcset(src,sizes)} width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" tabindex="0" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
+function tocHTML(){return PROJ.map(p=>`<li data-terr="${p.terr.join(' ')}"><a href="${ROUTE.project(p.id)}" data-pid="${p.id}" data-cursor="${attr(UI.cursorOpen)}"><span class="pg">${String(p.n).padStart(2,'0')}</span><span class="t">${nw(p.title)}<small>${p.sub}</small></span><span class="lead"></span><span class="ct">${p.terr.map(t=>TERR[t]).join(' · ')}</span><span class="yr">${p.year||'—'}</span><span class="go">↗</span></a></li>`).join('')}
 function filtersHTML(){return ['all',...Object.keys(TERR)].map(k=>`<button data-f="${k}" aria-pressed="${k==='all'}">${k==='all'?UI.filterAll:TERR[k]} <sup>${k==='all'?PROJ.length:PROJ.filter(p=>p.terr.includes(k)).length}</sup></button>`).join('')+`<span class="wcount mono" id="wcount">${PROJ.length} ${UI.workPlural}</span>`}
 function projectHTML(p){
   let fig=1;const F=()=>`${UI.fig} ${String(fig++).padStart(2,'0')}`;
   const idx=PROJ.indexOf(p),next=PROJ[(idx+1)%PROJ.length];
   const spec=[[UI.myRole,p.role,'role'],[UI.year,p.year],[UI.client,p.client],[UI.context,p.ctx],[UI.team,p.team],[UI.tools,p.tools],[UI.distinction,p.award?(p.awardUrl?`<a class="stamp" href="${attr(p.awardUrl)}" rel="noopener">${p.award} ↗</a>`:`<span class="stamp">${p.award}</span>`):'']].filter(r=>r[1]);
   let h=`<div class="inner"><a class="pback" href="${ROUTE.works}">${UI.allWorks}</a>
-  <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>${UI.work} ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${p.title}</span></span></h1></div>
+  <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>${UI.work} ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${nw(p.title)}</span></span></h1></div>
   <div class="pintro"><p class="deck">${p.deck}</p><dl class="spec2">${spec.map(r=>`<dt>${r[0]}</dt><dd${r[2]?` class="${r[2]}"`:''}>${r[1]}</dd>`).join('')}</dl></div>`;
   if(p.m3d!==undefined){h+=`<figure class="plate pplate" id="pplate"><span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span><canvas aria-label="${attr(fill(UI.model3DAria,{title:plain(p.title)}))}"></canvas>
     <div class="ptop"><span class="figno">${F().replace(UI.fig+' ','')}<small>${UI.drag3D}</small></span><div class="modes" role="group" aria-label="${attr(UI.view3D)}"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div></div>
     <ol class="legend" id="legend"></ol>
     <figcaption class="pcap"><p><b>${UI.explodedViewTitle}</b> ${fill(UI.simplifiedModel,{title:p.title})}</p><div class="xbar mono"><label for="xr">${UI.explode}</label><input type="range" id="xr" min="0" max="100" value="0"><output>0%</output></div></figcaption></figure>`}
   if(p.stats)h+=`<div class="pstats">${p.stats.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`;
-  if(p.hero)h+=`<figure class="pherofig">${img(p.hero[0],p.hero[1],false)}<figcaption><b>${F()}</b>${p.hero[1]}</figcaption></figure>`;
+  if(p.hero)h+=`<figure class="pherofig">${img(p.hero[0],p.hero[1],false,'(max-width: 1440px) 100vw, 1400px')}<figcaption><b>${F()}</b>${p.hero[1]}</figcaption></figure>`;
   p.sec.forEach((s,i)=>{const [title,paras,figs,list]=s;
     h+=`<section class="psec"><div class="ph2"><span class="mono">§ ${String(i+1).padStart(2,'0')}</span><h2>${title}</h2></div><div class="pb">${(paras||[]).map(t=>t.startsWith('<span')?t:`<p>${t}</p>`).join('')}${list?`<ul>${list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${figs&&figs.length?`<div class="figs">${figs.map(f=>`<figure>${img(f[0],f[1])}<figcaption><b>${F()}</b>${f[1]}</figcaption></figure>`).join('')}</div>`:''}</div></section>`});
-  h+=`<a class="pnext" href="${ROUTE.project(next.id)}" data-cursor="${attr(UI.cursorNext)}"><span class="mono">${UI.nextWork}</span><span class="t">${next.title} →</span></a></div><div style="height:40px"></div>`;
+  h+=`<a class="pnext" href="${ROUTE.project(next.id)}" data-cursor="${attr(UI.cursorNext)}"><span class="mono">${UI.nextWork}</span><span class="t">${nw(next.title)} →</span></a></div><div style="height:40px"></div>`;
   return h}
 /* the language switch only appears once there is more than one locale; the app points each link at the current page */
 function langsHTML(){if(D.locales.length<2)return '';
   return `<span class="langs" aria-label="${attr(UI.language)}">${D.locales.map(l=>`<a href="${l===D.defaultLang?'/':'/'+l+'/'}" hreflang="${l}" lang="${l}" data-lang="${l}"${l===D.lang?' aria-current="true"':''}>${l.toUpperCase()}</a>`).join('')}</span>`}
 /* the portrait from the profile (CMS: Perfil para Google e IAs), the same image the structured data names */
 function portraitHTML(){const src=String(D.site.person.image||'').replace(/^\//,'');if(!src)return '';const d=IMG[src]||[800,800];
-  return `<figure class="portrait"><img src="${src}" width="${d[0]}" height="${d[1]}" alt="${attr(D.site.name)}" decoding="async"></figure>`}
+  return `<figure class="portrait"><img src="${src}"${srcset(src,'(max-width: 900px) 220px, 300px')} width="${d[0]}" height="${d[1]}" alt="${attr(D.site.name)}" decoding="async"></figure>`}
 function aboutFactsHTML(){return D.about.facts.map(f=>`<dt>${f.label}</dt><dd>${
   f.type==='chips'?`<div class="chips">${(f.items||[]).map(x=>`<span>${x}</span>`).join('')}</div>`:
   f.type==='languages'?`<div class="lang">${(f.languages||[]).map(l=>`<div><span>${l.name}</span><i${l.full?'':' class="p"'}></i><span>${l.level}</span></div>`).join('')}</div>`:
@@ -679,7 +685,7 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
     <div class="arts">
       ${FEAT.map((f,i)=>`<article class="art${i?'':' on'}" data-p="${pad(i+2)}">
         <div class="kick mono"><span><b>${UI.project} ${pad(i+1)}</b> · ${f.kicker}</span><span>p. ${pad(i+2)}</span></div>
-        <h2><span class="ln"><span>${f.titleA}</span></span><span class="ln"><span><em>${f.titleB}</em></span></span></h2>
+        <h2><span class="ln"><span>${nw(f.titleA)}</span></span><span class="ln"><span><em>${nw(f.titleB)}</em></span></span></h2>
         <p class="deck">${f.deck}</p>
         <div class="body"><span class="mono">${UI.approach}</span><p>${f.approach}</p></div>
         <dl class="spec"><dt>${UI.myRole}</dt><dd>${f.role}</dd><dt>${f.factLabel}</dt><dd>${f.factStamp?`<span class="stamp">${f.factValue}</span>`:f.factValue}</dd></dl>
@@ -943,7 +949,7 @@ const K3=(function(){
     const zf=D/2-t/2,xs=W/2-t/2,Ls=D-2*t;
 
     /* foundation slab + front terrace */
-    P(merge([box(W+.12,.1,D+.12,0,g0-.05,0),box(2.3,.08,.75,-.4,g0-.06,D/2+.42)]),'paint',V(0,-1.15,0),V(-1.2,g0-.05,D/2+.5),{label:'Foundation slab · terrace'});
+    P(merge([box(W+.12,.1,D+.12,0,g0-.05,0),box(2.3,.08,.75,-.4,g0-.06,D/2+.42)]),'paint',V(0,-1.15,0),V(1.25,g0-.05,D/2+.06),{label:'Foundation slab · terrace'});
 
     /* systems on the slab (poster · water management) */
     const sys=V(0,-.65,0);
@@ -1286,7 +1292,7 @@ function startHome3D(){
     const midX=Bp.left+Bp.width/2;const L=items.filter(o=>o.x<midX).sort((a,b)=>a.y-b.y),R=items.filter(o=>o.x>=midX).sort((a,b)=>a.y-b.y);
     let pi=0;
     [[L,'l'],[R,'r']].forEach(([arr,side])=>{let prev=Bp.top+50;
-      arr.forEach(o=>{if(pi>=pool.length)return;const P=pool[pi++];const ly=Math.max(clamp(o.y,Bp.top+80,Bp.bottom-88),prev+28);prev=ly;
+      arr.forEach(o=>{if(pi>=pool.length)return;const P=pool[pi++];const ly=Math.max(clamp(o.y,Bp.top+80,Bp.bottom-88),prev+31);prev=ly;
         const cn='lbl '+side;if(P.cn!==cn){P.d.className=cn;P.cn=cn}
         if(P.d.dataset.t!==o.t){P.d.querySelector('span').textContent=o.t;P.d.dataset.t=o.t;P.w=P.d.offsetWidth}
         const no=String(pi).padStart(2,'0');if(P.no!==no){P.b.textContent=no;P.no=no}
@@ -1613,7 +1619,7 @@ gsap.ticker.add(t=>{if(S.view!=='home')return;const c=arm.getBoundingClientRect(
 
 /* procedure */
 if(!reduce){gsap.fromTo('#railFill',{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:'#steps',start:'top 65%',end:'bottom 70%',scrub:true}});
-  gsap.utils.toArray('#steps li').forEach(li=>gsap.from(li,{x:30,opacity:.15,duration:.9,ease:'power3.out',scrollTrigger:{trigger:li,start:'top 85%'}}));
+  gsap.utils.toArray('#steps li').forEach(li=>gsap.from(li,{x:30,opacity:.4,duration:.9,ease:'power3.out',scrollTrigger:{trigger:li,start:'top 85%'}}));
   gsap.utils.toArray('#steps li').forEach(li=>ScrollTrigger.create({trigger:li,start:'top 66%',onEnter:()=>li.classList.add('on'),onLeaveBack:()=>li.classList.remove('on')}))}
 
 /* crosshair cursor (delegated, works on rendered pages too) */

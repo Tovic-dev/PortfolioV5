@@ -9,7 +9,7 @@ Product Design Engineer portfolio. Static site.
 - `tools/content.mjs`: reads `content/` for the build scripts. `tools/cms-config.mjs`: writes the CMS page and its `config.json`, generated from the content.
 - `favicon.svg`, `img/og.jpg`: favicon and default share image (1200×630, the home cover; `npm run og` renders it).
 - `tools/build-og.mjs`: uses the installed Chrome to render `img/og/<project-id>.jpg` (a 1200×630 share card per project), `apple-touch-icon.png` and `favicon-32.png`. Run it after changing a project's title, subtitle or cover, or the favicon (`cd tools && npm install && npm run og`), then commit the images.
-- `img/`: project photos (CMS uploads land here too).
+- `img/`: project photos (CMS uploads land here too). On every build `tools/images.mjs` makes WebP copies at 640 and 1200 px and at full width in `dist/img/r/` (sharp, from the root `package.json`, which Vercel installs), and the pages list them in `srcset`; the original stays as `src` and opens in the image viewer.
 - `models/`: CAD models (SEAT mirror, Ardura, Orbea rack).
   - `*.glb`: what the site loads. They are Draco-compressed, have the feature edges baked in and load one at a time.
   - `*.gltf.js`: the SolidWorks exports wrapped in JS, the source for the GLBs.
