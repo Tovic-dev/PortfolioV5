@@ -27,6 +27,17 @@ const a = src.indexOf('const D='), b = src.indexOf('\n/* the app: ');
 if (a < 0 || b < 0) throw new Error('content block not found in index.html');
 const scriptJSON = v => JSON.stringify(v).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 const withData = (code, D) => code.replace('/*@content*/null/*@end*/', '/*@content*/' + scriptJSON(D) + '/*@end*/');
+// The app (the last inline <script> of index.html) and each locale's content are served as files under /assets/,
+// named by their content hash and cached for good: the HTML stays light for crawlers and AI fetchers, and
+// moving between pages downloads them once. Both are `defer`, after the libraries, so the order is unchanged.
+const appOpen = src.lastIndexOf('<script>', a), appClose = src.indexOf('</script>', a);
+if (appOpen < 0 || appClose < 0) throw new Error('app script not found in index.html');
+const APP = src.slice(appOpen + '<script>'.length, appClose).replace('/*@content*/null/*@end*/', 'window.__D');
+const assetFile = (name, code) => {
+  const rel = `assets/${name}.${crypto.createHash('md5').update(code).digest('hex').slice(0, 10)}.js`;
+  write(rel, code);
+  return '/' + rel;
+};
 
 // img/ is cached as immutable, so share images carry a content hash: a regenerated card gets a new URL
 // (LinkedIn and others fetch it again)
@@ -97,7 +108,10 @@ function buildLocale(lang) {
     return clean({ '@context': 'https://schema.org', '@graph': graph });
   }
   // the page source for this locale: content in, body rendered, language set
-  const page = withData(src, D).replace('<html lang="en">', `<html lang="${lang}">`), body0 = C.bodyHTML();
+  const scripts = `<script src="${assetFile('content-' + lang, `window.__D=${scriptJSON(D)};\n`)}" defer></script>\n` +
+    `<script src="${assetFile('app', APP)}" defer></script>`;
+  const page = (src.slice(0, appOpen) + scripts + src.slice(appClose + '</script>'.length))
+    .replace('<html lang="en">', `<html lang="${lang}">`), body0 = C.bodyHTML();
 
   function render(r, urlPath, { noindex = false, canonical = urlPath, base = null } = {}) {
     const meta = C.pageMeta(r), url = SITE + urlPath;
@@ -185,7 +199,25 @@ ${entries.map(e => `  <url><loc>${xmlEsc(SITE + e.url)}</loc><lastmod>${lastmod(
   e.images.map(i => `<image:image><image:loc>${xmlEsc(i)}</image:loc></image:image>`).join('')}</url>`).join('\n')}
 </urlset>
 `);
-write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: ${SITE}/sitemap.xml\n`);
+// robots.txt: everyone may crawl everything but the CMS. AI crawlers (search, answers and training) are named
+// explicitly to document that a portfolio wants to be read and cited; a named group replaces `*` for that bot,
+// so each one repeats the /admin/ rule.
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'meta-externalagent', 'CCBot'];
+write('robots.txt', `# ${SITE}: a portfolio. Crawling, citing and summarising it is welcome; /admin/ is the editor.
+# A Markdown version for language models: ${SITE}/llms.txt (full text: ${SITE}/llms-full.txt)
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# AI search, answer and training crawlers
+${AI_BOTS.map(b => `User-agent: ${b}`).join('\n')}
+Allow: /
+Disallow: /admin/
+
+Sitemap: ${SITE}/sitemap.xml
+`);
 writeAdmin(OUT, built[0].D);
 writeLLMs(built[0].D);
 
@@ -220,6 +252,14 @@ function writeLLMs(D) {
 for (const dir of ['img', 'fonts', 'vendor']) fs.cpSync(path.join(ROOT, dir), path.join(OUT, dir), { recursive: true });
 fs.cpSync(path.join(ROOT, 'models'), path.join(OUT, 'models'), { recursive: true, filter: f => !f.endsWith('.gltf.js') });
 for (const f of ['favicon.svg', 'favicon-32.png', 'apple-touch-icon.png']) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
+// /favicon.ico, which some readers and Bing still ask for: the 32 px PNG in an ICO container (one PNG-encoded entry)
+{
+  const png = fs.readFileSync(path.join(ROOT, 'favicon-32.png')), ico = Buffer.alloc(22);
+  ico.writeUInt16LE(0, 0); ico.writeUInt16LE(1, 2); ico.writeUInt16LE(1, 4);               // header: icon, 1 image
+  ico.writeUInt8(32, 6); ico.writeUInt8(32, 7); ico.writeUInt16LE(1, 10); ico.writeUInt16LE(32, 12); // 32×32, 32 bpp
+  ico.writeUInt32LE(png.length, 14); ico.writeUInt32LE(22, 18);                             // size and offset of the PNG
+  fs.writeFileSync(path.join(OUT, 'favicon.ico'), Buffer.concat([ico, png]));
+}
 // IndexNow key file (<32 hex>.txt, see tools/indexnow.mjs), served at the site root
 for (const f of fs.readdirSync(ROOT).filter(f => /^[0-9a-f]{32}\.txt$/.test(f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 
