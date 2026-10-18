@@ -33,7 +33,7 @@ const SITE_CSS = `${BASE}
 .l{position:absolute;left:64px;top:104px;bottom:58px;width:600px;display:flex;flex-direction:column}
 .av{display:flex;align-items:center;gap:10px;color:#141413;font-size:14px}
 .av i{width:9px;height:9px;border-radius:50%;background:#FF5B14;flex:none}
-h1{margin:22px 0 0 -6px;font-weight:640;font-size:150px;line-height:.84;letter-spacing:-.065em}
+h1{margin:22px 0 0 -6px;font-weight:640;font-size:150px;line-height:.84;letter-spacing:-.035em}
 h1 em{font-style:normal;color:#5D5D57}
 .deck{margin:26px 0 0;font:430 29px/1.22 "Inter Tight",sans-serif;letter-spacing:-.02em;max-width:520px;text-wrap:balance}
 .deck em{font-style:normal;color:#FF5B14}
