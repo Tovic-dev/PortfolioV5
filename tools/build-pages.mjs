@@ -118,9 +118,12 @@ function buildLocale(lang) {
   function render(r, urlPath, { noindex = false, canonical = urlPath, base = null } = {}) {
     const meta = C.pageMeta(r), url = SITE + urlPath;
     // share image: the project's 1200×630 card (tools/build-og.mjs), else its cover photo, else the site card
-    const card = r.v === 'project' && `img/og/${r.p.id}.jpg`;
-    const [file, w, h] = card && fs.existsSync(path.join(ROOT, card)) ? [card, 1200, 630]
-      : meta.image ? [meta.image, ...(C.IMG[meta.image] || [1600, 1000])] : ['img/og.jpg', 1200, 630];
+    // in this language when tools/build-og.mjs has made it, else the default language's
+    const own = (l, f) => (l === defaultLang ? f : f.replace(/^img\/og\//, `img/og/${l}/`).replace(/^img\/og\.jpg$/, `img/og-${l}.jpg`));
+    const pick = f => [own(lang, f), f].find(x => fs.existsSync(path.join(ROOT, x)));
+    const card = r.v === 'project' && pick(`img/og/${r.p.id}.jpg`);
+    const [file, w, h] = card ? [card, 1200, 630]
+      : meta.image ? [meta.image, ...(C.IMG[meta.image] || [1600, 1000])] : [pick('img/og.jpg') || 'img/og.jpg', 1200, 630];
     const image = `${SITE}/${file}?v=${version(file)}`;
     const ld = structuredData(r, meta, url, image);
     // other languages of this page (only once there is more than one)

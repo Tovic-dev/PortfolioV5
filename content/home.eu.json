@@ -1,7 +1,7 @@
 {
   "first": "Mikel",
   "last": "Arnao",
-  "availability": "Barnetegietarako eta graduondoko programetarako eskuragarri",
+  "availability": "Praktiketarako eta graduondoko programetarako prest",
   "deck": "Diseinu industrialeko eta produktu garapeneko ingeniaria. Fabrika daitezkeen objektuak, erabiltzen diren interfazeak eta horiek lotzen dituen kodea, <em>ideiatik piezara.</em>",
   "deckMobile": "Diseinu industriala eta produktu ingeniaritza, <em>ideiatik piezara.</em>",
   "coverTag": "Azala",
@@ -14,8 +14,8 @@
       "kicker": "Automozioa",
       "titleA": "SEAT Ateca",
       "titleB": "alboko ispilua",
-      "deck": "Zerbaitekin talka egin baino lehen bere kabuz pleguratzen den ispilua, eta hori gertatzen denean gidariak ikusten jarraitzen duena.",
-      "approach": "Ultrasoinuzko plegamendua, erdiko pantailako kamera-ikuspegia, ibilgailu-ezkutuko radarra eta LED adierazle dinamikoa, ECE R46 araudiaren eta SolidWorks Simulation-en arabera balioztatuak.",
+      "deck": "Zerbaitekin talka egin baino lehen bere kabuz tolesten den ispilua, eta hori gertatzen denean gidariak ikusten jarraitzen duena.",
+      "approach": "Ultrasoinu bidezko tolestea, erdiko pantailako kamera-ikuspegia, ibilgailu-ezkutuko radarra eta LED adierazle dinamikoa, ECE R46 araudiaren eta SolidWorks Simulation-en arabera balioztatuak.",
       "role": "Araudi-analisia, zirkuituaren berrdiseinua, material-zehaztapenak, errendatzeak",
       "factLabel": "Urtea",
       "factValue": "2025",
@@ -66,7 +66,7 @@
       "approach": "PV-termiko hibrido paneletak, haize-turbina txiki bat, bero-bonba, euri-ur bilketa eta birziklatutako zelulosazko isolamendua.",
       "role": "Energia berriztagarrien sistemak",
       "factLabel": "Saria",
-      "factValue": "UPV/EHUko olinpiadako irabazlea · batxilergoa",
+      "factValue": "UPV/EHUko olinpiadako irabazlea · DBH",
       "factStamp": true,
       "short": "Gudamendi",
       "figure": "Autonomoa den etxea Gudamendin"

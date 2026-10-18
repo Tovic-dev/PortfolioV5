@@ -1,6 +1,6 @@
 {
   "order": 4,
-  "title": "Autosufizientea den etxea",
+  "title": "Etxe autosufizientea",
   "subtitle": "Etxe ekologikoa Gudamendin, Donostian",
   "categories": [
     "sust"
@@ -8,12 +8,12 @@
   "year": "2021",
   "cover": "/img/casa-2.jpg",
   "deck": "Donostiaren gainean dagoen haizetsu batean kokatutako etxea, <em>bere energia sortzen duena</em> eta euria berrerabiltzen duena.",
-  "role": "Energia berriztagarrien sistemak diseinatu zituen: eguzki-panel hibridoak, haize-turbina, bateria-biltegiratzea eta bero-bonba.",
+  "role": "Energia berriztagarrien sistemak diseinatu nituen: eguzki-panel hibridoak, haize-turbina, bateria-biltegiratzea eta bero-bonba.",
   "client": "",
-  "context": "Lehiaketa · I. Eraikuntza Ingeniaritza Olinpiada, Gipuzkoako Ingeniaritza Eskola (UPV/EHU)",
+  "context": "Lehiaketa · Eraikuntzako Ingeniaritza I. Olinpiada, Gipuzkoako Ingeniaritza Eskola (UPV/EHU)",
   "team": "Bixen Gómez, Hugo Hernández, Mikel Arnao",
   "tools": "",
-  "award": "1. saria, Bigarren Hezkuntzako mailan (ESO) · I. Eraikuntza Ingeniaritza Olinpiada, UPV/EHU",
+  "award": "1. saria, DBH kategorian · Eraikuntzako Ingeniaritza I. Olinpiada, UPV/EHU",
   "awardUrl": "https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021",
   "stats": [
     {

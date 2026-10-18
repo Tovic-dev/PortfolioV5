@@ -43,7 +43,7 @@
     {
       "label": "Interesak",
       "items": [
-        "AI",
+        "AA",
         "Robotika",
         "Automatizazioa",
         "IoT",
@@ -58,12 +58,12 @@
       "languages": [
         {
           "name": "Gaztelania",
-          "level": "Hizkuntza ama",
+          "level": "Ama-hizkuntza",
           "full": true
         },
         {
           "name": "Euskara",
-          "level": "Hizkuntza ama",
+          "level": "Ama-hizkuntza",
           "full": true
         },
         {
@@ -76,11 +76,11 @@
     },
     {
       "label": "Sariak",
-      "text": "1. postua, <a href=\"https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021\">Building Engineering Olympiad</a> (UPV/EHU, 2021, Bigarren Hezkuntza) · Sari nagusiko 2. saria, <a href=\"https://www.axular.net/es/noticias/premios/2-premio-absoluto-para-overclock\">FIRST LEGO League Euskadi</a> (2022, Bigarren Hezkuntza)",
+      "text": "1. postua, <a href=\"https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021\">Eraikuntzako Ingeniaritza Olinpiada</a> (UPV/EHU, 2021, Bigarren Hezkuntza) · Sari nagusiko 2. saria, <a href=\"https://www.axular.net/es/noticias/premios/2-premio-absoluto-para-overclock\">FIRST LEGO League Euskadi</a> (2022, Bigarren Hezkuntza)",
       "type": "text"
     },
     {
-      "label": "Egoitza",
+      "label": "Bizilekua",
       "text": "Donostia · Euskal Herria",
       "type": "text"
     }

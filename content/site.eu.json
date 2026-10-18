@@ -29,7 +29,7 @@
   "footer": {
     "left": "© 2026 Mikel Arnao · 01. alea",
     "place": "Donostia",
-    "right": "Zenbakiaren amaiera"
+    "right": "Alearen amaiera"
   },
   "notFound": {
     "kicker": "Ez aurkitua",
@@ -40,7 +40,7 @@
   },
   "ui": {
     "navWorks": "Lanak",
-    "navAbout": "Nor naiz",
+    "navAbout": "Niri buruz",
     "navAria": "Atalak",
     "navMobileAria": "Atalak (mugikorra)",
     "theme": "Gaia",
@@ -56,7 +56,7 @@
     "turningPage": "Orria pasatzen",
     "home": "Hasiera",
     "works": "Lanak",
-    "about": "Nor naiz",
+    "about": "Niri buruz",
     "notFound": "Ez da aurkitu",
     "work": "Lana",
     "project": "Proiektua",

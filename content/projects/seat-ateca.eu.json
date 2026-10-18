@@ -8,7 +8,7 @@
   ],
   "year": "2025",
   "cover": "/img/seat-1.jpg",
-  "deck": "Zerbaitekin talka egin baino lehen <em>bere kabuz plegatzen</em> den ispilua, eta talka gertatzen denean gidariak ikusten jarraitzen duena.",
+  "deck": "Zerbaitekin talka egin baino lehen <em>bere kabuz tolesten</em> den ispilua, eta talka gertatzen denean gidariak ikusten jarraitzen duena.",
   "role": "Proiektu osoan lan egin nuen. Produktuaren analisiaren fasean eta garapen fasearen gehienean araudiaren azterketa (ECE R46) zuzendu nuen: zirkuitu berriaren analisia eta birdiseinua, materialen zehaztapen-eskuliburua, moldeak mekanizatzeko plana eta hautatutako materialaren justifikazioa. Azken errendatzeak zuzendu nituen.",
   "client": "",
   "context": "Akademikoa · PBL 4, 2. maila · Mondragon Unibertsitatea",
@@ -26,7 +26,7 @@
     },
     {
       "value": "5",
-      "label": "osagai berri: plegatzeko motorra, kamera, radarra, ultrasoinu-sentsorea, angelu itsuko LEDa"
+      "label": "osagai berri: tolesteko motorra, kamera, radarra, ultrasoinu-sentsorea, angelu itsuko LEDa"
     }
   ],
   "hero": {
@@ -81,7 +81,7 @@
     {
       "title": "Garapena",
       "paragraphs": [
-        "Ultrasoinu-sentsore batek ispiluari plegatzeko agintzen dio oztopo bat hurbiltzen denean; kamera pantaila zentralera transmititzen da plegatuta dagoen bitartean; radarrak angelu itsuko LEDa aktibatzen du. Zirkuitua 12 V-rean birdiseinatu zen, sentsoreak EFB bateriarekin paraleloan konektatuta.",
+        "Ultrasoinu-sentsore batek ispiluari tolesteko agintzen dio oztopo bat hurbiltzen denean; kamera pantaila zentralera transmititzen da tolestuta dagoen bitartean; radarrak angelu itsuko LEDa aktibatzen du. Zirkuitua 12 V-rean birdiseinatu zen, sentsoreak EFB bateriarekin paraleloan konektatuta.",
         "SolidWorks Simulation-ekin karga aerodinamikoa, 33 J-ko oinezko talka, milioi bat zikloko nekea, 500 N-ko bertikal eta 300 N-ko alboko kargak, portaera modala eta termikoa egiaztatu ziren."
       ],
       "list": [],

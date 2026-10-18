@@ -14,7 +14,7 @@ export async function responsiveImages(ROOT, OUT, sizes) {
   const dir = path.join(OUT, 'img/r');
   fs.mkdirSync(dir, { recursive: true });
   const out = {};
-  const jobs = Object.entries(sizes).filter(([src]) => !src.startsWith('img/og/')).map(async ([src, [w]]) => {
+  const jobs = Object.entries(sizes).filter(([src]) => !src.startsWith('img/og')).map(async ([src, [w]]) => {
     const file = path.join(ROOT, src), buf = fs.readFileSync(file);
     const base = path.basename(src).replace(/\.[^.]+$/, '') + '.' + crypto.createHash('md5').update(buf).digest('hex').slice(0, 8);
     const widths = [...WIDTHS.filter(x => x < w * 0.9), w];

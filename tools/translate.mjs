@@ -19,6 +19,13 @@ const DRY = process.argv.includes('--dry');
 const MODEL = 'claude-haiku-5-5';
 const LANGS = { es: 'Spanish (Spain)', eu: 'Basque (euskara batua)' };
 const CHUNK = 40; // strings per request
+// terms the first translation got wrong, fixed by hand: so new text uses the same words
+const GLOSSARY = {
+  es: `- Terminology: "case study" = "caso de estudio"; "exploded view" = "vista explosionada", the "Explode" slider = "Despiece"; "air vent" (car) = "aireador"; Mercedes V-Class = "Mercedes Clase V"; the UPV/EHU contest is "Olimpiada Ingeniería en la Edificación"; ESO (secondary school) stays "ESO". Address the reader as "tú".
+`,
+  eu: `- Terminology: "internships" = "praktikak" (never "barnetegi"); "to fold" = "tolestu" (never "plegatu"); "air vent" (car) = "aireztapen-irteera"; "plant pot" = "lorontzi"; "eco-design" = "ekodiseinua"; "rack" (bicycle) = "euskarria"; "native" (language level) = "ama-hizkuntza"; "End of issue" = "Alearen amaiera"; "About" (menu) = "Niri buruz"; ESO (secondary school) = "DBH"; the UPV/EHU contest is "Eraikuntzako Ingeniaritza Olinpiada"; Mercedes V-Class = "Mercedes V Klasea". Texts about the author's own work use the first person ("diseinatu nituen", not "diseinatu zituen").
+`,
+};
 
 const I18N_FILE = path.join(ROOT, 'content/i18n.json'), LOCK_FILE = path.join(ROOT, 'content/translations.lock.json');
 const readJSON = (f, fb) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : fb);
@@ -103,7 +110,7 @@ Rules:
 - Do not translate proper names, brands, product, company and team names, software, standards and codes (Mikel Arnao, SEAT Ateca, Ardura, Orbea, Mercedes V-Class, BIRA, OLEA, Alpesa, Vidrala, Ibili, ULMA Handling Systems, Mondragon Unibertsitatea, UPV/EHU, SolidWorks, KeyShot, ECE R46, PCTFE, EUIPO, iF Design Student Award, FIRST LEGO League…). Keep numbers, units and symbols.
 - Place names: use the usual form in the target language (Donostia stays Donostia).
 - Short interface labels (menus, buttons, captions) must stay short, of similar length to the source.
-- Each item has an id that tells where the text is used (for example site.ui.navWorks is a menu item, projects/ardura.sections.2.paragraphs.0 is a paragraph of a case study).
+${GLOSSARY[lang] || ''}- Each item has an id that tells where the text is used (for example site.ui.navWorks is a menu item, projects/ardura.sections.2.paragraphs.0 is a paragraph of a case study).
 Return every item with the same id and its translation in "text".`;
   const response = await client.messages.parse({
     model: MODEL,

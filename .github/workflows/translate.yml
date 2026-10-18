@@ -1,5 +1,6 @@
-# Translates the content into the languages in content/i18n.json ("translate") with Claude Haiku after every
-# content change (CMS saves included), commits the result and so triggers the Vercel deploy.
+# After every content change (CMS saves included): translates the content into the languages in
+# content/i18n.json ("translate") with Claude Haiku, renders the share cards of every language, commits the
+# result and so triggers the Vercel deploy.
 # Needs the repository secret ANTHROPIC_API_KEY. Can also be run by hand: Actions → Translate content → Run workflow.
 # Commits made here with GITHUB_TOKEN do not start this workflow again.
 name: Translate content
@@ -9,7 +10,9 @@ on:
     branches: [main]
     paths:
       - 'content/**'
+      - 'img/**'
       - 'tools/translate.mjs'
+      - 'tools/build-og.mjs'
       - 'tools/cms-config.mjs'
   workflow_dispatch:
 
@@ -30,17 +33,24 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            tools/package-lock.json
       - run: npm ci --no-audit --no-fund
       - name: Translate new or changed English text
         run: node tools/translate.mjs
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      - name: Commit the translations
+      - name: Render the share cards (every language, with the runner's Chrome)
         run: |
-          git add content
+          npm ci --prefix tools --no-audit --no-fund
+          node tools/build-og.mjs
+      - name: Commit the translations and cards
+        run: |
+          git add content img apple-touch-icon.png favicon-32.png
           if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Translate content (es, eu)"
+          git commit -m "Translate content and render share cards"
           for i in 1 2 3; do git pull --rebase --quiet && git push --quiet && exit 0; sleep 5; done
           exit 1
