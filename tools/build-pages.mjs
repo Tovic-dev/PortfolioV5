@@ -10,6 +10,12 @@ import { ROOT, SITE, i18n, loadContent } from './content.mjs';
 import { writeAdmin } from './cms-config.mjs';
 
 const OUT = path.join(ROOT, 'dist');
+// Vercel Web Analytics (no cookies; it also counts the client-side route changes). Only in Vercel builds,
+// where /_vercel/insights/ exists, so local builds don't request it.
+const ANALYTICS = process.env.VERCEL ? [
+  `<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script>`,
+  `<script defer src="/_vercel/insights/script.js"></script>`,
+] : [];
 const { defaultLang, locales } = i18n();
 const prefix = l => (l === defaultLang ? '' : '/' + l);
 
@@ -82,6 +88,7 @@ function buildLocale(lang) {
       `<meta name="twitter:description" content="${esc(meta.description)}">`,
       `<meta name="twitter:image" content="${esc(image)}">`,
       `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`,
+      ...ANALYTICS,
     ].filter(Boolean).join('\n');
 
     let html = page, body = body0;

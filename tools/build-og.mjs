@@ -1,11 +1,13 @@
 // Renders the share cards and PNG icons with the locally installed Chrome:
+//   img/og.jpg                1200×630 site card: the home cover itself, as built and with its 3D model
 //   img/og/<project-id>.jpg   1200×630 card per project (cover photo, or its sketch when it has none)
 //   apple-touch-icon.png      180×180, favicon-32.png  32×32   (from favicon.svg)
-// img/og.jpg (cover card with the exploded SEAT) is kept as it is.
-// Run after changing project titles, covers or the favicon:  cd tools && npm install && npm run og
+// Run after changing the home cover, project titles or covers, or the favicon:  cd tools && npm install && npm run og
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import http from 'node:http';
+import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright-core';
 import { ROOT, i18n, loadContent } from './content.mjs';
 
@@ -42,6 +44,29 @@ function card(p) {
 }
 
 const browser = await chromium.launch({ channel: 'chrome' });
+
+// site card: the built home page at 1440×756 (a desktop cover), scaled to 1200×630, light theme, no scroll cue
+execFileSync(process.execPath, [path.join(ROOT, 'tools/build-pages.mjs')], { stdio: 'ignore' });
+const DIST = path.join(ROOT, 'dist');
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.glb': 'model/gltf-binary',
+  '.wasm': 'application/wasm', '.woff2': 'font/woff2', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml' };
+const server = http.createServer((req, res) => {
+  let f = path.join(DIST, decodeURIComponent(req.url.split('?')[0]));
+  if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
+  if (!f.startsWith(DIST) || !fs.existsSync(f)) { res.writeHead(404).end(); return; }
+  res.writeHead(200, { 'content-type': TYPES[path.extname(f)] || 'application/octet-stream' }).end(fs.readFileSync(f));
+}).listen(0);
+{
+  const cover = await browser.newPage({ viewport: { width: 1440, height: 756 }, deviceScaleFactor: 1200 / 1440, colorScheme: 'light' });
+  await cover.goto(`http://localhost:${server.address().port}/@motion/`, { waitUntil: 'load' });
+  await cover.addStyleTag({ content: 'html{scrollbar-width:none}.scue{display:none!important}' });
+  await cover.waitForTimeout(7000); // entrance, then the cover model loads and settles
+  await cover.screenshot({ path: path.join(ROOT, 'img/og.jpg'), type: 'jpeg', quality: 86 });
+  await cover.close();
+  console.log('img/og.jpg');
+}
+server.close();
+
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 fs.mkdirSync(path.join(ROOT, 'img/og'), { recursive: true });
 for (const p of C.PROJ) {
