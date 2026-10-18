@@ -137,5 +137,7 @@ writeAdmin(OUT, built[0].D);
 for (const dir of ['img', 'fonts', 'vendor']) fs.cpSync(path.join(ROOT, dir), path.join(OUT, dir), { recursive: true });
 fs.cpSync(path.join(ROOT, 'models'), path.join(OUT, 'models'), { recursive: true, filter: f => !f.endsWith('.gltf.js') });
 for (const f of ['favicon.svg', 'favicon-32.png', 'apple-touch-icon.png']) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
+// IndexNow key file (<32 hex>.txt, see tools/indexnow.mjs), served at the site root
+for (const f of fs.readdirSync(ROOT).filter(f => /^[0-9a-f]{32}\.txt$/.test(f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 
 console.log(`dist/: ${urls.length} pages (${locales.join(', ')}) + @motion, 404, sitemap.xml, robots.txt, admin/  (site ${SITE})`);

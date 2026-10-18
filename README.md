@@ -36,3 +36,7 @@ To add a language, add it to `locales` in `content/i18n.json`. The CMS then show
 ## Deploy
 
 Vercel: import the repo with the framework preset **Other**. `vercel.json` sets the build command (`node tools/build-pages.mjs`), the output directory (`dist`) and trailing slashes.
+
+## Search engines
+
+Google Search Console and Bing Webmaster Tools are verified for `mikelarnao.com`; the sitemap is `https://www.mikelarnao.com/sitemap.xml`. For Bing and the other IndexNow engines, after a deploy with new or changed pages is live, run `cd tools && npm run indexnow` (every URL in the sitemap) or `npm run indexnow -- <url> …`. The key is the `<32 hex>.txt` file at the repo root.

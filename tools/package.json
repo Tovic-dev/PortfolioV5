@@ -4,6 +4,7 @@
   "scripts": {
     "models": "node build-models.mjs",
     "og": "node build-og.mjs",
+    "indexnow": "node indexnow.mjs",
     "vendor": "esbuild ../vendor/three-0.128.0/GLTFLoader.js --minify --outfile=../vendor/three-0.128.0/GLTFLoader.min.js && esbuild ../vendor/three-0.128.0/DRACOLoader.js --minify --outfile=../vendor/three-0.128.0/DRACOLoader.min.js"
   },
   "devDependencies": {
