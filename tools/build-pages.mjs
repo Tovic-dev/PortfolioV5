@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { ROOT, SITE, i18n, loadContent } from './content.mjs';
 import { writeAdmin } from './cms-config.mjs';
 
@@ -46,11 +47,51 @@ function buildLocale(lang) {
   const D = loadContent(lang);
   const C = vm.runInContext(withData(src.slice(a, b), D) + ';({PROJ,IMG,ROUTE,pageMeta,tocHTML,filtersHTML,projectHTML,bodyHTML})', vm.createContext({}));
   const S = D.site, P = S.person;
+  const L = prefix(lang), TERR = Object.fromEntries(D.works.categories.map(c => [c.key, c.label]));
+  const abs = f => SITE + '/' + String(f).replace(/^\//, '');
+  const txt = h => String(h || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const list = s => String(s || '').split(/\s*,\s*/).filter(Boolean);
+  // JSON-LD: one entity graph per page; empty fields are left out
+  const clean = o => JSON.parse(JSON.stringify(o, (k, v) => (v === '' || (Array.isArray(v) && !v.length) ? undefined : v)));
+  const ID = { person: SITE + '/#person', website: SITE + '/#website' };
   const PERSON = {
-    '@type': 'Person', '@id': SITE + '/#person', name: S.name, jobTitle: P.jobTitle, url: SITE + '/',
+    '@type': 'Person', '@id': ID.person, name: S.name, givenName: P.givenName, familyName: P.familyName,
+    alternateName: P.alternateName, jobTitle: P.jobTitle, description: P.description, url: SITE + '/',
+    image: P.image && abs(P.image), email: S.email,
     address: { '@type': 'PostalAddress', addressLocality: P.locality, addressRegion: P.region, addressCountry: P.country },
-    alumniOf: { '@type': 'CollegeOrUniversity', name: P.alumniOf }, sameAs: P.sameAs,
+    alumniOf: P.alumniOf && { '@type': 'CollegeOrUniversity', name: P.alumniOf, url: P.alumniOfUrl },
+    worksFor: P.worksFor && { '@type': 'Organization', name: P.worksFor, url: P.worksForUrl },
+    knowsAbout: P.knowsAbout, knowsLanguage: P.knowsLanguage, sameAs: P.sameAs,
   };
+  const WEBSITE = { '@type': 'WebSite', '@id': ID.website, name: S.name, url: SITE + '/', inLanguage: lang,
+    author: { '@id': ID.person }, publisher: { '@id': ID.person } };
+  const crumbs = items => ({ '@type': 'BreadcrumbList', itemListElement: items.map(([name, u], i) =>
+    ({ '@type': 'ListItem', position: i + 1, name, item: SITE + u })) });
+  const projectImages = p => [...new Set([p.cover, p.hero && p.hero[0], ...p.sec.flatMap(s => s[2].map(f => f[0]))].filter(Boolean))].map(abs);
+  function structuredData(r, meta, url, image) {
+    const page = { '@id': url + '#webpage', url, name: meta.title, description: meta.description, inLanguage: lang,
+      isPartOf: { '@id': ID.website }, primaryImageOfPage: { '@type': 'ImageObject', url: image } };
+    const graph = [PERSON, WEBSITE];
+    if (r.v === 'home') graph.push({ ...page, '@type': 'WebPage', about: { '@id': ID.person }, mainEntity: { '@id': ID.person } });
+    else if (r.v === 'about') graph.push({ ...page, '@type': 'ProfilePage', mainEntity: { '@id': ID.person },
+      breadcrumb: crumbs([[S.ui.home, L + '/'], [S.ui.about, L + '/about/']]) });
+    else if (r.v === 'works') graph.push({ ...page, '@type': 'CollectionPage', about: { '@id': ID.person },
+      breadcrumb: crumbs([[S.ui.home, L + '/'], [S.ui.works, L + '/works/']]),
+      mainEntity: { '@type': 'ItemList', numberOfItems: C.PROJ.length, itemListElement: C.PROJ.map((p, i) =>
+        ({ '@type': 'ListItem', position: i + 1, url: `${SITE}${L}/works/${p.id}/`, name: p.title })) } });
+    else if (r.v === 'project') {
+      const p = r.p, work = url + '#work', cats = p.terr.map(t => TERR[t]).filter(Boolean);
+      graph.push({ ...page, '@type': 'WebPage', mainEntity: { '@id': work },
+        breadcrumb: crumbs([[S.ui.home, L + '/'], [S.ui.works, L + '/works/'], [p.title, `${L}/works/${p.id}/`]]) });
+      graph.push({ '@type': 'CreativeWork', '@id': work, name: p.title, alternativeHeadline: p.sub, description: txt(p.deck),
+        url, mainEntityOfPage: { '@id': url + '#webpage' }, image: [image, ...projectImages(p)],
+        dateCreated: p.year, inLanguage: lang, genre: cats, keywords: [...cats, ...list(p.tools)].join(', '),
+        author: { '@id': ID.person }, creator: { '@id': ID.person },
+        contributor: list(p.team).filter(n => n !== S.name && /\s/.test(n) && !/project|individual/i.test(n)).map(name => ({ '@type': 'Person', name })),
+        sourceOrganization: p.client && { '@type': 'Organization', name: p.client }, award: p.award, isPartOf: { '@id': ID.website } });
+    } else graph.push({ ...page, '@type': 'WebPage' });
+    return clean({ '@context': 'https://schema.org', '@graph': graph });
+  }
   // the page source for this locale: content in, body rendered, language set
   const page = withData(src, D).replace('<html lang="en">', `<html lang="${lang}">`), body0 = C.bodyHTML();
 
@@ -61,12 +102,7 @@ function buildLocale(lang) {
     const [file, w, h] = card && fs.existsSync(path.join(ROOT, card)) ? [card, 1200, 630]
       : meta.image ? [meta.image, ...(C.IMG[meta.image] || [1600, 1000])] : ['img/og.jpg', 1200, 630];
     const image = `${SITE}/${file}?v=${version(file)}`;
-    const ld = r.v === 'project'
-      ? { '@context': 'https://schema.org', '@type': 'CreativeWork', name: r.p.title, description: meta.description, url, image,
-          dateCreated: r.p.year, creator: { '@id': PERSON['@id'] }, isPartOf: { '@id': SITE + '/#website' } }
-      : { '@context': 'https://schema.org', '@graph': [PERSON,
-          { '@type': 'WebSite', '@id': SITE + '/#website', name: S.name, url: SITE + '/', author: { '@id': PERSON['@id'] } },
-          { '@type': { about: 'ProfilePage', works: 'CollectionPage' }[r.v] || 'WebPage', name: meta.title, url, mainEntity: { '@id': PERSON['@id'] } }] };
+    const ld = structuredData(r, meta, url, image);
     // other languages of this page (only once there is more than one)
     const alternates = base && locales.length > 1
       ? [...locales.map(l => `<link rel="alternate" hreflang="${l}" href="${esc(SITE + prefix(l) + base)}">`),
@@ -110,7 +146,6 @@ function buildLocale(lang) {
     return once(html, '<!--@body-->', body);
   }
 
-  const L = prefix(lang);
   const pages = [
     [{ v: 'home' }, '/'], [{ v: 'works' }, '/works/'], [{ v: 'about' }, '/about/'],
     ...C.PROJ.map(p => [{ v: 'project', p }, `/works/${p.id}/`]),
@@ -120,18 +155,61 @@ function buildLocale(lang) {
     write('@motion/index.html', render({ v: 'home' }, '/@motion/', { noindex: true, canonical: '/' }));
     write('404.html', render({ v: '404' }, '/404', { noindex: true, canonical: null }));
   }
-  return { D, urls: pages.map(([, base]) => L + base) };
+  // for the sitemap: the content files each page shows (its lastmod) and its images
+  const own = name => [`content/${name}.${defaultLang}.json`, `content/${name}.${lang}.json`];
+  const sources = r => r.v === 'project' ? [...own(`projects/${r.p.id}`), ...own('works')]
+    : r.v === 'works' ? [...own('works'), `content/projects`] : [...own(r.v), ...own('site')];
+  const entries = pages.map(([r, base]) => ({ url: L + base, files: sources(r), images: r.v === 'project' ? projectImages(r.p) : [] }));
+  return { D, entries };
 }
 
 fs.rmSync(OUT, { recursive: true, force: true });
 const built = locales.map(buildLocale);
-const urls = built.flatMap(x => x.urls);
+const entries = built.flatMap(x => x.entries), urls = entries.map(e => e.url);
 
+// lastmod: the last commit that changed the page's content (not every deploy), else today.
+// Vercel clones shallowly, so an old page can show the oldest commit it has: still earlier than any real change.
 const today = new Date().toISOString().slice(0, 10);
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${
-  urls.map(u => `  <url><loc>${SITE + u}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+const lastmod = files => {
+  try { return execFileSync('git', ['log', '-1', '--format=%cs', '--', ...files], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() || today; }
+  catch { return today; }
+};
+const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${entries.map(e => `  <url><loc>${xmlEsc(SITE + e.url)}</loc><lastmod>${lastmod(e.files)}</lastmod>${
+  e.images.map(i => `<image:image><image:loc>${xmlEsc(i)}</image:loc></image:image>`).join('')}</url>`).join('\n')}
+</urlset>
+`);
 write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: ${SITE}/sitemap.xml\n`);
 writeAdmin(OUT, built[0].D);
+writeLLMs(built[0].D);
+
+// llms.txt (https://llmstxt.org): the site in Markdown for language models, from the default-locale content.
+// llms.txt is the short map; llms-full.txt has every case study in full.
+function writeLLMs(D) {
+  const S = D.site, P = S.person, A = D.about, TERR = Object.fromEntries(D.works.categories.map(c => [c.key, c.label]));
+  const md = h => String(h || '').replace(/<\/?(em|i)>/g, '*').replace(/<\/?(b|strong)>/g, '**').replace(/<br\s*\/?>/g, ' ')
+    .replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/ /g, ' ').replace(/\s+/g, ' ').trim();
+  const url = p => `${SITE}/works/${p.id}/`;
+  const cats = p => p.terr.map(t => TERR[t]).filter(Boolean).join(', ');
+  const facts = A.facts.map(f => `- ${f.label}: ${f.type === 'chips' ? f.items.join(', ')
+    : f.type === 'languages' ? f.languages.map(l => `${l.name} (${l.level})`).join(', ') : md(f.text)}`);
+  const contact = [`- Email: ${S.email}`, ...S.links.map(l => `- ${l.label}: ${l.url}`)];
+  const head = [`# ${S.name}`, '', `> ${md(P.description || D.site.seo.homeDescription)}`, '',
+    ...A.paragraphs.map(md).flatMap(t => [t, '']), '## Profile', '', ...facts, '', '## Contact', '', ...contact, ''];
+  write('llms.txt', [...head, '## Case studies', '',
+    ...D.projects.map(p => `- [${p.title}](${url(p)}): ${p.sub}. ${md(p.deck)} (${cats(p)}${p.year ? ', ' + p.year : ''})`), '',
+    '## Pages', '', `- [Home](${SITE}/): selected projects and the design process`, `- [All works](${SITE}/works/): the index of the ${D.projects.length} case studies`,
+    `- [About](${SITE}/about/): profile, experience and contact`, `- [Full text](${SITE}/llms-full.txt): every case study in Markdown`, ''].join('\n'));
+  const meta = p => [['Categories', cats(p)], ['Year', p.year], ['Context', p.ctx], ['Client', p.client], ['Team', p.team],
+    ['Tools', p.tools], ['Role', md(p.role)], ['Distinction', p.award]].filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`);
+  const project = p => [`## ${p.title}: ${p.sub}`, '', `URL: ${url(p)}`, '', md(p.deck), '', ...meta(p), '',
+    ...(p.stats || []).map(([v, l]) => `- **${md(v)}** ${md(l)}`), ...(p.stats ? [''] : []),
+    ...p.sec.flatMap(([title, paras, figs, items]) => [`### ${md(title)}`, '', ...paras.map(md).flatMap(t => [t, '']),
+      ...(items || []).map(t => `- ${md(t)}`), ...(items ? [''] : []), ...figs.filter(f => f[1]).map(f => `*Figure: ${md(f[1])}*`), ...(figs.some(f => f[1]) ? [''] : [])])];
+  write('llms-full.txt', [...head, ...D.projects.flatMap(project)].join('\n'));
+}
 
 // static assets the pages use (the *.gltf.js wrappers are only the source of the GLBs)
 for (const dir of ['img', 'fonts', 'vendor']) fs.cpSync(path.join(ROOT, dir), path.join(OUT, dir), { recursive: true });
@@ -140,4 +218,4 @@ for (const f of ['favicon.svg', 'favicon-32.png', 'apple-touch-icon.png']) fs.co
 // IndexNow key file (<32 hex>.txt, see tools/indexnow.mjs), served at the site root
 for (const f of fs.readdirSync(ROOT).filter(f => /^[0-9a-f]{32}\.txt$/.test(f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 
-console.log(`dist/: ${urls.length} pages (${locales.join(', ')}) + @motion, 404, sitemap.xml, robots.txt, admin/  (site ${SITE})`);
+console.log(`dist/: ${urls.length} pages (${locales.join(', ')}) + @motion, 404, sitemap.xml, robots.txt, llms.txt, admin/  (site ${SITE})`);

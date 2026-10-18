@@ -571,9 +571,12 @@ const plain=s=>String(s||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const attr=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
 const fill=(t,v)=>String(t||'').replace(/\{(\w+)\}/g,(m,k)=>k in v?v[k]:m);
 const pad=n=>String(n).padStart(2,'0');
+/* the first template that fits what search results show (titles ~70, descriptions ~160 characters) */
+const fit=(max,v,...ts)=>{const out=ts.filter(Boolean).map(t=>fill(t,v));return out.find(s=>s.length<=max)||out[out.length-1]};
 function pageMeta(r){const S=D.site.seo;
-  if(r.v==='project'){const p=r.p;return{title:fill(S.projectTitle,{title:p.title}),image:p.cover,
-    description:fill(S.projectDescription,{deck:plain(p.deck),categories:p.terr.map(t=>TERR[t]).join(', '),title:p.title})}}
+  if(r.v==='project'){const p=r.p,v={title:p.title,subtitle:p.sub||'',deck:plain(p.deck),categories:p.terr.map(t=>TERR[t]).join(', ')};
+    return{title:fit(72,v,S.projectTitle,S.projectTitleShort,'{title} · '+D.site.name),image:p.cover,
+      description:fit(160,v,S.projectDescription,S.projectDescriptionShort,'{deck}')}}
   return {
     home:{title:S.homeTitle,description:S.homeDescription},
     works:{title:S.worksTitle,description:fill(S.worksDescription,{count:PROJ.length,categories:Object.values(TERR).join(', ')})},
