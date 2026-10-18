@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MODELS, SKETCHES, SITE } from './content.mjs';
 
-const SVELTIA = 'https://unpkg.com/@sveltia/cms@0.227.0/dist/sveltia-cms.js';
+const SVELTIA = 'https://unpkg.com/@sveltia/cms@0.228.0/dist/sveltia-cms.js';
 const REPO = 'Tovic-dev/PortfolioV5';
 
 const T = (name, label, extra = {}) => ({ name, label, widget: 'string', i18n: true, ...extra });   // translated text
