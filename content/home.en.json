@@ -6,22 +6,6 @@
   "coverCaption": "SEAT Ateca side mirror redesign, assembly view. Scroll to take it apart.",
   "featured": [
     {
-      "project": "seat-ateca",
-      "line": "SEAT Ateca side mirror",
-      "lineCategory": "Automotive",
-      "kicker": "Automotive",
-      "titleA": "SEAT Ateca",
-      "titleB": "side mirror",
-      "deck": "A mirror that folds itself before it hits something, and keeps the driver seeing when it does.",
-      "approach": "Ultrasonic folding, camera view on the central screen, blind-spot radar and a dynamic LED indicator, validated against ECE R46 and in SolidWorks Simulation.",
-      "role": "Regulatory analysis, circuit redesign, material specs, renders",
-      "factLabel": "Year",
-      "factValue": "2025",
-      "factStamp": false,
-      "short": "SEAT Ateca",
-      "figure": "SEAT Ateca side mirror"
-    },
-    {
       "project": "ardura",
       "line": "Ardura, self-sufficient smart pot",
       "lineCategory": "Product",
@@ -36,6 +20,22 @@
       "factStamp": true,
       "short": "Ardura",
       "figure": "Ardura self-sufficient smart pot"
+    },
+    {
+      "project": "seat-ateca",
+      "line": "SEAT Ateca side mirror",
+      "lineCategory": "Automotive",
+      "kicker": "Automotive",
+      "titleA": "SEAT Ateca",
+      "titleB": "side mirror",
+      "deck": "A mirror that folds itself before it hits something, and keeps the driver seeing when it does.",
+      "approach": "Ultrasonic folding, camera view on the central screen, blind-spot radar and a dynamic LED indicator, validated against ECE R46 and in SolidWorks Simulation.",
+      "role": "Regulatory analysis, circuit redesign, material specs, renders",
+      "factLabel": "Year",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "SEAT Ateca",
+      "figure": "SEAT Ateca side mirror"
     },
     {
       "project": "cycle-dry",
