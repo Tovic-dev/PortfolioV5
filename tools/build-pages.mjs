@@ -6,6 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import crypto from 'node:crypto';
 import { ROOT, SITE, i18n, loadContent } from './content.mjs';
 import { writeAdmin } from './cms-config.mjs';
 
@@ -26,6 +27,9 @@ if (a < 0 || b < 0) throw new Error('content block not found in index.html');
 const scriptJSON = v => JSON.stringify(v).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 const withData = (code, D) => code.replace('/*@content*/null/*@end*/', '/*@content*/' + scriptJSON(D) + '/*@end*/');
 
+// img/ is cached as immutable, so share images carry a content hash: a regenerated card gets a new URL
+// (LinkedIn and others fetch it again)
+const version = file => crypto.createHash('md5').update(fs.readFileSync(path.join(ROOT, file))).digest('hex').slice(0, 8);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const once = (html, find, repl) => {
   const i = html.indexOf(find);
@@ -54,8 +58,9 @@ function buildLocale(lang) {
     const meta = C.pageMeta(r), url = SITE + urlPath;
     // share image: the project's 1200×630 card (tools/build-og.mjs), else its cover photo, else the site card
     const card = r.v === 'project' && `img/og/${r.p.id}.jpg`;
-    const [image, w, h] = card && fs.existsSync(path.join(ROOT, card)) ? [`${SITE}/${card}`, 1200, 630]
-      : meta.image ? [`${SITE}/${meta.image}`, ...(C.IMG[meta.image] || [1600, 1000])] : [`${SITE}/img/og.jpg`, 1200, 630];
+    const [file, w, h] = card && fs.existsSync(path.join(ROOT, card)) ? [card, 1200, 630]
+      : meta.image ? [meta.image, ...(C.IMG[meta.image] || [1600, 1000])] : ['img/og.jpg', 1200, 630];
+    const image = `${SITE}/${file}?v=${version(file)}`;
     const ld = r.v === 'project'
       ? { '@context': 'https://schema.org', '@type': 'CreativeWork', name: r.p.title, description: meta.description, url, image,
           dateCreated: r.p.year, creator: { '@id': PERSON['@id'] }, isPartOf: { '@id': SITE + '/#website' } }
