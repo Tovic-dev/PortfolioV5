@@ -1,4 +1,5 @@
 {
+  "hidden": true,
   "order": 12,
   "title": "PocketWise",
   "subtitle": "Personal finance app for young people",
@@ -6,8 +7,7 @@
     "digital"
   ],
   "year": "",
-  "model": "none",
-  "sketch": "finance-app",
+  "cover": "",
   "deck": "Helping young people <em>see where their money goes</em> each month.",
   "role": "User research, personas and interface design.",
   "client": "",
@@ -15,6 +15,7 @@
   "team": "Team project",
   "tools": "Figma",
   "award": "",
+  "awardUrl": "",
   "stats": [],
   "hero": {
     "image": "",
@@ -45,5 +46,7 @@
       "list": [],
       "figures": []
     }
-  ]
+  ],
+  "model": "none",
+  "sketch": "finance-app"
 }
