@@ -1,7 +1,9 @@
 {
   "first": "Mikel",
   "last": "Arnao",
+  "availability": "Open to internships and graduate programmes",
   "deck": "Industrial design and product development engineer. Objects that can be manufactured, interfaces that get used and the code that ties them together, <em>from idea to part.</em>",
+  "deckMobile": "Industrial design and product engineering, <em>from idea to part.</em>",
   "coverTag": "On the cover",
   "coverCaption": "SEAT Ateca side mirror redesign, assembly view. Scroll to take it apart.",
   "featured": [
@@ -128,5 +130,10 @@
         "text": "Drawings and documentation for production, automation or code ready to ship."
       }
     ]
+  },
+  "contact": {
+    "kicker": "Contact",
+    "title": "Let’s build <em>the next one.</em>",
+    "text": "Internships, graduate programmes and product or web commissions. If you need someone who brings design, engineering and code into the same project, write to me."
   }
 }

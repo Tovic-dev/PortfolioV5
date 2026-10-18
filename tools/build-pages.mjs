@@ -161,6 +161,9 @@ function buildLocale(lang) {
     if (r.v === 'project') body = once(body, '<div class="view vpage wrap ph" id="v-project" hidden></div>', `<div class="view vpage wrap ph" id="v-project">${C.projectHTML(r.p)}</div>`);
     if (r.v === 'about') body = once(body, '<div class="view vpage wrap" id="v-about" hidden>', '<div class="view vpage wrap" id="v-about">');
     if (r.v === '404') body = once(body, '<div class="view vpage wrap" id="v-404" hidden>', '<div class="view vpage wrap" id="v-404">');
+    // only this URL's view keeps its content; the app fills the others in on load (index.html, start of the app)
+    body = body.replace(/(<div class="view[^"]*" id="(v-[a-z0-9]+)"[^>]*>)[\s\S]*?(?=<!-- =+ [A-Z0-9 ]+ =+ -->\s*<div class="view|<div class="view|<footer)/g,
+      (m, open, id) => (id === 'v-' + r.v ? m : open + '</div>\n'));
     return once(html, '<!--@body-->', body);
   }
 

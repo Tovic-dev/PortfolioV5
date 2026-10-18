@@ -11,7 +11,7 @@
      no script) and that first entrance is skipped. Scroll animations are unaffected. -->
 <script>document.documentElement.classList.add('boot');setTimeout(function(){document.documentElement.classList.remove('boot')},Math.max(0,1200-performance.now()))</script>
 <style>
-.boot .mast,.boot .cover-deck,.boot .lines li,.boot .cover-fig>*,.boot .vpage .shead h1,.boot #filters,.boot #toc,.boot .pintro,.boot .pback,.boot .prof .cols p,.boot .prof .side{opacity:0}
+.boot .mast,.boot .cover-meta,.boot .cover-deck,.boot .lines li,.boot .cover-fig>*,.boot .vpage .shead h1,.boot #filters,.boot #toc,.boot .pintro,.boot .pback,.boot .prof .cols p,.boot .prof .side{opacity:0}
 </style>
 <style>
 /* Inter Tight, Inter, IBM Plex Mono (SIL OFL), latin + latin-ext subsets */
@@ -149,6 +149,10 @@ img{display:block;max-width:100%;height:auto}
 .cover-left{grid-column:1 / span 4;display:flex;flex-direction:column;gap:22px;padding-top:22px;min-width:0}
 .cover-deck{font-family:var(--serif);font-size:clamp(20px,1.7vw,26px);line-height:1.22;font-weight:350;letter-spacing:-.01em}
 .cover-deck em{color:var(--spot)}
+.cover-meta{margin:0;font-size:10.5px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.cover-meta::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--spot);margin-right:8px;vertical-align:1px}
+.m-only{display:none}
+@media (max-width:900px){.m-only{display:inline}.d-only{display:none}}
 .lines{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
 .lines li{border-bottom:1px solid var(--rule)}
 .lines button{width:100%;display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:baseline;text-align:left;padding:9px 0;transition:padding .35s var(--ease)}
@@ -294,7 +298,8 @@ a.stamp,a.addr{text-decoration:none}a.stamp:hover,a.addr:hover{text-decoration:u
 .xbar label{white-space:nowrap}
 .xbar input{flex:1;accent-color:var(--spot);min-width:80px}
 .xbar output{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;width:4ch;text-align:right}
-@media (max-width:700px){.legend{display:none}.pplate{height:68svh}.pplate .pcap{flex-direction:column;align-items:stretch}.xbar{min-width:0}}
+@media (max-width:900px){.legend{display:none}} /* no part labels on mobile: the model reads better alone */
+@media (max-width:700px){.pplate{height:68svh}.pplate .pcap{flex-direction:column;align-items:stretch}.xbar{min-width:0}}
 .pherofig{margin:0 0 clamp(40px,6vw,80px)}
 .pherofig img{width:100%;max-height:82svh;object-fit:contain;background:var(--sheet);border:1px solid var(--rule);cursor:zoom-in}
 .pherofig figcaption,.figs figcaption{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.35}
@@ -342,6 +347,8 @@ a.stamp,a.addr{text-decoration:none}a.stamp:hover,a.addr:hover{text-decoration:u
 .prof .cols p + p{margin-top:1em}
 .prof .cols p:first-child::first-letter{font-family:var(--serif);float:left;font-size:4.6em;line-height:.82;padding:4px 10px 0 0;font-weight:300;color:var(--spot)}
 .prof .side{grid-column:9 / span 4;min-width:0}
+.portrait{margin:0 0 22px}.portrait img{display:block;width:100%;max-width:300px;height:auto;aspect-ratio:4 / 5;object-fit:cover;object-position:50% 35%;background:var(--sheet)}
+@media (max-width:900px){.portrait img{max-width:220px}}
 .spec2{margin:0;display:grid;grid-template-columns:110px 1fr;border-top:2px solid var(--ink);font-size:14.5px}
 .spec2 dt,.spec2 dd{margin:0;padding:12px 0;border-bottom:1px solid var(--rule)}
 .spec2 dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:14px}
@@ -428,6 +435,10 @@ a.stamp,a.addr{text-decoration:none}a.stamp:hover,a.addr:hover{text-decoration:u
 footer{position:relative;z-index:3;background:var(--paper);border-top:1px solid var(--rule);padding-block:16px calc(16px + env(safe-area-inset-bottom,0px))}
 footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;color:var(--ink-2)}
 footer b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+footer .f-links a{color:var(--ink);text-decoration:none}footer .f-links a:hover{text-decoration:underline}
+.hello{padding-top:clamp(24px,3vw,48px);padding-bottom:clamp(70px,9vw,140px)}.hello .colo{margin-top:28px}
+/* mobile footer: who and how to reach him; the clock and the sign-off stay on desktop */
+@media (max-width:900px){footer .f-place,footer .f-right{display:none}}
 
 /* crosshair cursor */
 .xh{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;pointer-events:none;z-index:96;display:none}
@@ -529,6 +540,13 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
   .pplate .ptop{left:14px;right:14px;top:12px}.pplate .figno small{display:none}
   .modes{gap:12px}.modes button{white-space:nowrap}
   .cover-fig figcaption{display:none}
+  /* mobile cover: who, what and availability in the first screen, then the model; the project list and the
+     "on the cover" tag are left out (the chapters below show the same projects) */
+  #cover{min-height:0}.cover{grid-template-rows:auto auto auto;min-height:0}
+  .cover-left{order:2;gap:14px;padding-top:16px}.cover-fig{order:3;align-self:start;height:40svh;min-height:0;margin-top:4px}
+  .cover-left .lines,.cover-fig .tag{display:none}
+  .cover-deck{font-size:21px}
+  .scue{display:none}
 }
 </style>
 </head>
@@ -594,7 +612,7 @@ function projectHTML(p){
   <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>${UI.work} ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${p.title}</span></span></h1></div>
   <div class="pintro"><p class="deck">${p.deck}</p><dl class="spec2">${spec.map(r=>`<dt>${r[0]}</dt><dd${r[2]?` class="${r[2]}"`:''}>${r[1]}</dd>`).join('')}</dl></div>`;
   if(p.m3d!==undefined){h+=`<figure class="plate pplate" id="pplate"><span class="cm"></span><span class="cm"></span><span class="cm"></span><span class="cm"></span><canvas aria-label="${attr(fill(UI.model3DAria,{title:plain(p.title)}))}"></canvas>
-    <div class="ptop"><span class="figno">${F().replace(UI.fig+' ','')}<small>${UI.drag3D}</small></span><div class="modes" role="group" aria-label="${attr(UI.view3D)}"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="wire" aria-pressed="false">${UI.wireframe}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div></div>
+    <div class="ptop"><span class="figno">${F().replace(UI.fig+' ','')}<small>${UI.drag3D}</small></span><div class="modes" role="group" aria-label="${attr(UI.view3D)}"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div></div>
     <ol class="legend" id="legend"></ol>
     <figcaption class="pcap"><p><b>${UI.explodedViewTitle}</b> ${fill(UI.simplifiedModel,{title:p.title})}</p><div class="xbar mono"><label for="xr">${UI.explode}</label><input type="range" id="xr" min="0" max="100" value="0"><output>0%</output></div></figcaption></figure>`}
   if(p.stats)h+=`<div class="pstats">${p.stats.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`;
@@ -606,6 +624,9 @@ function projectHTML(p){
 /* the language switch only appears once there is more than one locale; the app points each link at the current page */
 function langsHTML(){if(D.locales.length<2)return '';
   return `<span class="langs" aria-label="${attr(UI.language)}">${D.locales.map(l=>`<a href="${l===D.defaultLang?'/':'/'+l+'/'}" hreflang="${l}" lang="${l}" data-lang="${l}"${l===D.lang?' aria-current="true"':''}>${l.toUpperCase()}</a>`).join('')}</span>`}
+/* the portrait from the profile (CMS: Perfil para Google e IAs), the same image the structured data names */
+function portraitHTML(){const src=String(D.site.person.image||'').replace(/^\//,'');if(!src)return '';const d=IMG[src]||[800,800];
+  return `<figure class="portrait"><img src="${src}" width="${d[0]}" height="${d[1]}" alt="${attr(D.site.name)}" decoding="async"></figure>`}
 function aboutFactsHTML(){return D.about.facts.map(f=>`<dt>${f.label}</dt><dd>${
   f.type==='chips'?`<div class="chips">${(f.items||[]).map(x=>`<span>${x}</span>`).join('')}</div>`:
   f.type==='languages'?`<div class="lang">${(f.languages||[]).map(l=>`<div><span>${l.name}</span><i${l.full?'':' class="p"'}></i><span>${l.level}</span></div>`).join('')}</div>`:
@@ -640,7 +661,8 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
   <div class="inner cover">
     <h1 class="mast" aria-label="${attr(H.first+' '+H.last)}"><span class="ln"><span class="prox">${H.first}</span> <em class="prox">${H.last}</em></span></h1>
     <div class="cover-left">
-      <p class="cover-deck">${H.deck}</p>
+      <p class="cover-meta mono"><span class="m-only">${S.role} · </span>${H.availability}</p>
+      <p class="cover-deck"><span class="d-only">${H.deck}</span><span class="m-only">${H.deckMobile||H.deck}</span></p>
       <ul class="lines">
         ${FEAT.map((f,i)=>`<li><button data-go="${i}"><span class="pg">${pad(i+1)}</span><span class="tt">${f.line}</span><span class="ct">${f.lineCategory}</span></button></li>`).join('\n        ')}
       </ul>
@@ -669,10 +691,10 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
       <span class="pframe" id="pframe" aria-hidden="true"><i class="b"></i><i class="l"></i><i class="r"></i><i class="tl"></i><i class="tr"></i></span>
       <div class="ptop">
         <span class="figno" id="figno">01<small>/ ${pad(n)}</small></span>
-        <div class="modes" role="group" aria-label="${attr(UI.view3D)}" data-modes="home"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="wire" aria-pressed="false">${UI.wireframe}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div>
+        <div class="modes" role="group" aria-label="${attr(UI.view3D)}" data-modes="home"><button data-mode="solid" aria-pressed="true">${UI.solid}</button><button data-mode="xray" aria-pressed="false">${UI.xray}</button></div>
       </div>
       <figcaption class="pcap">
-        <p><b id="capT">${UI.fig} 01</b> <span id="capName">${FEAT[0].figure}</span> · ${UI.explodedView} <span class="num" id="rEx">000 %</span></p>
+        <p><b id="capT">${UI.fig} 01</b> <span id="capName">${FEAT[0].figure}</span> · ${UI.explodedView} <span class="num" id="rEx">000&nbsp;%</span></p>
       </figcaption>
     </figure>
     <nav class="strip" id="strip" aria-label="${attr(UI.goToProject)}">
@@ -693,6 +715,21 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
         ${H.procedure.steps.map(s=>`<li><span class="n">${s.label}</span><h3>${s.title}</h3><p>${s.text}</p></li>`).join('\n        ')}
         <span class="rail" aria-hidden="true"><i id="railFill"></i></span>
       </ol>
+    </div>
+  </div>
+</section>
+<section class="sec wrap hello" id="hello" data-folio="08">
+  <div class="inner">
+    <div class="shead"><div class="k mono"><b>p. 08</b><span>${H.contact.kicker}</span></div><h2>${H.contact.title}</h2></div>
+    <div class="colo">
+      <p class="say">${H.contact.text}</p>
+      <div class="mail">
+        <a class="addr" href="mailto:${attr(S.email)}">${S.email}</a>
+        <div class="btns">
+          <a class="btn solid" href="${ROUTE.works}">${UI.seeAllWorks}</a>
+          ${S.links.map(l=>`<a class="btn" href="${attr(l.url)}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('\n          ')}
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -733,6 +770,7 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
         </div>
       </div>
       <div class="side">
+        ${portraitHTML()}
         <dl class="spec2">
           ${aboutFactsHTML()}
         </dl>
@@ -760,13 +798,19 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
 
 <footer class="wrap"><div class="inner mono">
   <span>${S.footer.left}</span>
-  <span>${S.footer.place} · <b id="clock">--:--:--</b></span>
-  <span>${S.footer.right}</span>
+  <span class="f-place">${S.footer.place} · <b id="clock">--:--:--</b></span>
+  <span class="f-links"><a href="mailto:${attr(S.email)}">${UI.email}</a>${S.links.map(l=>` · <a href="${attr(l.url)}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</span>
+  <span class="f-right">${S.footer.right}</span>
 </div></footer>
 </main>`}
 
 /* the app: runs once the deferred libraries (three, GSAP, Lenis) have executed */
 addEventListener('DOMContentLoaded',function(){
+/* each URL is built with only its own view filled in (crawlers and AI readers get just that page); the other
+   views come from the same render functions, before anything below looks them up */
+(function(){const empty=[...document.querySelectorAll('main > .view:empty')];if(!empty.length)return;
+  const t=document.createElement('template');t.innerHTML=bodyHTML();
+  empty.forEach(v=>{const s=t.content.getElementById(v.id);if(s)v.replaceChildren(...s.childNodes)})})();
 /* /@motion or ?motion in the URL forces full motion even with reduced motion turned on; it lasts the browser session */
 let forceMotion=location.pathname.includes('@motion')||/(^|[?&])motion(=|&|$)/.test(location.search.slice(1));
 try{if(forceMotion)sessionStorage.setItem('motion','1');else forceMotion=sessionStorage.getItem('motion')==='1'}catch(e){}
@@ -1311,7 +1355,7 @@ function setActive(i){if(i===cur)return;arts[cur].classList.remove('on');stripB[
     gsap.fromTo(a.querySelectorAll('.kick,.deck,.body,.spec,.more'),{y:14,opacity:0},{y:0,opacity:1,duration:.7,ease:'power3.out',stagger:.06,delay:.1,overwrite:true});
     gsap.fromTo('#figno',{yPercent:40,opacity:0},{yPercent:0,opacity:1,duration:.6,ease:'power3.out',overwrite:true})}}
 let lastReadout='';
-function readout(e){const s=String(Math.round(e*100)).padStart(3,'0')+' %';if(s!==lastReadout){$('rEx').textContent=s;lastReadout=s}}
+function readout(e){const s=String(Math.round(e*100)).padStart(3,'0')+' %';if(s!==lastReadout){$('rEx').textContent=s;lastReadout=s}}
 
 /* ===================== WORKS INDEX ===================== */
 const toc=$('toc'),filters=$('filters');
@@ -1434,7 +1478,7 @@ const intro=$('intro');
 /* returns when the entrance ends (s), 0 if there is none */
 function coverIn(){if(reduce||late||S.view!=='home')return 0;
   const a=gsap.from('.mast .ch',{yPercent:105,duration:1.3,ease:'expo.out',stagger:.035,delay:.05});
-  const b=gsap.from('.cover-deck, .lines li, .cover-fig > *',{y:18,opacity:0,duration:.9,stagger:.05,ease:'power3.out',delay:.35});
+  const b=gsap.from('.cover-meta, .cover-deck, .lines li, .cover-fig > *',{y:18,opacity:0,duration:.9,stagger:.05,ease:'power3.out',delay:.35});
   return Math.max(a.delay()+a.totalDuration(),b.delay()+b.totalDuration())}
 /* about lede words (split before the first go(), so a direct /about/ load can animate them) */
 const lede=$('lede');
@@ -1589,9 +1633,10 @@ addEventListener('load',()=>ScrollTrigger.refresh());
 (function(){const cue=$('scue'),txt=$('scueT');
   function upd(){const doc=document.documentElement;const end=doc.scrollHeight-innerHeight-scrollY<160;
     const th=$('theatre').getBoundingClientRect();
-    const on=S.view==='home'&&!end&&!(innerWidth<900&&th.top<=innerHeight*.5);cue.classList.toggle('off',!on);
+    /* only over the cover and the projects: past them it would sit on top of the text (Procedure, contact) */
+    const on=S.view==='home'&&!end&&th.bottom>innerHeight;cue.classList.toggle('off',!on);
     if(!on)return;
-    const s=th.top>innerHeight*.5?UI.scrollOpen:(th.bottom>innerHeight?UI.scrollNext:UI.scroll);if(txt.textContent!==s)txt.textContent=s}
+    const s=th.top>innerHeight*.5?UI.scrollOpen:UI.scrollNext;if(txt.textContent!==s)txt.textContent=s}
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);addEventListener('route',()=>setTimeout(upd,1400));setInterval(upd,800);upd()})();
 });
 </script>

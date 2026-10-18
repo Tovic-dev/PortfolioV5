@@ -69,7 +69,10 @@ function config(D) {
             name: 'home', label: 'Portada', file: 'content/home.{{locale}}.json', i18n: true,
             fields: [
               T('first', 'Nombre (titular, línea 1)'), T('last', 'Apellido (titular, línea 2)'),
+              T('availability', 'Disponibilidad (línea sobre la presentación)', { required: false,
+                hint: 'Por ejemplo «Open to internships and graduate programmes». En móvil va precedida del cargo.' }),
               X('deck', 'Presentación', { hint: HTML }),
+              X('deckMobile', 'Presentación corta para móvil', { required: false, hint: HTML + ' Una frase: en móvil sustituye a la presentación.' }),
               T('coverTag', 'Rótulo de la figura'), X('coverCaption', 'Pie de la figura'),
               { name: 'featured', label: 'Proyectos destacados (los 5 modelos 3D, en este orden)', widget: 'list', i18n: true,
                 min: 5, max: 5, allow_add: false, allow_remove: false, summary: '{{titleA}} {{titleB}}', fields: [
@@ -87,6 +90,9 @@ function config(D) {
                 { name: 'steps', label: 'Fases', widget: 'list', i18n: true, summary: '{{label}} · {{title}}',
                   fields: [T('label', 'Etiqueta'), T('title', 'Título'), X('text', 'Texto')] },
               ] },
+              { name: 'contact', label: 'Contacto (cierre de la portada)', widget: 'object', i18n: true,
+                hint: 'Bloque final de la portada, con tu email, «All works» y tus enlaces.', fields: [
+                T('kicker', 'Rótulo'), T('title', 'Título', { hint: HTML }), X('text', 'Texto')] },
             ],
           },
           {

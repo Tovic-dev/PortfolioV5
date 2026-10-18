@@ -65,7 +65,6 @@
     "goToProject": "Go to project",
     "view3D": "3D model view",
     "solid": "Solid",
-    "wireframe": "Wireframe",
     "xray": "X-ray",
     "explodedView": "exploded view",
     "approach": "Approach",
@@ -97,6 +96,8 @@
     "copied": "Copied ✓",
     "selectedCopy": "Selected · copy it",
     "toolsAria": "Tools",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "seeAllWorks": "All works →",
+    "email": "Email"
   }
 }
