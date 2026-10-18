@@ -2,6 +2,14 @@
   "buildCommand": "node tools/build-pages.mjs",
   "outputDirectory": "dist",
   "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "portfolio-v5-eight-bice.vercel.app" }],
+      "destination": "https://www.mikelarnao.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/models/(.*)",

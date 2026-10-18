@@ -11,7 +11,10 @@ export const SITE = (process.env.SITE_URL || 'https://www.mikelarnao.com').repla
 export const MODELS = ['seat', 'ardura', 'orbea', 'house', 'vent'];
 export const SKETCHES = ['plant-pot', 'mirror', 'rack', 'robot', 'house', 'route-app', 'finance-app'];
 
-const readJSON = f => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null);
+// a number never wraps away from its unit: "85 %" and "13 €" get a no-break space
+const nbsp = v => typeof v === 'string' ? v.replace(/(\d) (%|€)/g, '$1 $2')
+  : Array.isArray(v) ? v.map(nbsp) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, nbsp(x)])) : v;
+const readJSON = f => (fs.existsSync(f) ? nbsp(JSON.parse(fs.readFileSync(f, 'utf8'))) : null);
 const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
 // objects merge key by key; arrays and scalars come whole from the locale when it has them
 function merge(base, over) {

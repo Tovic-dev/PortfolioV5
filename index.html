@@ -11,7 +11,7 @@
      no script) and that first entrance is skipped. Scroll animations are unaffected. -->
 <script>document.documentElement.classList.add('boot');setTimeout(function(){document.documentElement.classList.remove('boot')},Math.max(0,1200-performance.now()))</script>
 <style>
-.boot .mast,.boot .cover-deck,.boot .lines li,.boot .cover-fig>*,.boot .vpage .shead h1,.boot #filters,.boot #toc,.boot .pintro,.boot .pback,.boot .prof .cols p,.boot .prof aside{opacity:0}
+.boot .mast,.boot .cover-deck,.boot .lines li,.boot .cover-fig>*,.boot .vpage .shead h1,.boot #filters,.boot #toc,.boot .pintro,.boot .pback,.boot .prof .cols p,.boot .prof .side{opacity:0}
 </style>
 <style>
 /* Inter Tight, Inter, IBM Plex Mono (SIL OFL), latin + latin-ext subsets */
@@ -68,6 +68,9 @@ a{color:inherit}
 ::selection{background:var(--spot);color:var(--on-spot)}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--spot);outline-offset:3px}
+.skip{position:fixed;left:var(--gl,16px);top:10px;z-index:100;transform:translateY(-200%);padding:8px 12px;background:var(--paper);color:var(--ink);border:1px solid var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.skip:focus{transform:none}
+main:focus{outline:none}
 h1,h2,h3{margin:0;font-weight:inherit;text-wrap:balance}
 p{margin:0}
 em{font-style:italic}
@@ -122,7 +125,7 @@ img{display:block;max-width:100%;height:auto}
 .langs{display:inline-flex;gap:10px}.langs a{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-decoration:none}.langs a:hover,.langs a[aria-current]{color:var(--ink)}
 .runhead .mnav{display:none;height:auto;grid-template-columns:none;gap:14px;padding:8px 0 10px;border-top:1px solid var(--rule)}
 .mnav a{text-decoration:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
-.mnav a[aria-current="page"]{color:var(--spot)}
+.mnav a[aria-current="page"]{color:var(--ink);text-decoration:underline 2px var(--spot);text-underline-offset:5px}
 .progress{position:fixed;top:calc(var(--head) + env(safe-area-inset-top,0px));left:0;height:2px;width:100%;background:var(--spot);transform-origin:0 50%;transform:scaleX(0);z-index:51}
 @media (max-width:860px){
   :root{--head:44px}
@@ -337,7 +340,7 @@ img{display:block;max-width:100%;height:auto}
 .prof .cols{columns:2 280px;column-gap:32px;font-size:16px}
 .prof .cols p + p{margin-top:1em}
 .prof .cols p:first-child::first-letter{font-family:var(--serif);float:left;font-size:4.6em;line-height:.82;padding:4px 10px 0 0;font-weight:300;color:var(--spot)}
-.prof aside{grid-column:9 / span 4;min-width:0}
+.prof .side{grid-column:9 / span 4;min-width:0}
 .spec2{margin:0;display:grid;grid-template-columns:110px 1fr;border-top:2px solid var(--ink);font-size:14.5px}
 .spec2 dt,.spec2 dd{margin:0;padding:12px 0;border-bottom:1px solid var(--rule)}
 .spec2 dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:14px}
@@ -347,7 +350,7 @@ img{display:block;max-width:100%;height:auto}
 .lang div{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em}
 .lang i{height:5px;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 6px);transform-origin:left}
 .lang i.p{-webkit-mask:linear-gradient(90deg,#000 75%,transparent 75%);mask:linear-gradient(90deg,#000 75%,transparent 75%)}
-@media (max-width:900px){.prof .text,.prof aside{grid-column:1 / -1}}
+@media (max-width:900px){.prof .text,.prof .side{grid-column:1 / -1}}
 
 /* appendix (removed from home) */
 
@@ -498,7 +501,7 @@ em,.pcap p,.pherofig figcaption,.figs figcaption,.cover-fig figcaption,#lb figca
 .steps li::before{border-color:var(--ink-2)}
 .rail i{background:var(--spot)}
 .steps li::before{transition:background .35s,border-color .35s}.steps .n{transition:color .35s}
-.steps li.on::before{background:var(--spot);border-color:var(--spot)}.steps li.on .n{color:var(--spot)}
+.steps li.on::before{background:var(--spot);border-color:var(--spot)}.steps li.on .n{color:var(--ink)}
 .psec .pb li::before{border-color:var(--ink-2)}
 .stamp{background:transparent;color:var(--ink);border:1px solid var(--ink)}
 .progress{background:var(--ink)}
@@ -576,7 +579,7 @@ function pageMeta(r){const S=D.site.seo;
     works:{title:S.worksTitle,description:fill(S.worksDescription,{count:PROJ.length,categories:Object.values(TERR).join(', ')})},
     about:{title:S.aboutTitle,description:S.aboutDescription},
     404:{title:S.notFoundTitle,description:S.notFoundDescription}}[r.v]}
-function img(src,cap,lazy=true){const d=IMG[src]||[1600,1000];return `<img src="${src}" width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
+function img(src,cap,lazy=true){const d=IMG[src]||[1600,1000];return `<img src="${src}" width="${d[0]}" height="${d[1]}" alt="${cap.replace(/"/g,'&quot;')}" ${lazy?'loading="lazy"':''} decoding="async" tabindex="0" data-zoom data-cap="${cap.replace(/"/g,'&quot;')}">`}
 function tocHTML(){return PROJ.map(p=>`<li data-terr="${p.terr.join(' ')}"><a href="${ROUTE.project(p.id)}" data-pid="${p.id}" data-cursor="${attr(UI.cursorOpen)}"><span class="pg">${String(p.n).padStart(2,'0')}</span><span class="t">${p.title}<small>${p.sub}</small></span><span class="lead"></span><span class="ct">${p.terr.map(t=>TERR[t]).join(' · ')}</span><span class="yr">${p.year||'—'}</span><span class="go">↗</span></a></li>`).join('')}
 function filtersHTML(){return ['all',...Object.keys(TERR)].map(k=>`<button data-f="${k}" aria-pressed="${k==='all'}">${k==='all'?UI.filterAll:TERR[k]} <sup>${k==='all'?PROJ.length:PROJ.filter(p=>p.terr.includes(k)).length}</sup></button>`).join('')+`<span class="wcount mono" id="wcount">${PROJ.length} ${UI.workPlural}</span>`}
 function projectHTML(p){
@@ -615,6 +618,7 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
 <div class="peek" id="peek" aria-hidden="true"></div>
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="${attr(UI.imageViewer)}"><button id="lbClose">${UI.close}</button><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
 
+<a class="skip" href="#main">${UI.skipToContent}</a>
 <header class="runhead"><div class="inner">
   <a href="${ROUTE.home}" class="who">${S.name} <em>· ${S.role}</em></a>
   <nav aria-label="${attr(UI.navAria)}">
@@ -625,7 +629,7 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
 <nav class="mnav inner" aria-label="${attr(UI.navMobileAria)}"><a href="${ROUTE.works}" data-nav="works">${UI.navWorks}</a><a href="${ROUTE.about}" data-nav="about">${UI.navAbout}</a></nav>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 <!-- ============ HOME ============ -->
 <div class="view" id="v-home">
 <section id="cover" class="wrap" data-folio="01">
@@ -724,11 +728,11 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
           ${A.paragraphs.map(t=>`<p>${t}</p>`).join('\n          ')}
         </div>
       </div>
-      <aside>
+      <div class="side">
         <dl class="spec2">
           ${aboutFactsHTML()}
         </dl>
-      </aside>
+      </div>
     </div>
   </section>
   <section class="inner" id="contact" style="padding-bottom:clamp(80px,10vw,160px)">
@@ -1326,10 +1330,17 @@ function renderProject(p){
 
 /* lightbox */
 const lb=$('lb');
-document.addEventListener('click',ev=>{const im=ev.target.closest('[data-zoom]');if(!im)return;$('lbImg').src=im.src;$('lbImg').alt=im.alt;$('lbCap').textContent=im.dataset.cap;lb.hidden=false;lenis&&lenis.stop();$('lbClose').focus()});
-function closeLb(){if(lb.hidden)return;lb.hidden=true;lenis&&lenis.start()}
+let lbFrom=null; /* the image that opened it: focus goes back there on close */
+function openLb(im){$('lbImg').src=im.src;$('lbImg').alt=im.alt;$('lbCap').textContent=im.dataset.cap;lbFrom=im;lb.hidden=false;lenis&&lenis.stop();$('lbClose').focus()}
+document.addEventListener('click',ev=>{const im=ev.target.closest('[data-zoom]');if(im)openLb(im)});
+/* zoomable images are focusable (tabindex in img()): Enter or Space opens them */
+document.addEventListener('keydown',ev=>{const im=ev.target.closest&&ev.target.closest('[data-zoom]');if(im&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();openLb(im)}});
+function closeLb(){if(lb.hidden)return;lb.hidden=true;lenis&&lenis.start();if(lbFrom&&lbFrom.isConnected)lbFrom.focus({preventScroll:true});lbFrom=null}
 $('lbClose').addEventListener('click',closeLb);lb.addEventListener('click',ev=>{if(ev.target===lb)closeLb()});
-addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLb()});
+/* modal: Escape closes it, Tab stays on its only control */
+addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLb();else if(ev.key==='Tab'&&!lb.hidden){ev.preventDefault();$('lbClose').focus()}});
+/* skip link: focus the content without changing the URL (#hashes are legacy routes here) */
+document.querySelector('.skip').addEventListener('click',ev=>{ev.preventDefault();$('main').focus()});
 
 /* ===================== ROUTER ===================== */
 let lenis=null;
@@ -1455,7 +1466,7 @@ function enter(r){
       intro('#v-about .shead h1',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',delay:.2});
       gsap.fromTo('#lede .w',{opacity:.15},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:'#lede',start:'top 85%',end:'bottom 45%',scrub:true}});
       gsap.from('.lang i',{scaleX:0,duration:1.2,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.lang',start:'top 92%'}});
-      intro('.prof .cols p, .prof aside',{y:24,opacity:0,duration:.9,stagger:.1,ease:'power3.out',delay:.3});
+      intro('.prof .cols p, .prof .side',{y:24,opacity:0,duration:.9,stagger:.1,ease:'power3.out',delay:.3});
       gsap.from('.big .ch, .big em',{yPercent:105,duration:1.1,stagger:.04,ease:'expo.out',scrollTrigger:{trigger:'.big',start:'top 88%'}});
       gsap.from('#contact .shead h2',{yPercent:30,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:'#contact',start:'top 85%'}});
     }

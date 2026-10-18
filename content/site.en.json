@@ -105,6 +105,7 @@
     "copyEmail": "Copy email",
     "copied": "Copied ✓",
     "selectedCopy": "Selected · copy it",
-    "toolsAria": "Tools"
+    "toolsAria": "Tools",
+    "skipToContent": "Skip to content"
   }
 }
