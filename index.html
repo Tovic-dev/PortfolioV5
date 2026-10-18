@@ -185,6 +185,7 @@ img{display:block;max-width:100%;height:auto}
 .art .spec dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:9px}
 .art .more{align-self:flex-start;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--spot);padding-bottom:2px}
 .art .more:hover{color:var(--spot)}
+a.stamp,a.addr{text-decoration:none}a.stamp:hover,a.addr:hover{text-decoration:underline}
 .stamp{display:inline-block;background:var(--spot);color:var(--on-spot);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px}
 .plate{position:relative;min-height:0;border:1px solid var(--rule);margin:0}
 .plate .cm{position:absolute;width:14px;height:14px;border:0 solid var(--ink);z-index:3}
@@ -588,7 +589,7 @@ function filtersHTML(){return ['all',...Object.keys(TERR)].map(k=>`<button data-
 function projectHTML(p){
   let fig=1;const F=()=>`${UI.fig} ${String(fig++).padStart(2,'0')}`;
   const idx=PROJ.indexOf(p),next=PROJ[(idx+1)%PROJ.length];
-  const spec=[[UI.myRole,p.role,'role'],[UI.year,p.year],[UI.client,p.client],[UI.context,p.ctx],[UI.team,p.team],[UI.tools,p.tools],[UI.distinction,p.award?`<span class="stamp">${p.award}</span>`:'']].filter(r=>r[1]);
+  const spec=[[UI.myRole,p.role,'role'],[UI.year,p.year],[UI.client,p.client],[UI.context,p.ctx],[UI.team,p.team],[UI.tools,p.tools],[UI.distinction,p.award?(p.awardUrl?`<a class="stamp" href="${attr(p.awardUrl)}" rel="noopener">${p.award} ↗</a>`:`<span class="stamp">${p.award}</span>`):'']].filter(r=>r[1]);
   let h=`<div class="inner"><a class="pback" href="${ROUTE.works}">${UI.allWorks}</a>
   <div class="shead"><div class="k mono"><b>p. ${p.page}</b><span>${UI.work} ${String(p.n).padStart(2,'0')} · ${p.terr.map(t=>TERR[t]).join(' · ')}</span></div><h1><span class="ln"><span>${p.title}</span></span></h1></div>
   <div class="pintro"><p class="deck">${p.deck}</p><dl class="spec2">${spec.map(r=>`<dt>${r[0]}</dt><dd${r[2]?` class="${r[2]}"`:''}>${r[1]}</dd>`).join('')}</dl></div>`;
@@ -744,7 +745,7 @@ return `<div id="intro" aria-hidden="true"><div class="reg"><i></i></div><div cl
     <div class="colo">
       <p class="say">${A.contact.text}</p>
       <div class="mail">
-        <span class="addr" id="addr">${S.email}</span>
+        <a class="addr" id="addr" href="mailto:${attr(S.email)}">${S.email}</a>
         <div class="btns">
           <button class="btn solid" id="copyBtn">${UI.copyEmail}</button>
           ${S.links.map(l=>`<a class="btn" href="${attr(l.url)}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('\n          ')}

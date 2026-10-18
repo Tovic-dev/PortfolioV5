@@ -12,52 +12,6 @@
       "url": "https://github.com/Tovic-dev"
     }
   ],
-  "person": {
-    "givenName": "Mikel",
-    "familyName": "Arnao",
-    "alternateName": "",
-    "jobTitle": "Product Design Engineer",
-    "description": "Product Design Engineer from Donostia who brings industrial design, engineering and code into the same project: CAD, product development, eco-design, UX/UI and web.",
-    "image": "",
-    "locality": "Donostia",
-    "region": "Basque Country",
-    "country": "ES",
-    "alumniOf": "Mondragon Unibertsitatea",
-    "alumniOfUrl": "https://www.mondragon.edu",
-    "worksFor": "ULMA Handling Systems",
-    "worksForUrl": "https://www.ulmahandling.com",
-    "knowsAbout": [
-      "Industrial design",
-      "Product development",
-      "Mechanical design",
-      "Design for manufacturing",
-      "CAD",
-      "SolidWorks",
-      "Siemens NX",
-      "Revit",
-      "KeyShot",
-      "Blender",
-      "3ds Max",
-      "Product rendering",
-      "Eco-design",
-      "Life-cycle assessment",
-      "UX/UI design",
-      "Web development",
-      "React",
-      "Next.js",
-      "IoT",
-      "Robotics"
-    ],
-    "knowsLanguage": [
-      "es",
-      "eu",
-      "en"
-    ],
-    "sameAs": [
-      "https://www.linkedin.com/in/mikelarnao",
-      "https://github.com/Tovic-dev"
-    ]
-  },
   "seo": {
     "homeTitle": "Mikel Arnao · Product Design Engineer",
     "homeDescription": "Portfolio of Mikel Arnao, Product Design Engineer in Donostia: industrial design, product development, CAD, UX/UI, web and robotics, from idea to part.",

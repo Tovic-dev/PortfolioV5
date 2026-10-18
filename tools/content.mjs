@@ -70,7 +70,7 @@ function project(id, e) {
     id, title: e.title, sub: e.subtitle, terr: e.categories || [], year: e.year || undefined,
     m3d: MODELS.includes(e.model) ? MODELS.indexOf(e.model) : undefined, sk: SKETCHES.indexOf(e.sketch),
     cover: local(e.cover), ctx: e.context || undefined, client: e.client || undefined, team: e.team || undefined,
-    tools: e.tools || undefined, role: e.role, deck: e.deck, award: e.award || undefined,
+    tools: e.tools || undefined, role: e.role, deck: e.deck, award: e.award || undefined, awardUrl: (e.award && e.awardUrl) || undefined,
     stats: some((e.stats || []).map(s => [s.value, s.label])),
     hero: e.hero && e.hero.image ? [local(e.hero.image), e.hero.caption || ''] : undefined,
     sec: (e.sections || []).map(s => [s.title, s.paragraphs || [], (s.figures || []).map(f => [local(f.image), f.caption || '']), some(s.list)]),
@@ -83,13 +83,23 @@ export function loadContent(lang) {
     lang === defaultLang ? null : readJSON(path.join(ROOT, `content/${name}.${lang}.json`)));
   const dir = path.join(ROOT, 'content/projects');
   const ids = fs.readdirSync(dir).map(f => f.match(new RegExp(`^(.+)\\.${defaultLang}\\.json$`))).filter(Boolean).map(m => m[1]);
+  // "Ocultar en la web" (hidden) leaves a project out of every page, the sitemap and llms.txt. A project featured
+  // on the home page stays published (its chapter links to it): take it off the home page first.
+  const home = file('home'), featured = new Set((home.featured || []).map(f => f.project));
   const projects = ids.map(id => ({ id, e: file(`projects/${id}`) }))
+    .filter(({ id, e }) => {
+      if (!e.hidden) return true;
+      if (featured.has(id)) { console.warn(`! "${id}" is hidden but featured on the home page: it stays published.`); return true; }
+      return false;
+    })
     .sort((a, b) => (a.e.order ?? 999) - (b.e.order ?? 999) || a.id.localeCompare(b.id))
     .map(({ id, e }) => project(id, e));
   const models = file('models') || { labels: [] };
+  // the profile for search engines and AI (JSON-LD, llms.txt) lives in its own file, edited as its own CMS entry
+  const site = { ...file('site'), person: file('person') || {} };
   return {
     lang, defaultLang, locales,
-    site: file('site'), home: file('home'), works: file('works'), about: file('about'),
+    site, home, works: file('works'), about: file('about'),
     labels: Object.fromEntries(models.labels.filter(l => l.label && l.label !== l.part).map(l => [l.part, l.label])),
     projects, img: imageSizes(),
   };

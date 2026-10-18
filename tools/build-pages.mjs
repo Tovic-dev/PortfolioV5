@@ -62,6 +62,9 @@ function buildLocale(lang) {
     alumniOf: P.alumniOf && { '@type': 'CollegeOrUniversity', name: P.alumniOf, url: P.alumniOfUrl },
     worksFor: P.worksFor && { '@type': 'Organization', name: P.worksFor, url: P.worksForUrl },
     knowsAbout: P.knowsAbout, knowsLanguage: P.knowsLanguage, sameAs: P.sameAs,
+    // recognitions: the award, and the page that reports it (it also names him, which ties the entity together)
+    award: (P.recognitions || []).map(x => x.text),
+    subjectOf: (P.recognitions || []).filter(x => x.url).map(x => ({ '@type': 'WebPage', url: x.url, name: x.text })),
   };
   const WEBSITE = { '@type': 'WebSite', '@id': ID.website, name: S.name, url: SITE + '/', inLanguage: lang,
     author: { '@id': ID.person }, publisher: { '@id': ID.person } };
@@ -88,7 +91,8 @@ function buildLocale(lang) {
         dateCreated: p.year, inLanguage: lang, genre: cats, keywords: [...cats, ...list(p.tools)].join(', '),
         author: { '@id': ID.person }, creator: { '@id': ID.person },
         contributor: list(p.team).filter(n => n !== S.name && /\s/.test(n) && !/project|individual/i.test(n)).map(name => ({ '@type': 'Person', name })),
-        sourceOrganization: p.client && { '@type': 'Organization', name: p.client }, award: p.award, isPartOf: { '@id': ID.website } });
+        sourceOrganization: p.client && { '@type': 'Organization', name: p.client }, award: p.award, subjectOf: p.awardUrl && { '@type': 'WebPage', url: p.awardUrl, name: p.award },
+        isPartOf: { '@id': ID.website } });
     } else graph.push({ ...page, '@type': 'WebPage' });
     return clean({ '@context': 'https://schema.org', '@graph': graph });
   }
@@ -189,7 +193,7 @@ writeLLMs(built[0].D);
 // llms.txt is the short map; llms-full.txt has every case study in full.
 function writeLLMs(D) {
   const S = D.site, P = S.person, A = D.about, TERR = Object.fromEntries(D.works.categories.map(c => [c.key, c.label]));
-  const md = h => String(h || '').replace(/<\/?(em|i)>/g, '*').replace(/<\/?(b|strong)>/g, '**').replace(/<br\s*\/?>/g, ' ')
+  const md = h => String(h || '').replace(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g, '[$2]($1)').replace(/<\/?(em|i)>/g, '*').replace(/<\/?(b|strong)>/g, '**').replace(/<br\s*\/?>/g, ' ')
     .replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/ /g, ' ').replace(/\s+/g, ' ').trim();
   const url = p => `${SITE}/works/${p.id}/`;
   const cats = p => p.terr.map(t => TERR[t]).filter(Boolean).join(', ');
@@ -197,13 +201,14 @@ function writeLLMs(D) {
     : f.type === 'languages' ? f.languages.map(l => `${l.name} (${l.level})`).join(', ') : md(f.text)}`);
   const contact = [`- Email: ${S.email}`, ...S.links.map(l => `- ${l.label}: ${l.url}`)];
   const head = [`# ${S.name}`, '', `> ${md(P.description || D.site.seo.homeDescription)}`, '',
-    ...A.paragraphs.map(md).flatMap(t => [t, '']), '## Profile', '', ...facts, '', '## Contact', '', ...contact, ''];
+    ...A.paragraphs.map(md).flatMap(t => [t, '']), '## Profile', '', ...facts, '', ...((P.recognitions || []).length ? ['## Recognitions', '', ...P.recognitions.map(x => `- ${x.text}${x.url ? ` (${x.url})` : ''}`), ''] : []),
+    '## Contact', '', ...contact, ''];
   write('llms.txt', [...head, '## Case studies', '',
     ...D.projects.map(p => `- [${p.title}](${url(p)}): ${p.sub}. ${md(p.deck)} (${cats(p)}${p.year ? ', ' + p.year : ''})`), '',
     '## Pages', '', `- [Home](${SITE}/): selected projects and the design process`, `- [All works](${SITE}/works/): the index of the ${D.projects.length} case studies`,
     `- [About](${SITE}/about/): profile, experience and contact`, `- [Full text](${SITE}/llms-full.txt): every case study in Markdown`, ''].join('\n'));
   const meta = p => [['Categories', cats(p)], ['Year', p.year], ['Context', p.ctx], ['Client', p.client], ['Team', p.team],
-    ['Tools', p.tools], ['Role', md(p.role)], ['Distinction', p.award]].filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`);
+    ['Tools', p.tools], ['Role', md(p.role)], ['Distinction', p.award && (p.awardUrl ? `${p.award} (${p.awardUrl})` : p.award)]].filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`);
   const project = p => [`## ${p.title}: ${p.sub}`, '', `URL: ${url(p)}`, '', md(p.deck), '', ...meta(p), '',
     ...(p.stats || []).map(([v, l]) => `- **${md(v)}** ${md(l)}`), ...(p.stats ? [''] : []),
     ...p.sec.flatMap(([title, paras, figs, items]) => [`### ${md(title)}`, '', ...paras.map(md).flatMap(t => [t, '']),

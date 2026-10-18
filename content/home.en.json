@@ -47,9 +47,9 @@
       "deck": "A plant pot that waters itself on indoor light, so the plant survives the holidays.",
       "approach": "Organic photovoltaic film, a positive-displacement pump dosing 250 ml, a lift-out rPET tank and a recycled PP body with no glue or paint.",
       "role": "Led the development phase and CAD, renders",
-      "factLabel": "Distinction",
-      "factValue": "iF recognition",
-      "factStamp": true,
+      "factLabel": "Year",
+      "factValue": "2026",
+      "factStamp": false,
       "short": "Ardura",
       "figure": "Ardura self-sufficient smart pot"
     },
@@ -64,7 +64,7 @@
       "approach": "Hybrid PV-thermal panels, a small wind turbine, a heat pump, rainwater harvesting and recycled cellulose insulation.",
       "role": "Renewable energy systems",
       "factLabel": "Distinction",
-      "factValue": "UPV contest winner",
+      "factValue": "UPV/EHU olympiad winner",
       "factStamp": true,
       "short": "Gudamendi",
       "figure": "Self-sufficient house in Gudamendi"

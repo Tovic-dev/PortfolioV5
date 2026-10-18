@@ -1,0 +1,56 @@
+{
+  "givenName": "Mikel",
+  "familyName": "Arnao",
+  "alternateName": "Mikel Arnao Azpiazu",
+  "jobTitle": "Product Design Engineer",
+  "description": "Product Design Engineer from Donostia who brings industrial design, engineering and code into the same project: CAD, product development, eco-design, UX/UI and web.",
+  "image": "",
+  "locality": "Donostia",
+  "region": "Basque Country",
+  "country": "ES",
+  "alumniOf": "Mondragon Unibertsitatea",
+  "alumniOfUrl": "https://www.mondragon.edu",
+  "worksFor": "ULMA Handling Systems",
+  "worksForUrl": "https://www.ulmahandling.com",
+  "knowsAbout": [
+    "Industrial design",
+    "Product development",
+    "Mechanical design",
+    "Design for manufacturing",
+    "CAD",
+    "SolidWorks",
+    "Siemens NX",
+    "Revit",
+    "KeyShot",
+    "Blender",
+    "3ds Max",
+    "Product rendering",
+    "Eco-design",
+    "Life-cycle assessment",
+    "UX/UI design",
+    "Web development",
+    "React",
+    "Next.js",
+    "IoT",
+    "Robotics"
+  ],
+  "knowsLanguage": [
+    "es",
+    "eu",
+    "en"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/mikelarnao",
+    "https://github.com/Tovic-dev"
+  ],
+  "recognitions": [
+    {
+      "text": "1st place, ESO category, I Building Engineering Olympiad (UPV/EHU, 2021), with Bixen Gómez and Hugo Hernández",
+      "url": "https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021"
+    },
+    {
+      "text": "2nd overall prize (Innobasque) and Tecnun robot performance award, FIRST LEGO League Euskadi 2022, team Overclock Axular",
+      "url": "https://www.axular.net/es/noticias/premios/2-premio-absoluto-para-overclock"
+    }
+  ]
+}

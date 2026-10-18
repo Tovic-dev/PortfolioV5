@@ -8,17 +8,82 @@
     "I am looking for specialised internships, graduate programmes and master's degrees in Product Design, Design Engineering and Integrated Product Design."
   ],
   "facts": [
-    { "type": "text", "label": "Degree", "text": "Bachelor's in Industrial Design and Product Development Engineering · 4th year, until June 2027" },
-    { "type": "text", "label": "University", "text": "Mondragon Unibertsitatea · Faculty of Engineering" },
-    { "type": "text", "label": "Experience", "text": "ULMA Handling Systems · Studies and Proposals · dual training since 2025" },
-    { "type": "chips", "label": "Tools", "items": ["SolidWorks", "Siemens NX", "Revit", "Blender", "KeyShot", "3ds Max", "Adobe CC", "React", "Next.js", "TypeScript", "Tailwind"] },
-    { "type": "chips", "label": "Interests", "items": ["AI", "Robotics", "Automation", "IoT", "Mobility", "Sustainability", "Connected products"] },
-    { "type": "languages", "label": "Languages", "languages": [
-      { "name": "Spanish", "level": "Native", "full": true },
-      { "name": "Basque", "level": "Native", "full": true },
-      { "name": "English", "level": "Professional", "full": false }
-    ] },
-    { "type": "text", "label": "Base", "text": "Donostia · Basque Country" }
+    {
+      "type": "text",
+      "label": "Degree",
+      "text": "Bachelor's in Industrial Design and Product Development Engineering · 4th year, until June 2027"
+    },
+    {
+      "type": "text",
+      "label": "University",
+      "text": "Mondragon Unibertsitatea · Faculty of Engineering"
+    },
+    {
+      "type": "text",
+      "label": "Experience",
+      "text": "ULMA Handling Systems · Studies and Proposals · dual training since 2025"
+    },
+    {
+      "type": "chips",
+      "label": "Tools",
+      "items": [
+        "SolidWorks",
+        "Siemens NX",
+        "Revit",
+        "Blender",
+        "KeyShot",
+        "3ds Max",
+        "Adobe CC",
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Tailwind"
+      ]
+    },
+    {
+      "type": "chips",
+      "label": "Interests",
+      "items": [
+        "AI",
+        "Robotics",
+        "Automation",
+        "IoT",
+        "Mobility",
+        "Sustainability",
+        "Connected products"
+      ]
+    },
+    {
+      "type": "languages",
+      "label": "Languages",
+      "languages": [
+        {
+          "name": "Spanish",
+          "level": "Native",
+          "full": true
+        },
+        {
+          "name": "Basque",
+          "level": "Native",
+          "full": true
+        },
+        {
+          "name": "English",
+          "level": "Professional",
+          "full": false
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "label": "Awards",
+      "text": "1st place, <a href=\"https://www.ehu.eus/es/web/gipuzkoako-ingeniaritza-eskola/olimpiada-ingenieria-edificacion-2021\">Building Engineering Olympiad</a> (UPV/EHU, 2021) · 2nd overall prize, <a href=\"https://www.axular.net/es/noticias/premios/2-premio-absoluto-para-overclock\">FIRST LEGO League Euskadi</a> (2022)"
+    },
+    {
+      "type": "text",
+      "label": "Base",
+      "text": "Donostia · Basque Country"
+    }
   ],
   "contact": {
     "kicker": "Colophon · Contact",
@@ -27,9 +92,21 @@
     "text": "If you are looking for someone who brings design, engineering and code into the same project, write to me."
   },
   "colophon": [
-    { "label": "Typefaces", "text": "SF Pro / Inter Tight, Inter and IBM Plex Mono" },
-    { "label": "Spot ink", "text": "Safety orange" },
-    { "label": "Built with", "text": "Three.js, GSAP and Lenis" },
-    { "label": "Models", "text": "SolidWorks CAD (SEAT Ateca, Ardura) and geometry generated in code" }
+    {
+      "label": "Typefaces",
+      "text": "SF Pro / Inter Tight, Inter and IBM Plex Mono"
+    },
+    {
+      "label": "Spot ink",
+      "text": "Safety orange"
+    },
+    {
+      "label": "Built with",
+      "text": "Three.js, GSAP and Lenis"
+    },
+    {
+      "label": "Models",
+      "text": "SolidWorks CAD (SEAT Ateca, Ardura) and geometry generated in code"
+    }
   ]
 }
