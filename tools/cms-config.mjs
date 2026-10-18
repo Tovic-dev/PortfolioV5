@@ -14,7 +14,7 @@ const SAME = { i18n: 'duplicate' };                                             
 const HTML = 'Admite HTML sencillo, por ejemplo <em>texto en naranja</em>.';
 const humanize = k => k.replace(/([A-Z0-9])/g, ' $1').replace(/^./, c => c.toUpperCase());
 
-function config(D) {
+export function config(D) {
   const categories = D.works.categories.map(c => ({ label: c.label, value: c.key }));
   const image = (name, label) => ({ name, label, widget: 'image', required: false, ...SAME });
   return {
@@ -101,7 +101,7 @@ function config(D) {
               T('kicker', 'Rótulo'), T('title', 'Título', { hint: HTML }),
               { name: 'categories', label: 'Categorías', widget: 'list', i18n: true, summary: '{{label}}',
                 hint: 'La clave identifica la categoría en los proyectos: no la cambies en una categoría que ya se usa.',
-                fields: [T('key', 'Clave'), T('label', 'Nombre')] },
+                fields: [{ name: 'key', label: 'Clave', widget: 'string', ...SAME }, T('label', 'Nombre')] },
             ],
           },
           {
@@ -134,12 +134,12 @@ function config(D) {
               T('jobTitle', 'Cargo'), X('description', 'Descripción breve de ti (1–2 frases)'),
               { name: 'image', label: 'Foto tuya (retrato)', widget: 'image', required: false, ...SAME,
                 hint: 'Cuadrada o vertical, mínimo 800 px. Es la que Google y las IAs asocian a tu nombre.' },
-              T('locality', 'Ciudad'), T('region', 'Región'), T('country', 'País (código)'),
+              T('locality', 'Ciudad'), T('region', 'Región'), { name: 'country', label: 'País (código)', widget: 'string', ...SAME },
               T('alumniOf', 'Universidad'), { name: 'alumniOfUrl', label: 'Web de la universidad', widget: 'string', required: false, ...SAME },
               T('worksFor', 'Empresa actual', { required: false }), { name: 'worksForUrl', label: 'Web de la empresa', widget: 'string', required: false, ...SAME },
               { name: 'knowsAbout', label: 'Especialidades (temas y herramientas)', widget: 'list', i18n: true, field: T('topic', 'Tema') },
               { name: 'knowsLanguage', label: 'Idiomas (códigos: es, eu, en…)', widget: 'list', field: { name: 'code', label: 'Código', widget: 'string' }, ...SAME },
-              { name: 'sameAs', label: 'Perfiles en otras webs (URL)', widget: 'list', i18n: true, field: T('url', 'URL') },
+              { name: 'sameAs', label: 'Perfiles en otras webs (URL)', widget: 'list', field: { name: 'url', label: 'URL', widget: 'string' }, ...SAME },
               { name: 'recognitions', label: 'Premios y reconocimientos', widget: 'list', i18n: true, required: false, summary: '{{text}}',
                 fields: [T('text', 'Reconocimiento'), { name: 'url', label: 'Página que lo acredita', widget: 'string', required: false, ...SAME }] },
             ],
@@ -176,10 +176,21 @@ function config(D) {
   };
 }
 
+// Translated fields are required in the default language only: you can save in English and leave the other
+// languages to tools/translate.mjs (GitHub Action), which fills them in after every change.
+function englishRequired(cfg, lang) {
+  const walk = fields => (fields || []).forEach(f => {
+    if (f.i18n === true && f.required !== false && !Array.isArray(f.required)) f.required = [lang];
+    walk(f.fields); if (f.field) walk([f.field]); (f.types || []).forEach(t => walk(t.fields));
+  });
+  cfg.collections.forEach(c => { walk(c.fields); (c.files || []).forEach(x => walk(x.fields)); });
+  return cfg;
+}
+
 export function writeAdmin(out, D) {
   const dir = path.join(out, 'admin');
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'config.json'), JSON.stringify(config(D), null, 2) + '\n');
+  fs.writeFileSync(path.join(dir, 'config.json'), JSON.stringify(englishRequired(config(D), D.defaultLang), null, 2) + '\n');
   fs.writeFileSync(path.join(dir, 'index.html'), `<!doctype html>
 <html lang="es">
 <head>

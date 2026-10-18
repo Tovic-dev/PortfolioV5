@@ -1,4 +1,10 @@
 {
   "default": "en",
-  "locales": ["en"]
+  "locales": [
+    "en"
+  ],
+  "translate": [
+    "es",
+    "eu"
+  ]
 }

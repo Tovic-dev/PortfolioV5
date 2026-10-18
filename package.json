@@ -1,7 +1,11 @@
 {
   "private": true,
-  "description": "Build dependency for the site: sharp makes the responsive images (tools/images.mjs). Vercel installs it before the build.",
+  "description": "Dependencies: sharp makes the responsive images on every build (tools/images.mjs, installed by Vercel); the Anthropic SDK and zod are for the translation of the content (tools/translate.mjs, run by the GitHub Action).",
   "dependencies": {
     "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "0.131.0",
+    "zod": "4.6.5"
   }
 }

@@ -40,3 +40,7 @@ Vercel: import the repo with the framework preset **Other**. `vercel.json` sets 
 ## Search engines
 
 Google Search Console and Bing Webmaster Tools are verified for `mikelarnao.com`; the sitemap is `https://www.mikelarnao.com/sitemap.xml`. For Bing and the other IndexNow engines, after a deploy with new or changed pages is live, run `cd tools && npm run indexnow` (every URL in the sitemap) or `npm run indexnow -- <url> …`. The key is the `<32 hex>.txt` file at the repo root.
+
+## Languages and machine translation
+
+English is written in the CMS; Spanish and Basque are translated by Claude Haiku (`tools/translate.mjs`, run by `.github/workflows/translate.yml` after every content change). Only new or changed English text is sent. `content/translations.lock.json` records which English text each translation came from, so a translation corrected by hand in the CMS is kept until that English text changes. Fields marked `i18n: 'duplicate'` in `tools/cms-config.mjs` (images, URLs, keys, numbers) are copied, not translated. The target languages are `translate` in `content/i18n.json`; each one is published (added to `locales`, so it gets its `/<lang>/` pages, the CMS tab and the language switcher) after its first complete translation. The workflow needs the repository secret `ANTHROPIC_API_KEY`. `node tools/translate.mjs --dry` tests the pipeline without calling the API.

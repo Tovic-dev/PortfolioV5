@@ -1,0 +1,46 @@
+# Translates the content into the languages in content/i18n.json ("translate") with Claude Haiku after every
+# content change (CMS saves included), commits the result and so triggers the Vercel deploy.
+# Needs the repository secret ANTHROPIC_API_KEY. Can also be run by hand: Actions → Translate content → Run workflow.
+# Commits made here with GITHUB_TOKEN do not start this workflow again.
+name: Translate content
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'tools/translate.mjs'
+      - 'tools/cms-config.mjs'
+  workflow_dispatch:
+
+concurrency:
+  group: translate
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Translate new or changed English text
+        run: node tools/translate.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Commit the translations
+        run: |
+          git add content
+          if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898341+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Translate content (es, eu)"
+          for i in 1 2 3; do git pull --rebase --quiet && git push --quiet && exit 0; sleep 5; done
+          exit 1
