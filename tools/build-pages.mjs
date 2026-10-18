@@ -110,7 +110,8 @@ function buildLocale(lang) {
     return clean({ '@context': 'https://schema.org', '@graph': graph });
   }
   // the page source for this locale: content in, body rendered, language set
-  const scripts = `<script src="${assetFile('content-' + lang, `window.__D=${scriptJSON(D)};\n`)}" defer></script>\n` +
+  const contentSrc = assetFile('content-' + lang, `window.__D=${scriptJSON(D)};\n`);
+  const scripts = `<script src="${contentSrc}" defer></script>\n` +
     `<script src="${assetFile('app', APP)}" defer></script>`;
   const page = (src.slice(0, appOpen) + scripts + src.slice(appClose + '</script>'.length))
     .replace('<html lang="en">', `<html lang="${lang}">`), body0 = C.bodyHTML();
@@ -163,7 +164,7 @@ function buildLocale(lang) {
     if (r.v !== 'home') body = once(body, '<div class="view" id="v-home">', '<div class="view" id="v-home" hidden>');
     if (r.v === 'works') body = once(body, '<div class="view vpage wrap" id="v-works" hidden>', '<div class="view vpage wrap" id="v-works">')
       .replace('id="filters"></div>', `id="filters">${C.filtersHTML()}</div>`).replace('<ul class="toc" id="toc"></ul>', `<ul class="toc" id="toc">${C.tocHTML()}</ul>`);
-    if (r.v === 'project') body = once(body, '<div class="view vpage wrap ph" id="v-project" hidden></div>', `<div class="view vpage wrap ph" id="v-project">${C.projectHTML(r.p)}</div>`);
+    if (r.v === 'project') body = once(body, '<div class="view vpage wrap ph" id="v-project" hidden></div>', `<div class="view vpage wrap ph" id="v-project" data-pid="${r.p.id}">${C.projectHTML(r.p)}</div>`);
     if (r.v === 'about') body = once(body, '<div class="view vpage wrap" id="v-about" hidden>', '<div class="view vpage wrap" id="v-about">');
     if (r.v === '404') body = once(body, '<div class="view vpage wrap" id="v-404" hidden>', '<div class="view vpage wrap" id="v-404">');
     // only this URL's view keeps its content; the app fills the others in on load (index.html, start of the app)
@@ -186,7 +187,7 @@ function buildLocale(lang) {
   const sources = r => r.v === 'project' ? [...own(`projects/${r.p.id}`), ...own('works')]
     : r.v === 'works' ? [...own('works'), `content/projects`] : [...own(r.v), ...own('site')];
   const entries = pages.map(([r, base]) => ({ url: L + base, files: sources(r), images: r.v === 'project' ? projectImages(r.p) : [] }));
-  return { D, entries };
+  return { D, entries, contentSrc };
 }
 
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -229,6 +230,16 @@ Sitemap: ${SITE}/sitemap.xml
 `);
 writeAdmin(OUT, built[0].D);
 writeLLMs(built[0].D);
+
+// One 404.html serves every missing URL (Vercel can't pick another and keep the 404 status). Under /es/ or /eu/
+// it loads that language's content instead, and the app renders the whole page from it (window.__rebody).
+if (locales.length > 1) {
+  const map = Object.fromEntries(built.map(b => [b.D.lang, b.contentSrc])), others = locales.filter(l => l !== defaultLang);
+  const f404 = path.join(OUT, '404.html');
+  const chooser = `<script>(function(){var s=${JSON.stringify(map)},m=location.pathname.match(/^\\/(${others.join('|')})(\\/|$)/);`
+    + `if(m)window.__rebody=1;document.write('<script src="'+s[m?m[1]:${JSON.stringify(defaultLang)}]+'"><\\/script>')})()</script>`;
+  fs.writeFileSync(f404, once(fs.readFileSync(f404, 'utf8'), `<script src="${map[defaultLang]}" defer></script>`, chooser));
+}
 
 // llms.txt (https://llmstxt.org): the site in Markdown for language models, from the default-locale content.
 // llms.txt is the short map; llms-full.txt has every case study in full.

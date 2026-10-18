@@ -14,11 +14,11 @@
   ],
   "seo": {
     "homeTitle": "Mikel Arnao · Ingeniero de diseño de producto",
-    "homeDescription": "Portfolio de Mikel Arnao, ingeniero de diseño de producto en Donostia: diseño industrial, desarrollo de producto, CAD, UX/UI, web y robótica, de la idea a la pieza.",
+    "homeDescription": "Portfolio de Mikel Arnao, ingeniero de diseño de producto en Donostia: diseño industrial, desarrollo de producto, CAD, UX/UI y web, de la idea a la pieza.",
     "worksTitle": "Proyectos de diseño industrial e ingeniería de producto · Mikel Arnao",
     "worksDescription": "Los {count} trabajos de Mikel Arnao, ingeniero de diseño de producto: {categories}.",
     "aboutTitle": "Sobre Mikel Arnao, ingeniero de diseño de producto en Donostia",
-    "aboutDescription": "Mikel Arnao estudia Diseño Industrial e Ingeniería en Desarrollo de Producto en Mondragon Unibertsitatea y realiza prácticas en ULMA Handling Systems. Abierto a prácticas profesionales.",
+    "aboutDescription": "Mikel Arnao estudia Diseño Industrial e Ingeniería de Desarrollo de Producto en Mondragon Unibertsitatea y se forma en ULMA Handling Systems.",
     "projectTitle": "{title}: {subtitle} · Mikel Arnao",
     "projectTitleShort": "{title}: {subtitle}",
     "projectDescription": "Caso de estudio de Mikel Arnao, ingeniero de diseño de producto: {deck} {categories}.",
