@@ -6,22 +6,6 @@
   "coverCaption": "SEAT Ateca side mirror redesign, assembly view. Scroll to take it apart.",
   "featured": [
     {
-      "project": "cycle-dry",
-      "line": "Cycle Dry, Orbea rear rack",
-      "lineCategory": "Cycling",
-      "kicker": "Cycling",
-      "titleA": "Cycle Dry",
-      "titleB": "Orbea rear rack",
-      "deck": "A simpler, cheaper bikepacking rack with a hanger to dry clothes on the move.",
-      "approach": "Material teardown of the original rack, a single bent aluminium frame and a hanger that lifts 90° and turns 180° out of the wind.",
-      "role": "Market and use analysis, ideation, specs, manufacturing",
-      "factLabel": "Year",
-      "factValue": "2025",
-      "factStamp": false,
-      "short": "Cycle Dry",
-      "figure": "Cycle Dry, Orbea rear rack"
-    },
-    {
       "project": "seat-ateca",
       "line": "SEAT Ateca side mirror",
       "lineCategory": "Automotive",
@@ -52,6 +36,22 @@
       "factStamp": true,
       "short": "Ardura",
       "figure": "Ardura self-sufficient smart pot"
+    },
+    {
+      "project": "cycle-dry",
+      "line": "Cycle Dry, Orbea rear rack",
+      "lineCategory": "Cycling",
+      "kicker": "Cycling",
+      "titleA": "Cycle Dry",
+      "titleB": "Orbea rear rack",
+      "deck": "A simpler, cheaper bikepacking rack with a hanger to dry clothes on the move.",
+      "approach": "Material teardown of the original rack, a single bent aluminium frame and a hanger that lifts 90° and turns 180° out of the wind.",
+      "role": "Market and use analysis, ideation, specs, manufacturing",
+      "factLabel": "Year",
+      "factValue": "2025",
+      "factStamp": false,
+      "short": "Cycle Dry",
+      "figure": "Cycle Dry, Orbea rear rack"
     },
     {
       "project": "gudamendi-house",
