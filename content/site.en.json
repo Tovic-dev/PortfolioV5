@@ -3,9 +3,14 @@
   "role": "Product Design Engineer",
   "email": "arnaoazpiazu@gmail.com",
   "links": [
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/mikelarnao" },
-    { "label": "GitHub", "url": "https://github.com/Tovic-dev" },
-    { "label": "mikelarnao.com", "url": "https://mikelarnao.com" }
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/mikelarnao"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Tovic-dev"
+    }
   ],
   "person": {
     "jobTitle": "Product Design Engineer",
@@ -13,7 +18,10 @@
     "region": "Basque Country",
     "country": "ES",
     "alumniOf": "Mondragon Unibertsitatea",
-    "sameAs": ["https://www.linkedin.com/in/mikelarnao", "https://github.com/Tovic-dev"]
+    "sameAs": [
+      "https://www.linkedin.com/in/mikelarnao",
+      "https://github.com/Tovic-dev"
+    ]
   },
   "seo": {
     "homeTitle": "Mikel Arnao · Product Design Engineer",
