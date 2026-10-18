@@ -2,17 +2,14 @@
 // its own title, description, canonical, hreflang, Open Graph / Twitter tags and JSON-LD, plus sitemap.xml,
 // robots.txt, 404.html and the CMS at /admin/. The client router takes over after load (same index.html code).
 // No dependencies, so Vercel can run it as the build step:  node tools/build-pages.mjs
-// SITE_URL overrides the absolute base URL (default: the Vercel production domain).
+// The absolute base URL is SITE in tools/content.mjs (SITE_URL overrides it).
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-import { ROOT, i18n, loadContent } from './content.mjs';
+import { ROOT, SITE, i18n, loadContent } from './content.mjs';
 import { writeAdmin } from './cms-config.mjs';
 
 const OUT = path.join(ROOT, 'dist');
-const SITE = (process.env.SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL : 'https://portfolio-v5-eight-bice.vercel.app'))
-  .replace(/\/$/, '');
 const { defaultLang, locales } = i18n();
 const prefix = l => (l === defaultLang ? '' : '/' + l);
 

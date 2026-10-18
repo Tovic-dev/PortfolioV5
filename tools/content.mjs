@@ -5,6 +5,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// the site's public address: canonical URLs, sitemap, share tags (SITE_URL overrides it, e.g. for a staging build)
+export const SITE = (process.env.SITE_URL || 'https://www.mikelarnao.com').replace(/\/$/, '');
 // stored in the content as names; the code addresses them by index (3D model slots in index.html, sketch drawings)
 export const MODELS = ['seat', 'ardura', 'orbea', 'house', 'vent'];
 export const SKETCHES = ['plant-pot', 'mirror', 'rack', 'robot', 'house', 'route-app', 'finance-app'];

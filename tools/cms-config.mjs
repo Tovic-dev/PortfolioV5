@@ -3,7 +3,7 @@
 // Vercel rebuilds the site. Sign-in: "Sign In with Token" (a GitHub personal access token).
 import fs from 'node:fs';
 import path from 'node:path';
-import { MODELS, SKETCHES } from './content.mjs';
+import { MODELS, SKETCHES, SITE } from './content.mjs';
 
 const SVELTIA = 'https://unpkg.com/@sveltia/cms@0.227.0/dist/sveltia-cms.js';
 const REPO = 'Tovic-dev/PortfolioV5';
@@ -21,7 +21,7 @@ function config(D) {
     backend: { name: 'github', repo: REPO, branch: 'main' },
     media_folder: 'img',
     public_folder: '/img',
-    site_url: 'https://portfolio-v5-eight-bice.vercel.app',
+    site_url: SITE,
     i18n: { structure: 'multiple_files', locales: D.locales, default_locale: D.defaultLang },
     collections: [
       {
