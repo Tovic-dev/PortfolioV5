@@ -1,4 +1,5 @@
 {
+  "hidden": true,
   "order": 9,
   "title": "Jario 09 · Ibili",
   "subtitle": "Graphic for the Hydrate & Reuse bottle line",
@@ -6,8 +7,6 @@
     "product"
   ],
   "year": "2026",
-  "model": "none",
-  "sketch": "none",
   "cover": "/img/ibili-1.jpg",
   "deck": "Topographic contour lines that <em>turn into a river</em> around a reusable bottle.",
   "role": "Individual project: concept, surface pattern and visualisation.",
@@ -16,6 +15,7 @@
   "team": "Individual",
   "tools": "Adobe Illustrator, Adobe Photoshop",
   "award": "",
+  "awardUrl": "",
   "stats": [],
   "hero": {
     "image": "/img/ibili-1.jpg",
@@ -43,5 +43,7 @@
         }
       ]
     }
-  ]
+  ],
+  "model": "none",
+  "sketch": "none"
 }
