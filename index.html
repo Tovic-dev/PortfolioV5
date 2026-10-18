@@ -547,6 +547,8 @@ const UI=D.site.ui,IMG=D.img,PROJ=D.projects,FEAT=D.home.featured;
 const TERR=Object.fromEntries(D.works.categories.map(c=>[c.key,c.label]));
 PROJ.forEach((p,i)=>{p.n=i+1;p.page=String(9+i).padStart(2,'0')});
 const HOME_IDS=FEAT.map(f=>f.project);
+/* the 3D model of each home chapter: its project's model (by position if the project has none) */
+const HOME_M=HOME_IDS.map((id,i)=>{const p=PROJ.find(p=>p.id===id);return p&&p.m3d!==undefined?p.m3d:i});
 /* 3D part labels, by their original English name */
 const LBL=s=>(s&&D.labels[s])||s;
 const DRAW=[
@@ -1085,8 +1087,9 @@ const K3=(function(){
        file://: fetch is blocked, so fall back to the JS-wrapped exports (window.__GLTF[name]) */
     const local=location.protocol==='file:';
     if(!local&&THREE.DRACOLoader){const DL=new THREE.DRACOLoader();DL.setDecoderPath('vendor/three-0.128.0/draco/');L.setDRACOLoader(DL)}
-    /* one model at a time, in index order (the cover model first), each after the page goes idle */
-    const queue=Object.entries(GLB),idle=f=>window.requestIdleCallback?requestIdleCallback(f,{timeout:1500}):setTimeout(f,200);
+    /* one model at a time, in home order (the cover model first), each after the page goes idle */
+    const rank=i=>{const r=HOME_M.indexOf(+i);return r<0?99:r};
+    const queue=Object.entries(GLB).sort(([a],[b])=>rank(a)-rank(b)),idle=f=>window.requestIdleCallback?requestIdleCallback(f,{timeout:1500}):setTimeout(f,200);
     const next=()=>{const e=queue.shift();if(!e)return;const [i,spec]=e;
       const name=spec.url.replace(/^.*\//,'').replace(/\.gltf.*$/,'');
       const done=g=>{const sc=g.scene;
@@ -1168,11 +1171,11 @@ function startHome3D(){
   const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,0,12);
   const visH=2*Math.tan(15*Math.PI/180)*12;
   /* the cover model now; the others when the scroll gets near them (see frame) */
-  for(let i=0;i<N;i++)st.models.push(K3.build(i,scene,i>0));
+  for(let i=0;i<N;i++)st.models.push(K3.build(HOME_M[i],scene,i>0));
   K3.loadReal();
   /* models with no CAD file are procedural only: build them while the page is idle */
   const idle=f=>window.requestIdleCallback?requestIdleCallback(f,{timeout:3000}):setTimeout(f,300);
-  (function prebuild(i){if(i>=N)return;if(!K3.hasCAD(i))K3.fill(st.models[i]);idle(()=>prebuild(i+1))})(1);
+  (function prebuild(i){if(i>=N)return;if(!K3.hasCAD(HOME_M[i]))K3.fill(st.models[i]);idle(()=>prebuild(i+1))})(1);
   st.theme();themeHooks.push(st.theme);
   const md={solid:1,edge:.85},mt={solid:1,edge:.85};
   document.querySelectorAll('[data-modes="home"] [data-mode]').forEach(b=>b.addEventListener('click',()=>{
@@ -1215,7 +1218,7 @@ function startHome3D(){
       if(lt>-.9)K3.fill(M); /* most of a chapter before it shows; no-op once filled or once its CAD model is in */
       M.g.visible=vis>.002;if(!M.g.visible)return;
       let e=smooth((lt-.1)/.28)*(1-smooth((lt-.66)/.22));if(reduce)e=lt>.2&&lt<.8?1:0;
-      const s=base*M.scale*(.75+.25*vis)*(mobile&&i===3?.74:1);
+      const s=base*M.scale*(.75+.25*vis)*(mobile&&M.idx===3?.74:1);
       M.g.position.set(anchor.x,anchor.y+((1-vin)*-2.4+(1-vout)*2.6)*base,0);M.g.scale.setScalar(s);
       const spin=reduce?0:(lt*Math.PI*1.4+(1-vin)*-1.2+(1-vout)*1.2+(1-k)*t*.25);
       M.g.rotation.set(.22+rx,-.55+spin+ry,0);
