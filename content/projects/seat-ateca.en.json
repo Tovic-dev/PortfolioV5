@@ -7,8 +7,6 @@
     "product"
   ],
   "year": "2025",
-  "model": "seat",
-  "sketch": "mirror",
   "cover": "/img/seat-1.jpg",
   "deck": "A mirror that <em>folds itself</em> before it hits something, and keeps the driver seeing when it does.",
   "role": "Worked across the whole project. Led the regulatory analysis (ECE R46) in the product-analysis phase and most of the development phase: analysis and redesign of the new circuit, the material specification manual, the mould machining roadmap and the justification of the selected material. Led the final renders.",
@@ -47,6 +45,10 @@
         {
           "image": "/img/seat-12.jpg",
           "caption": "Storyboard of the school pick-up used to find the pain point."
+        },
+        {
+          "image": "https://picsum.photos/id/273/1920/1280.webp",
+          "caption": "test image"
         }
       ]
     },
@@ -143,5 +145,7 @@
       "list": [],
       "figures": []
     }
-  ]
+  ],
+  "model": "seat",
+  "sketch": "mirror"
 }
