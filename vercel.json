@@ -15,6 +15,10 @@
       ]
     },
     {
+      "source": "/(llms|llms-full).txt",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
