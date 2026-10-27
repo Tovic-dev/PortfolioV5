@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { contentProblems } from './sanitize.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // the site's public address: canonical URLs, sitemap, share tags (SITE_URL overrides it, e.g. for a staging build)
@@ -14,7 +15,13 @@ export const SKETCHES = ['plant-pot', 'mirror', 'rack', 'robot', 'house', 'route
 // a number never wraps away from its unit: "85 %" and "13 €" get a no-break space
 const nbsp = v => typeof v === 'string' ? v.replace(/(\d) (%|€)/g, '$1 $2')
   : Array.isArray(v) ? v.map(nbsp) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, nbsp(x)])) : v;
-const readJSON = f => (fs.existsSync(f) ? nbsp(JSON.parse(fs.readFileSync(f, 'utf8'))) : null);
+// every file is held to the HTML/URL allowlist (tools/sanitize.mjs): the build stops on anything else
+function readJSON(f) {
+  if (!fs.existsSync(f)) return null;
+  const doc = JSON.parse(fs.readFileSync(f, 'utf8')), bad = contentProblems(doc);
+  if (bad.length) throw new Error(`${path.relative(ROOT, f)} has markup or links that are not allowed:\n  ${bad.join('\n  ')}`);
+  return nbsp(doc);
+}
 const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
 // objects merge key by key; arrays and scalars come whole from the locale when it has them
 function merge(base, over) {

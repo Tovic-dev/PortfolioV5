@@ -49,7 +49,21 @@ const once = (html, find, repl) => {
   if (i < 0 || html.indexOf(find, i + 1) >= 0) throw new Error('expected exactly one match for: ' + find.slice(0, 80));
   return html.slice(0, i) + repl + html.slice(i + find.length);
 };
+// Content-Security-Policy of the pages, as a <meta> (the inline scripts change with each build, so their hashes
+// can't sit in vercel.json; frame-ancestors, which a meta can't set, is a header there). Everything the site runs
+// is its own: scripts from this domain plus the hashed inline ones; 'wasm-unsafe-eval' and blob: workers are the
+// Draco decoder of the 3D models. A style="" attribute is allowed (the app and GSAP set inline styles).
+const CSP_SCRIPT = /<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g;
+function withCSP(html) {
+  const hashes = [...html.matchAll(CSP_SCRIPT)].map(m => `'sha256-${crypto.createHash('sha256').update(m[1]).digest('base64')}'`);
+  const policy = ["default-src 'self'", ['script-src', "'self'", ...hashes, "'wasm-unsafe-eval'"].join(' '), "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob:", "font-src 'self'", "connect-src 'self' data: blob:", "worker-src 'self' blob:", "object-src 'none'",
+    "base-uri 'self'", "form-action 'self'", 'upgrade-insecure-requests'].join('; ');
+  return once(html.replace(/\n?<meta http-equiv="Content-Security-Policy"[^>]*>/, ''), '<meta charset="utf-8">',
+    `<meta charset="utf-8">\n<meta http-equiv="Content-Security-Policy" content="${policy}">`);
+}
 function write(rel, content) {
+  if (rel.endsWith('.html')) content = withCSP(content);
   const file = path.join(OUT, rel);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, content);
@@ -238,7 +252,7 @@ if (locales.length > 1) {
   const f404 = path.join(OUT, '404.html');
   const chooser = `<script>(function(){var s=${JSON.stringify(map)},m=location.pathname.match(/^\\/(${others.join('|')})(\\/|$)/);`
     + `if(m)window.__rebody=1;document.write('<script src="'+s[m?m[1]:${JSON.stringify(defaultLang)}]+'"><\\/script>')})()</script>`;
-  fs.writeFileSync(f404, once(fs.readFileSync(f404, 'utf8'), `<script src="${map[defaultLang]}" defer></script>`, chooser));
+  fs.writeFileSync(f404, withCSP(once(fs.readFileSync(f404, 'utf8'), `<script src="${map[defaultLang]}" defer></script>`, chooser)));
 }
 
 // llms.txt (https://llmstxt.org): the site in Markdown for language models, from the default-locale content.

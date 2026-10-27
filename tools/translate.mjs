@@ -14,6 +14,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { ROOT, loadContent } from './content.mjs';
 import { config } from './cms-config.mjs';
+import { tagSignature, htmlProblems } from './sanitize.mjs';
 
 const DRY = process.argv.includes('--dry');
 const MODEL = 'claude-haiku-5-5';
@@ -148,6 +149,14 @@ for (const lang of targets) {
     for (let i = 0; i < ctx.queue.length; i += CHUNK) {
       const batch = ctx.queue.slice(i, i + CHUNK).map(q => ({ id: `${file.base}.${q.id}`, text: q.text }));
       const res = await translateBatch(lang, batch);
+      // a translation must keep the English tags exactly (no tag added, dropped or changed): asked again once,
+      // then the English text is used and the field is left out of the lock, so the next run tries again
+      const wrong = b => b.filter(x => tagSignature(res[x.id]) !== tagSignature(x.text) || htmlProblems(res[x.id]).length);
+      if (wrong(batch).length) Object.assign(res, await translateBatch(lang, wrong(batch)));
+      for (const x of wrong(batch)) {
+        console.warn(`! ${lang} ${x.id}: the translation changed the HTML tags, the English text is kept`);
+        res[x.id] = x.text; delete ctx.used[x.id.slice(file.base.length + 1)];
+      }
       for (const q of ctx.queue.slice(i, i + CHUNK)) done[q.id] = res[`${file.base}.${q.id}`];
       sent += batch.length;
     }

@@ -5,7 +5,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MODELS, SKETCHES, SITE } from './content.mjs';
 
-const SVELTIA = 'https://unpkg.com/@sveltia/cms@0.228.0/dist/sveltia-cms.js';
+// self-hosted (vendor/, copied from the npm package, checked against its registry integrity): no third-party
+// script on the page where the GitHub token is entered
+const SVELTIA = '/vendor/sveltia-cms-0.228.0/sveltia-cms.js';
 const REPO = 'Tovic-dev/PortfolioV5';
 
 const T = (name, label, extra = {}) => ({ name, label, widget: 'string', i18n: true, ...extra });   // translated text
@@ -187,6 +189,12 @@ function englishRequired(cfg, lang) {
   return cfg;
 }
 
+// the editor may only talk to GitHub (the token goes nowhere else); fonts come from jsDelivr, which Sveltia
+// loads them from (https://github.com/sveltia/sveltia-cms#setting-up-content-security-policy)
+const ADMIN_CSP = ["default-src 'self'", "script-src 'self'", "style-src 'self' 'unsafe-inline'", "font-src 'self' https://cdn.jsdelivr.net",
+  "img-src 'self' blob: data: https://*.githubusercontent.com", 'media-src blob:', 'frame-src blob:',
+  "connect-src 'self' blob: data: https://api.github.com https://www.githubstatus.com", 'manifest-src blob:',
+  "worker-src 'self' blob:", "object-src 'none'", "base-uri 'self'", "form-action 'self'"].join('; ');
 export function writeAdmin(out, D) {
   const dir = path.join(out, 'admin');
   fs.mkdirSync(dir, { recursive: true });
@@ -195,6 +203,7 @@ export function writeAdmin(out, D) {
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="${ADMIN_CSP}">
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Editor · ${D.site.name}</title>
